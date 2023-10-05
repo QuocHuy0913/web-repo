@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->string('email')->unique();
-            $table->string('role',20)->nullable();
+            $table->string('role',20)->nullable()->default('client');;
             $table->bigInteger('rank_id')->nullable()->unsigned();
             $table->string('phone',100)->nullable();
             $table->date('dob')->nullable();
