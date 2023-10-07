@@ -172,9 +172,33 @@
         .header-below-right {
             flex: 1 1 0px;
         }
+        a.underline-hover-effect {
+            text-decoration: none;
+        }
 
+        .underline-hover-effect {
+            display: inline-block;
+            position: relative;
+        }
 
-
+        .underline-hover-effect::before {
+            content: "";
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            width: 0;
+            height: 2.5px;
+            background-color: #000;
+            transition: width 0.25s ease-out;
+        }
+        .underline-hover-effect:hover::before {
+            width: 100%;
+            left: 0;
+            right: auto;
+        }
+        .menu-item-title {
+            font-size:16px;
+        }
     </style>
     <div>
         <div id="page-top-bar">
@@ -233,28 +257,28 @@
                                         <div class="menu">
                                             <ul class="menu-wrap">
                                                 <li class="menu-item">
-                                                    <a href="" class="rm-rf">
+                                                    <a href="{{route('home')}}" class="rm-rf underline-hover-effect">
                                                         <div class="menu-item-wrap">
                                                             <span class="menu-item-title">Home</span>
                                                         </div>
                                                     </a>
                                                 </li>
                                                 <li class="menu-item">
-                                                    <a href="" class="rm-rf">
+                                                    <a href="{{route('shop')}}" class="rm-rf underline-hover-effect">
                                                         <div class="menu-item-wrap">
                                                             <span class="menu-item-title">Shop</span>
                                                         </div>
                                                     </a>
                                                 </li>
                                                 <li class="menu-item">
-                                                    <a href="" class="rm-rf">
+                                                    <a href="{{route('blog')}}" class="rm-rf underline-hover-effect">
                                                         <div class="menu-item-wrap">
                                                             <span class="menu-item-title">Blog</span>
                                                         </div>
                                                     </a>
                                                 </li>
                                                 <li class="menu-item">
-                                                    <a href="" class="rm-rf">
+                                                    <a href="{{route('more')}}" class="rm-rf underline-hover-effect">
                                                         <div class="menu-item-wrap">
                                                             <span class="menu-item-title">More</span>
                                                         </div>
