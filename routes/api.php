@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\API\App\ProductController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -25,5 +26,6 @@ Route::group(['middleware' => ['auth:sanctum'], 'as' => 'api.'], function () {
         return response()->json("welcome",200);
     });
 });
+Route::get('products',[ProductController::class,'getList']);
 
 
