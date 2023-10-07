@@ -39,6 +39,9 @@ Route::prefix('admin')->name('admin.')->group(function (){
 
 // Routes Client
 Route::get('/', [ClientDashboardController::class, 'home'])->name('home');
+Route::get('/shop', [ClientDashboardController::class, 'shop'])->name('shop');
+Route::get('/blog', [ClientDashboardController::class, 'blog'])->name('blog');
+Route::get('/more', [ClientDashboardController::class, 'more'])->name('more');
 Auth::routes();
 
 
