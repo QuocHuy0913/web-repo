@@ -3,7 +3,7 @@
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
-use App\Http\Controllers\Admin\BrandController as AdminBrandController;
+use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Client\DashboardController as ClientDashboardController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -31,8 +31,12 @@ Route::prefix('admin')->name('admin.')->group(function (){
         Route::get('/add', [AdminCategoryController::class, 'getAdd'])->name('getAdd');
     });
     Route::prefix('brands')->name('brands.')->group(function () {
-        Route::get('/', [AdminBrandController::class, 'getList'])->name('getList');
-        Route::get('/add', [AdminBrandController::class, 'getAdd'])->name('getAdd');
+        Route::get('/' , [BrandController::class, 'getLists']) -> name('getList');
+        Route::get('/add' , [BrandController::class, 'getAdd'] )->name('getAdd');
+        Route::post('/add' , [BrandController::class, 'postAdd'])->name('postAdd');
+        Route::get('/update/{id}' , [BrandController::class, 'getUpdate'])->name('getUpdate');
+        Route::post('update/{id}' , [BrandController::class, 'postUpdate'])->name('postUpdate');
+        Route::get('/delete/{id}' , [BrandController::class, 'delete'])->name('delete');
     });
 
 });

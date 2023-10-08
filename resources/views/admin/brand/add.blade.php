@@ -10,17 +10,25 @@
         <div class="card-body">
             <form action="" method="POST">
 
-                    <div class="mb-3">
-                        <label for="">Name</label>
-                        <input type="text" name="name" class="form-control w-50" placeholder="Brand Name..." value="{{old('name')}}">
-                    </div>
+                <div class="mb-3">
+                    <label for="brand_name">Brand Name</label>
+                    <input class="form-control" type="text" name="name" placeholder="Brand name ..." value="{{old("name")}}">
+                    @error('name')
+                        <span style="color: red">{{$message}}</span>
+                    @enderror
+                </div>
 
-                    <div class="mb-3">
-                        <label for="">Description</label>
-                        <input type="text" name="description" class="form-control w-50" placeholder="Brand Descriptions..." value="{{old('description')}}">
-                    </div>
+                <div class="mb-3">
+                    <label for="">Description</label>
+                    <input class="form-control" type="text" name="description" placeholder="Description ..." value="{{old("description")}}">
+                    @error('description')
+                        <span style="color: red">{{$message}}</span>
+                    @enderror
+                </div>
 
-                <button type="submit" class="btn btn-primary">Add New</button>
+                <a href="{{route('admin.brands.getList')}}" class="btn btn-warning">Back</a>
+                <button class="btn btn-primary" type="submit">Add</button>
+
                 @csrf
             </form>
         </div>
