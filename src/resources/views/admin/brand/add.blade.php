@@ -1,38 +1,30 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Update category')
+@section('title', 'Add a new brand')
 
 @section('content')
+
+<script src="{{asset('admins')}}/vendor/jquery/jquery.min.js"></script>
+
     <div class="card shadow mb-4">
         <div class="card-body">
-            @if(session('msg'))
-                <div class="alert alert-success">{{session('msg')}}</div>
-            @endif
-            @if($errors->any())
-                <div class="alert alert-danger">Dữ liệu không hợp lệ. Vui lòng kiểm tra lại</div>
-            @endif
             <form action="" method="POST">
 
                     <div class="mb-3">
                         <label for="">Name</label>
-                        <input type="text" name="name" class="form-control w-50" placeholder="Category Name..." value="{{old('name') ?? $item->name}}">
+                        <input type="text" name="name" class="form-control w-50" placeholder="Brand Name..." value="{{old('name')}}">
                     </div>
 
                     <div class="mb-3">
                         <label for="">Description</label>
-                        <input type="text" name="description" class="form-control w-50" placeholder="Category Descriptions..." value="{{old('description')?? $item->description}}">
+                        <input type="text" name="description" class="form-control w-50" placeholder="Brand Descriptions..." value="{{old('description')}}">
                     </div>
 
-                <button type="submit" class="btn btn-primary">Update</button>
+                <button type="submit" class="btn btn-primary">Add New</button>
                 @csrf
             </form>
         </div>
     </div>
-
-
-
-    <script src="{{asset('admins')}}/vendor/jquery/jquery.min.js"></script>
-
     <script src="{{asset('admins')}}/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->

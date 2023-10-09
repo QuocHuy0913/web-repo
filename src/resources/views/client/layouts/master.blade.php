@@ -10,6 +10,8 @@
     <link href="{{asset ('admins')}}/css/sb-admin-2.min.css" rel="stylesheet">
     <link href="{{asset ('admins')}}/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link href="{{asset('admins')}}/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <title>Document</title>
 </head>
@@ -23,6 +25,9 @@
             background-color: #F7F7F7;
             margin: 0;
             font-family: Nunito;
+        }
+        a:hover {
+            text-decoration: none;
         }
         #page-top-bar {
             min-height: 40px;
@@ -124,7 +129,15 @@
             font-size: 16px;
             line-height: 22px;
             text-transform: uppercase;
+            transition: 0.25s ease;
 
+        }
+        .header-categories-nav:hover .nav-toggle-btn {
+            background: #000;
+            color: #fff;
+        }
+        .header-categories-nav:hover .category-menu {
+            display: block;
         }
         .header-below-center {
             flex-grow: 1;
@@ -199,6 +212,175 @@
         .menu-item-title {
             font-size:16px;
         }
+        .search_wrap{
+            width: 500px;
+        }
+
+        .search_wrap .search_box{
+            position: relative;
+            width: 500px;
+            height: 44px;
+        }
+
+        .search_wrap .search_box .input{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 10px 20px;
+            font-size: 16px;
+            padding-right: 80px;
+            border: 1px solid #bbb;
+            font-weight: 700;
+        }
+        .search_wrap .search_box .input:focus-visible
+        {
+            outline: none;
+        }
+
+        .search_wrap .search_box .btn{
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 44px;
+            height: 100%;
+            background: black;
+            z-index: 1;
+            cursor: pointer;
+        }
+
+        .search_wrap .search_box .btn.btn_common .fas{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            color: #fff;
+            font-size: 20px;
+        }
+
+        .search_wrap.search_wrap_1 .search_box .btn {
+            border-radius: 0;
+
+        }
+        .icon-wrap {
+            padding: 0 16px;
+            position: relative;
+        }
+        .material-symbols-outlined {
+            color: black
+        }
+        .tooltiptext {
+            visibility: hidden;
+            width: 80px;
+            background-color: black;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+            position: absolute;
+            z-index: 1;
+            top: 50%;
+            left: 85%;
+            margin-left: -60px;
+            opacity: 0;
+            transition:opacity 0.5s ease , transform 0.5s;
+        }
+
+        .tooltiptext::after {
+            content: "";
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent transparent black transparent;
+        }
+        .icon:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(60%);
+        }
+        .icon-amount-favorite {
+            font-weight: 700;
+            top: -8px;
+            right: -1px;
+            position: absolute;
+            padding: 0 3px;
+            min-width: 22px;
+            height: 22px;
+            border-radius: 22px;
+            line-height: 22px;
+            color: #fff;
+            background: #B82121;
+            font-weight: 700;
+            font-size: 12px;
+            text-align: center;
+            z-index: 3;
+        }
+        .icon-amount-orders {
+            font-weight: 700;
+            top: -8px;
+            right: 0px;
+            position: absolute;
+            padding: 0 3px;
+            min-width: 22px;
+            height: 22px;
+            border-radius: 22px;
+            line-height: 22px;
+            color: #fff;
+            background: #B82121;
+            font-weight: 700;
+            font-size: 12px;
+            text-align: center;
+            z-index: 3;
+        }
+        .category-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            display: none;
+            width: 100%;
+            z-index: 9;
+        }
+        .category-menu-list {
+            list-style-type: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            z-index: 5;
+            margin: 0;
+            padding: 16px;
+            background: #fff;
+            border: 1px solid #eee;
+            min-width: 220px;
+            width: 100%;
+        }
+        .category-menu-item {
+            width: 100%;
+        }
+        .cmi-link{
+            z-index: 0;
+            position: relative;
+            display: block;
+            padding: 9px 12px;
+            line-height: 24px;
+            color: #000;
+            transition: 0.25s ease;
+        }
+        .cmi-wrap{
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .cmi-content {
+            line-height: 24px;
+        }
+        .category-menu-item:hover .cmi-link {
+            background: #000;
+            color: #fff;
+        }
     </style>
     <div>
         <div id="page-top-bar">
@@ -234,6 +416,50 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="header-center " style="flex-shrink: 0;">
+                            <div class="header-content-inner">
+                                <div class="header-search-form">
+                                    <div class="search_wrap search_wrap_1">
+                                        <div class="search_box">
+                                            <input type="text" class="input" placeholder="Search something...">
+                                            <button class="btn btn_common">
+                                                <i class="fas fa-search"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="header-right" style="flex: 1 1 0px;">
+                            <div class="header-content-inner" style=" justify-content:flex-end">
+                                <a href="" class="icon-wrap">
+                                   <div class="icon">
+                                        <span class="material-symbols-outlined">
+                                        person
+                                        </span>
+                                        <span class="tooltiptext">Login</span>
+                                   </div>
+                                </a>
+                                <a href="" class="icon-wrap">
+                                    <div class="icon">
+                                        <span class="material-symbols-outlined">
+                                            favorite
+                                        </span>
+                                        <span class="icon-amount-favorite">0</span>
+                                        <span class="tooltiptext">Wishlist</span>
+                                    </div>
+                                 </a>
+                                 <a href="" class="icon-wrap">
+                                    <div class="icon">
+                                        <span class="material-symbols-outlined">
+                                            shopping_bag
+                                        </span>
+                                        <span class="icon-amount-orders">0</span>
+                                        <span class="tooltiptext">Cart</span>
+                                    </div>
+                                 </a>
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -247,6 +473,37 @@
                                             <span class="nav-toggle-btn">
                                                 Shop By Categories
                                             </span>
+                                            <nav class="category-menu">
+                                                <ul class="category-menu-list">
+                                                    <li class="category-menu-item">
+                                                        <a href="" class="cmi-link">
+                                                            <div class="cmi-wrap">
+                                                                <span class="cmi-content">
+                                                                    Phone
+                                                                </span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li class="category-menu-item">
+                                                        <a href="" class="cmi-link">
+                                                            <div class="cmi-wrap">
+                                                                <span class="cmi-content">
+                                                                    Laptop
+                                                                </span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                    <li class="category-menu-item">
+                                                        <a href="" class="cmi-link">
+                                                            <div class="cmi-wrap">
+                                                                <span class="cmi-content">
+                                                                    Watch
+                                                                </span>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </nav>
                                         </div>
                                     </div>
                                 </div>

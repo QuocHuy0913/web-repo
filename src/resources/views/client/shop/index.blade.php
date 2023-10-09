@@ -280,6 +280,163 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-3">
+                            <div class="card">
+                                <span class="like"><i class='bx bx-heart'></i></span>
+                                <span class="cart"><i class='bx bx-cart-alt' ></i></span>
+                                <div class="card__img">
+                                    <img src="{{asset('images/iphone-15.png')}}" alt="" />
+                                </div>
+                                <h2 class="card__title">iPhone 15 ProMax</h2>
+                                <p class="card__price">$99</p>
+                                <div class="card__size">
+                                    <h3 style="font-size: 16px; margin : 0 12px 0 0">Storage:</h3>
+                                    <span>512GB</span>
+                                    <span>1TB</span>
+                                </div>
+                                <div class="card__color">
+                                    <h3 style="font-size: 16px;margin : 0 12px 0 0">Color:</h3>
+                                    <span class="green"></span>
+                                    <span class="red"></span>
+                                    <span class="black"></span>
+                                </div>
+                                <div class="card__action">
+                                    <button class="buy-now" style="font-size: 16px;">Buy now</button>
+                                    <button class="add-cart" style="font-size: 16px;">Add cart</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card">
+                                <span class="like"><i class='bx bx-heart'></i></span>
+                                <span class="cart"><i class='bx bx-cart-alt' ></i></span>
+                                <div class="card__img">
+                                    <img src="{{asset('images/iphone-15.png')}}" alt="" />
+                                </div>
+                                <h2 class="card__title">iPhone 15 ProMax</h2>
+                                <p class="card__price">$99</p>
+                                <div class="card__size">
+                                    <h3 style="font-size: 16px; margin : 0 12px 0 0">Storage:</h3>
+                                    <span>512GB</span>
+                                    <span>1TB</span>
+                                </div>
+                                <div class="card__color">
+                                    <h3 style="font-size: 16px;margin : 0 12px 0 0">Color:</h3>
+                                    <span class="green"></span>
+                                    <span class="red"></span>
+                                    <span class="black"></span>
+                                </div>
+                                <div class="card__action">
+                                    <button class="buy-now" style="font-size: 16px;">Buy now</button>
+                                    <button class="add-cart" style="font-size: 16px;">Add cart</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card">
+                                <span class="like"><i class='bx bx-heart'></i></span>
+                                <span class="cart"><i class='bx bx-cart-alt' ></i></span>
+                                <div class="card__img">
+                                    <img src="{{asset('images/iphone-15.png')}}" alt="" />
+                                </div>
+                                <h2 class="card__title">iPhone 15 ProMax</h2>
+                                <p class="card__price">$99</p>
+                                <div class="card__size">
+                                    <h3 style="font-size: 16px; margin : 0 12px 0 0">Storage:</h3>
+                                    <span>512GB</span>
+                                    <span>1TB</span>
+                                </div>
+                                <div class="card__color">
+                                    <h3 style="font-size: 16px;margin : 0 12px 0 0">Color:</h3>
+                                    <span class="green"></span>
+                                    <span class="red"></span>
+                                    <span class="black"></span>
+                                </div>
+                                <div class="card__action">
+                                    <button class="buy-now" style="font-size: 16px;">Buy now</button>
+                                    <button class="add-cart" style="font-size: 16px;">Add cart</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card">
+                                <span class="like"><i class='bx bx-heart'></i></span>
+                                <span class="cart"><i class='bx bx-cart-alt' ></i></span>
+                                <div class="card__img">
+                                    <img src="{{asset('images/iphone-15.png')}}" alt="" />
+                                </div>
+                                <h2 class="card__title">iPhone 15 ProMax</h2>
+                                <p class="card__price">$99</p>
+                                <div class="card__size">
+                                    <h3 style="font-size: 16px; margin : 0 12px 0 0">Storage:</h3>
+                                    <span>512GB</span>
+                                    <span>1TB</span>
+                                </div>
+                                <div class="card__color">
+                                    <h3 style="font-size: 16px;margin : 0 12px 0 0">Color:</h3>
+                                    <span class="green"></span>
+                                    <span class="red"></span>
+                                    <span class="black"></span>
+                                </div>
+                                <div class="card__action">
+                                    <button class="buy-now" style="font-size: 16px;">Buy now</button>
+                                    <button class="add-cart" style="font-size: 16px;">Add cart</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card">
+                                <span class="like"><i class='bx bx-heart'></i></span>
+                                <span class="cart"><i class='bx bx-cart-alt' ></i></span>
+                                <div class="card__img">
+                                    <img src="{{asset('images/iphone-15.png')}}" alt="" />
+                                </div>
+                                <h2 class="card__title">iPhone 15 ProMax</h2>
+                                <p class="card__price">$99</p>
+                                <div class="card__size">
+                                    <h3 style="font-size: 16px; margin : 0 12px 0 0">Storage:</h3>
+                                    <span>512GB</span>
+                                    <span>1TB</span>
+                                </div>
+                                <div class="card__color">
+                                    <h3 style="font-size: 16px;margin : 0 12px 0 0">Color:</h3>
+                                    <span class="green"></span>
+                                    <span class="red"></span>
+                                    <span class="black"></span>
+                                </div>
+                                <div class="card__action">
+                                    <button class="buy-now" style="font-size: 16px;">Buy now</button>
+                                    <button class="add-cart" style="font-size: 16px;">Add cart</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="card">
+                                <span class="like"><i class='bx bx-heart'></i></span>
+                                <span class="cart"><i class='bx bx-cart-alt' ></i></span>
+                                <div class="card__img">
+                                    <img src="{{asset('images/iphone-15.png')}}" alt="" />
+                                </div>
+                                <h2 class="card__title">iPhone 15 ProMax</h2>
+                                <p class="card__price">$99</p>
+                                <div class="card__size">
+                                    <h3 style="font-size: 16px; margin : 0 12px 0 0">Storage:</h3>
+                                    <span>512GB</span>
+                                    <span>1TB</span>
+                                </div>
+                                <div class="card__color">
+                                    <h3 style="font-size: 16px;margin : 0 12px 0 0">Color:</h3>
+                                    <span class="green"></span>
+                                    <span class="red"></span>
+                                    <span class="black"></span>
+                                </div>
+                                <div class="card__action">
+                                    <button class="buy-now" style="font-size: 16px;">Buy now</button>
+                                    <button class="add-cart" style="font-size: 16px;">Add cart</button>
+                                </div>
+                            </div>
+                        </div>
+                        
 
 
                     </div>

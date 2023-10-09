@@ -3,13 +3,11 @@
 use App\Http\Controllers\Admin\DashboardController as AdminDashboardController;
 use App\Http\Controllers\Admin\ProductController as AdminProductController;
 use App\Http\Controllers\Admin\CategoryController as AdminCategoryController;
-use App\Http\Controllers\Admin\BrandController;
+use App\Http\Controllers\Admin\BrandController as AdminBrandController;
 use App\Http\Controllers\Client\DashboardController as ClientDashboardController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-use App\Models\Category;
-use App\Http\Controllers\Admin\CategoryController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -31,18 +29,10 @@ Route::prefix('admin')->name('admin.')->group(function (){
     Route::prefix('categories')->name('categories.')->group(function () {
         Route::get('/', [AdminCategoryController::class, 'getList'])->name('getList');
         Route::get('/add', [AdminCategoryController::class, 'getAdd'])->name('getAdd');
-        Route::post('/add', [AdminCategoryController::class, 'postAdd'])->name('postAdd');
-        Route::get('/update/{id}', [AdminCategoryController::class, 'getEdit'])->name('getEdit');
-        Route::post('/update/{id}', [AdminCategoryController::class, 'postEdit'])->name('postEdit');
-        Route::get('/delete/{id}', [AdminCategoryController::class, 'deleteItem'])->name('delete');
     });
     Route::prefix('brands')->name('brands.')->group(function () {
-        Route::get('/' , [BrandController::class, 'getLists']) -> name('getList');
-        Route::get('/add' , [BrandController::class, 'getAdd'] )->name('getAdd');
-        Route::post('/add' , [BrandController::class, 'postAdd'])->name('postAdd');
-        Route::get('/update/{id}' , [BrandController::class, 'getUpdate'])->name('getUpdate');
-        Route::post('update/{id}' , [BrandController::class, 'postUpdate'])->name('postUpdate');
-        Route::get('/delete/{id}' , [BrandController::class, 'delete'])->name('delete');
+        Route::get('/', [AdminBrandController::class, 'getList'])->name('getList');
+        Route::get('/add', [AdminBrandController::class, 'getAdd'])->name('getAdd');
     });
 
 });

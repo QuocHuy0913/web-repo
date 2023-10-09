@@ -21,27 +21,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if(!empty($categoryList))
-                        @foreach($categoryList as $key=>$item)
-                            <tr>
-                                <td>{{$item->name}}</td>
-                                <td>{{$item->description}}</td>
-                                <td>hmmm</td>
-                                <td><a href="{{route('admin.categories.getEdit',['id'=>$item->id])}}" class="btn btn-warning"><span>Update</span></a></td>
-                                <td><a onclick="return confirm('Are you sure :))) ?')" href="{{route('admin.categories.delete',['id'=>$item->id])}}" class="btn btn-danger"><span>Delete</span></a></td>
-                            </tr>
-                        @endforeach
-                    @else
-                            <tr>
-                                <td>Khong co du lieu</td>
-                            </tr>
-                    @endif
+                    <tr>
+                        <td>IP15</td>
+                        <td>Iphone 15</td>
+                        <td>02/02/2003</td>
+                        <td><a href="" class="btn btn-warning"><span>Update</span></a></td>
+                        <td><a href="" class="btn btn-danger"><span>Delete</span></a></td>
+                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
 </div>
-
 <!-- Bootstrap core JavaScript-->
 <script src="{{asset ('admins')}}/vendor/jquery/jquery.min.js"></script>
 <script src="{{asset ('admins')}}/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -58,4 +49,5 @@
 
 <!-- Page level custom scripts -->
 <script src="{{asset ('admins')}}/js/demo/datatables-demo.js"></script>
+
 @endsection
