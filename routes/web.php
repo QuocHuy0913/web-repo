@@ -8,6 +8,8 @@ use App\Http\Controllers\Client\DashboardController as ClientDashboardController
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Category;
+use App\Http\Controllers\Admin\CategoryController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,6 +31,10 @@ Route::prefix('admin')->name('admin.')->group(function (){
     Route::prefix('categories')->name('categories.')->group(function () {
         Route::get('/', [AdminCategoryController::class, 'getList'])->name('getList');
         Route::get('/add', [AdminCategoryController::class, 'getAdd'])->name('getAdd');
+        Route::post('/add', [AdminCategoryController::class, 'postAdd'])->name('postAdd');
+        Route::get('/update/{id}', [AdminCategoryController::class, 'getEdit'])->name('getEdit');
+        Route::post('/update/{id}', [AdminCategoryController::class, 'postEdit'])->name('postEdit');
+        Route::get('/delete/{id}', [AdminCategoryController::class, 'deleteItem'])->name('delete');
     });
     Route::prefix('brands')->name('brands.')->group(function () {
         Route::get('/', [AdminBrandController::class, 'getList'])->name('getList');
