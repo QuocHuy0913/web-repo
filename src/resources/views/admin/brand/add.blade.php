@@ -13,11 +13,17 @@
                     <div class="mb-3">
                         <label for="">Name</label>
                         <input type="text" name="name" class="form-control w-50" placeholder="Brand Name..." value="{{old('name')}}">
+                        @error('name')
+                            <span style="color: red">{{$message}}</span>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
                         <label for="">Description</label>
                         <input type="text" name="description" class="form-control w-50" placeholder="Brand Descriptions..." value="{{old('description')}}">
+                        @error('description')
+                            <span style="color: red">{{$message}}</span>
+                        @enderror
                     </div>
 
                 <button type="submit" class="btn btn-primary">Add New</button>

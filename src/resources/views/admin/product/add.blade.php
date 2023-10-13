@@ -7,53 +7,95 @@
 
     <div class="card shadow mb-4">
         <div class="card-body">
-            <form action="" method="POST" enctype="multipart/form-data">
+            <form action="{{route('admin.products.postAdd')}}" method="POST" enctype="multipart/form-data">
                 <div style="display: grid; grid-template-columns: repeat(2, 1fr)">
                     <div class="mb-3">
                         <label for="">Code</label>
                         <input type="text" name="code" class="form-control w-50" placeholder="Product Code..." value="{{old('code')}}">
+                        @error('code')
+                            <span style="color: red">{{$message}}</span>
+                        @enderror
                     </div>
                     <div class="mb-3">
                         <label for="">Category</label>
                         <select class="form-control w-50" required name="category">
                             <option value="0">Open this select menu</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
-                          </select>
+                            @if (!empty(getAllCategory()))
+                                @foreach(getAllCategory() as $item)
+                                    <option value="{{$item->id}}">{{$item->name}}</option>
+                                @endforeach
+                            @endif
+                        </select>
+                        @error('category')
+                          <span style="color: red">{{$message}}</span>
+                        @enderror
                     </div>
 
 
                     <div class="mb-3">
                         <label for="">Name</label>
                         <input type="text" name="name" class="form-control w-50" placeholder="Product Name..." value="{{old('name')}}">
+                        @error('name')
+                            <span style="color: red">{{$message}}</span>
+                        @enderror
                     </div>
                     <div class="mb-3">
                         <label for="">Brand</label>
                         <select class="form-control w-50" required name="brand">
                             <option value="0">Open this select menu</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                            @if (!empty(getAllBrand()))
+                                @foreach(getAllBrand() as $item)
+                                    <option value="{{$item->id}}">{{$item->name}}</option>
+                                @endforeach
+                            @endif
                           </select>
+                        @error('brand')
+                            <span style="color: red">{{$message}}</span>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
                         <label for="">Amount</label>
                         <input type="number" name="amount" class="form-control w-50" placeholder="Product Amount" min="1" max="10" value="{{old('amount')}}">
+                        @error('amount')
+                            <span style="color: red">{{$message}}</span>
+                        @enderror
                     </div>
                     <div class="mb-3">
                         <label for="">Buying Prices</label>
-                        <input type="number" name="buy" class="form-control w-50" placeholder="Product Buying..." value="{{old('buy')}}">
+                        <input type="number" name="price_buy" class="form-control w-50" placeholder="Product Buying..." value="{{old('buy')}}">
+                        @error('price_buy')
+                            <span style="color: red">{{$message}}</span>
+                        @enderror
                     </div>
                     <div class="mb-3">
                         <label for="">Image</label>
                         <input type="file" name="image" class="form-control w-50" placeholder="Product Imgae..." value="{{old('image')}}">
+                        @error('image')
+                            <span style="color: red">{{$message}}</span>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
                         <label for="">Selling Prices</label>
-                        <input type="number" name="sell" class="form-control w-50" placeholder="Product Selling..." value="{{old('sell')}}">
+                        <input type="number" name="price_sell" class="form-control w-50" placeholder="Product Selling..." value="{{old('sell')}}">
+                        @error('price_sell')
+                            <span style="color: red">{{$message}}</span>
+                        @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label for="">Colors</label>
+                        <input type="color" name="color" class="form-control w-50" placeholder="Product Selling..." value="{{old('sell')}}">
+                        @error('color')
+                            <span style="color: red">{{$message}}</span>
+                        @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label for="">Storages</label>
+                        <input type="number" name="storage" class="form-control w-50" placeholder="Product Storages..." value="{{old('sell')}}">
+                        @error('storage')
+                            <span style="color: red">{{$message}}</span>
+                        @enderror
                     </div>
 
                 </div>

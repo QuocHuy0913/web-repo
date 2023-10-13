@@ -14,20 +14,32 @@
                     <tr>
                         <th>Name</th>
                         <th>Description</th>
-                        <th width="20%">Entry</th>
+                        <th width="20%">Created_At</th>
+                        <th width="20%">Updated_At</th>
                         <th width ="2%"></th>
                         <th width ="2%"></th>
 
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>IP15</td>
-                        <td>Iphone 15</td>
-                        <td>02/02/2003</td>
-                        <td><a href="" class="btn btn-warning"><span>Update</span></a></td>
-                        <td><a href="" class="btn btn-danger"><span>Delete</span></a></td>
-                    </tr>
+                    @if (!empty($list))
+                        @if(count($list) > 0)
+                            @foreach ($list as $item)
+                                <tr>
+                                    <td>{{$item -> name}}</td>
+                                    <td>{{$item -> description}}</td>
+                                    <td>{{$item -> created_at}}</td>
+                                    <td>{{$item -> updated_at}}</td>
+                                    <td><a href="{{route('admin.categories.getUpdate',['id'=>$item ->id])}}" class="btn btn-warning">Sửa</a></td>
+                                    <td><a href="{{route('admin.categories.delete',['id'=>$item ->id])}}" class="btn btn-danger">Xóa</a></td>
+                                </tr>
+                            @endforeach
+                        @else
+                            <td colspan="6">Data is not available</td>
+                        @endif
+                    @else
+                        <td colspan="6">Server error responses</td>
+                    @endif
                 </tbody>
             </table>
         </div>

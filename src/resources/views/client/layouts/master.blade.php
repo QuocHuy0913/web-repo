@@ -25,9 +25,16 @@
             background-color: #F7F7F7;
             margin: 0;
             font-family: Nunito;
+            overflow: visible;
+        }
+        #page-header {
+	        transition: all .4s ease!important;
         }
         a:hover {
             text-decoration: none;
+        }
+        h1 {
+            font-size: 2rem;
         }
         #page-top-bar {
             min-height: 40px;
@@ -69,9 +76,8 @@
             text-align: center;
         }
         #page-header {
-            position: sticky;
-            z-index: 99999;
             width: 100%;
+            z-index: 99999999;
         }
         .page-header-wrap {
             background-color: #fff;
@@ -302,6 +308,9 @@
             opacity: 1;
             transform: translateY(60%);
         }
+        .icon:hover .material-symbols-outlined{
+            opacity: 0.5;
+        }
         .icon-amount-favorite {
             font-weight: 700;
             top: -8px;
@@ -319,7 +328,7 @@
             text-align: center;
             z-index: 3;
         }
-        .icon-amount-orders {
+        #icon-amount-orders {
             font-weight: 700;
             top: -8px;
             right: 0px;
@@ -374,15 +383,238 @@
             display: flex;
             align-items: center;
         }
-        .cmi-content {
-            line-height: 24px;
+        #login {
+        width: fit-content;
+        top: 36%;
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        display: none;
+        backdrop-filter: blur(10px);
+        transition: all cubic-bezier(0.215, 0.610, 0.355, 1) 0.5s;
+        transition-delay: 0s, 0s, 0.3s;
         }
-        .category-menu-item:hover .cmi-link {
-            background: #000;
-            color: #fff;
+        .login-trigger {
+        font-weight: bold;
+        color: #fff;
+        background: linear-gradient(to bottom right, #B05574, #F87E7B);
+        padding: 15px 30px;
+        border-radius: 30px;
+        position: relative;
+
+        }
+
+        .login-form-body {
+        position: relative;
+        padding:
+        }
+        * {
+            box-sizing: border-box;
+        }
+        .title-login-form {
+            font-weight: bold;
+            margin: 0;
+        }
+        .guide-login-form {
+            font-size: 14px;
+            font-weight: 100;
+            line-height: 20px;
+            letter-spacing: 0.5px;
+            margin: 20px 0 30px;
+        }
+        .subtitle-login-forn {
+            font-size: 12px;
+        }
+        .forgot-pass-link,
+        .social {
+            color: #333;
+            font-size: 14px;
+            text-decoration: none;
+            margin: 15px 0;
+        }
+        .btn-login-form {
+            border-radius: 20px;
+            border: 1px solid #FF4B2B;
+            background-color: #FF4B2B;
+            color: #FFFFFF;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 12px 45px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: transform 80ms ease-in;
+        }
+        .btn-login-form:active {
+            transform: scale(0.95);
+        }
+
+        .btn-login-form:focus-visible,
+        {
+            outline: none;
+        }
+        button.ghost {
+            background-color: transparent;
+            border-color: #FFFFFF;
+        }
+        .form-login,
+        .form-sign-in
+        {
+            background-color: #FFFFFF;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 0 50px;
+            height: 100%;
+            text-align: center;
+        }
+        .inp-login-form {
+            background-color: #eee;
+            border: none;
+            padding: 12px 15px;
+            margin: 8px 0;
+            width: 100%;
+        }
+        .inp-login-form:focus-visible {
+            outline: none;
+        }
+        .container-login-form {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 14px 28px rgba(0,0,0,0.25),
+                    0 10px 10px rgba(0,0,0,0.22);
+            position: relative;
+            overflow: hidden;
+            width: 768px;
+            max-width: 100%;
+            min-height: 480px;
+        }
+        .form-container-wrap {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            transition: all 0.6s ease-in-out;
+        }
+
+        .sign-in-container {
+            left: 0;
+            width: 50%;
+            z-index: 2;
+        }
+
+        .container-login-form.right-panel-active .sign-in-container {
+            transform: translateX(100%);
+        }
+
+        .sign-up-container {
+            left: 0;
+            width: 50%;
+            opacity: 0;
+            z-index: 1;
+        }
+
+        .container-login-form.right-panel-active .sign-up-container {
+            transform: translateX(100%);
+            opacity: 1;
+            z-index: 5;
+            animation: show 0.6s;
+        }
+
+        @keyframes show {
+            0%, 49.99% {
+                opacity: 0;
+                z-index: 1;
+            }
+
+            50%, 100% {
+                opacity: 1;
+                z-index: 5;
+            }
+        }
+
+        .overlay-container {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 50%;
+            height: 100%;
+            overflow: hidden;
+            transition: transform 0.6s ease-in-out;
+            z-index: 100;
+        }
+
+        .container-login-form.right-panel-active .overlay-container{
+            transform: translateX(-100%);
+        }
+
+        .overlay {
+            background: #FF416C;
+            background: -webkit-linear-gradient(to right, #FF4B2B, #FF416C);
+            background: linear-gradient(to right, #FF4B2B, #FF416C);
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: 0 0;
+            color: #FFFFFF;
+            position: relative;
+            left: -100%;
+            height: 100%;
+            width: 200%;
+            transform: translateX(0);
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .container-login-form.right-panel-active .overlay {
+            transform: translateX(50%);
+        }
+
+        .overlay-panel {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 0 40px;
+            text-align: center;
+            top: 0;
+            height: 100%;
+            width: 50%;
+            transform: translateX(0);
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .overlay-left {
+            transform: translateX(-20%);
+        }
+
+        .container-login-form.right-panel-active .overlay-left {
+            transform: translateX(0);
+        }
+
+        .overlay-right {
+            right: 0;
+            transform: translateX(0);
+        }
+
+        .container-login-form.right-panel-active .overlay-right {
+            transform: translateX(20%);
+        }
+
+        .social-container {
+            margin: 20px 0;
+        }
+
+        .social-container a {
+            border: 1px solid #DDDDDD;
+            border-radius: 50%;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 5px;
+            height: 40px;
+            width: 40px;
         }
     </style>
-    <div>
+    <div style="position: sticky">
         <div id="page-top-bar">
             <div class="container" style="max-width: 1270px;">
                 <div class="top-bar-wrap">
@@ -409,7 +641,7 @@
                             <div class="header-content-inner">
                                 <div class="branding" style="padding: 8px 0 8px;">
                                     <div class="branding__logo">
-                                        <a href="https://minimog.thememove.com/megastore/" rel="home">
+                                        <a href="{{route('home')}}" rel="home">
                                         <img src="{{asset('images/logo.png')}}">
                                         </a>
                                     </div>
@@ -432,7 +664,7 @@
                         </div>
                         <div class="header-right" style="flex: 1 1 0px;">
                             <div class="header-content-inner" style=" justify-content:flex-end">
-                                <a href="" class="icon-wrap">
+                                <a href="javascript:" class="icon-wrap" id="btn-login-form">
                                    <div class="icon">
                                         <span class="material-symbols-outlined">
                                         person
@@ -449,12 +681,16 @@
                                         <span class="tooltiptext">Wishlist</span>
                                     </div>
                                  </a>
-                                 <a href="" class="icon-wrap">
+                                 <a href="{{route('cart')}}" class="icon-wrap">
                                     <div class="icon">
                                         <span class="material-symbols-outlined">
                                             shopping_bag
                                         </span>
-                                        <span class="icon-amount-orders">0</span>
+                                        @if (!empty(Session::has('Cart')))
+                                            <span id="icon-amount-orders">{{Session::get('Cart')->totalQuantity}}</span>
+                                        @else
+                                            <span id="icon-amount-orders">0</span>
+                                        @endif
                                         <span class="tooltiptext">Cart</span>
                                     </div>
                                  </a>
@@ -560,6 +796,109 @@
             @yield('content')
         </div>
     </div>
+    <div id="sontran" style=" display:none ;position: absolute;top: 0;left: 0;bottom: 0;right: 0;background: #000; opacity: 0.5;">
+    </div>
+    <div id="login" class="login-form" role="dialog">
+        <div class="login-form-dialog">
+            <div class="login-form-content">
+                <div class="login-form-body">
+                    <div class="container-login-form" id="container-id">
+                        <div class="form-container-wrap sign-up-container">
+                            <form action="#" class="form-login">
+                                <h1 class="title-login-form">Create Account</h1>
+                                <div class="social-container">
+                                    <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                                    <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+                                    <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+                                </div>
+                                <span class="subtitle-login-forn">or use your email for registration</span>
+                                <input type="text" placeholder="Name"  class="inp-login-form"/>
+                                <input type="email" placeholder="Email" class="inp-login-form"/>
+                                <input type="password" placeholder="Password" class="inp-login-form"/>
+                                <button class="btn-login-form">Sign Up</button>
+                            </form>
+                        </div>
+                        <div class="form-container-wrap sign-in-container">
+                            <form action="#" class="form-sign-in">
+                                <h1 class="title-login-form">Sign in</h1>
+                                <div class="social-container">
+                                    <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                                    <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+                                    <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+                                </div>
+                                <span class="subtitle-login-forn">or use your account</span>
+                                <input type="email" placeholder="Email" class="inp-login-form"/>
+                                <input type="password" placeholder="Password" class="inp-login-form"/>
+                                <a class="forgot-pass-link" href="#">Forgot your password?</a>
+                                <button class="btn-login-form">Sign In</button>
+                            </form>
+                        </div>
+                        <div class="overlay-container">
+                            <div class="overlay">
+                                <div class="overlay-panel overlay-left">
+                                    <h1 class="title-login-form">Welcome Back!</h1>
+                                    <p class="guide-login-form">To keep connected with us please login with your personal info</p>
+                                    <button class="ghost btn-login-form" id="signIn">Sign In</button>
+                                </div>
+                                <div class="overlay-panel overlay-right">
+                                    <h1 class="title-login-form">Hello, Friend!</h1>
+                                    <p class="guide-login-form">Enter your personal details and start journey with us</p>
+                                    <button class="ghost btn-login-form" id="signUp">Sign Up</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://kit.fontawesome.com/f9275dded9.js" crossorigin="anonymous"></script>
+    <script>
+        const signUpButton = document.getElementById('signUp');
+        const signInButton = document.getElementById('signIn');
+        const container = document.getElementById('container-id');
+        signUpButton.addEventListener('click', () => {
+            container.classList.add("right-panel-active");
+        });
+        signInButton.addEventListener('click', () => {
+            container.classList.remove("right-panel-active");
+        });
+
+        var prevScrollpos = window.pageYOffset;
+        window.onscroll = function() {
+        var currentScrollPos = window.pageYOffset;
+          if (prevScrollpos > currentScrollPos) {
+            document.getElementById("page-header").style.position = "sticky";
+
+            document.getElementById("page-header").style.top = "0";
+          } else {
+            document.getElementById("page-header").style.position = "";
+            document.getElementById("page-header").style.top = "-133.6px"; /* adjust this value to the height of your header */
+          }
+          prevScrollpos = currentScrollPos;
+        }
+        const loginForm = document.getElementById("login");
+        const sontran = document.getElementById("sontran");
+        const btnLoginForm = document.getElementById("btn-login-form");
+        btnLoginForm.addEventListener("click", function(){
+            loginForm.style.display = "block";
+            loginForm.style.top = window.scrollY + window.innerHeight / 2 + "px";
+            document.body.style.overflow = "hidden";
+            sontran.style.display = "block";
+            document.body.style.paddingRight = "17px";
+            document.addEventListener("click", (e) => {
+                if (!loginForm.contains(e.target) && !btnLoginForm.contains(e.target)) {
+                    loginForm.style.display = "none";
+                    loginForm.style.top = "36%";
+                    document.body.style.overflow = "visible";
+                    document.body.style.paddingRight = "";
+                    sontran.style.display = "none";
+                }
+            });
+        });
+
+
+    </script>
     <script src="{{asset('admins')}}/vendor/jquery/jquery.min.js"></script>
     <script src="{{asset('admins')}}/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
@@ -575,6 +914,8 @@
     <!-- Page level custom scripts -->
     <script src="{{asset('admins')}}/js/demo/chart-area-demo.js"></script>
     <script src="{{asset('admins')}}/js/demo/chart-pie-demo.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="sweetalert2.all.min.js"></script>
 </body>
 
 </html>

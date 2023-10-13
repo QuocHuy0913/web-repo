@@ -14,45 +14,42 @@
                     <tr>
                         <th>Code</th>
                         <th width="15%">Name</th>
-                        <th width="20%">Image</th>
+                        <th width="10%">Image</th>
                         <th>Category</th>
                         <th>Brand</th>
-                        <th width ="2%">Amnout</th>
+                        <th width ="5%">Amnout</th>
                         <th>Buying</th>
                         <th>Selling</th>
-                        <th>Entry</th>
+                        <th>Created</th>
                         <th width ="2%"></th>
                         <th width ="2%"></th>
 
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>IP15</td>
-                        <td>Iphone 15</td>
-                        <td>Edinburgh</td>
-                        <td>SmartPhone</td>
-                        <td>Apple</td>
-                        <td>158</td>
-                        <td>2000$</td>
-                        <td>2300$</td>
-                        <td>02/02/2003</td>
-                        <td><a href="" class="btn btn-warning"><span>Update</span></a></td>
-                        <td><a href="" class="btn btn-danger"><span>Delete</span></a></td>
-                    </tr>
-                    <tr>
-                        <td>SS20</td>
-                        <td>SamSung S20</td>
-                        <td>Edinburgh</td>
-                        <td>SmartPhone</td>
-                        <td>Apple</td>
-                        <td>58</td>
-                        <td>1000$</td>
-                        <td>300$</td>
-                        <td>01/02/2003</td>
-                        <td><a href="" class="btn btn-warning"><span>Update</span></a></td>
-                        <td><a href="" class="btn btn-danger"><span>Delete</span></a></td>
-                    </tr>
+                    @if (!empty($list))
+                            @if(count($list) > 0)
+                                @foreach ($list as $item)
+                                    <tr>
+                                        <td>{{$item->code}}</td>
+                                        <td>{{$item->name}}</td>
+                                        <td><img src="{{asset($item->images)}}" alt="" style="width: 100px; height:auto"></td>
+                                        <td>{{$item->category_id}}</td>
+                                        <td>{{$item->brand_id}}</td>
+                                        <td>{{$item->amount}}</td>
+                                        <td>{{$item->price_buy}}</td>
+                                        <td>{{$item->price_sell}}</td>
+                                        <td>{{$item->created_at}}</td>
+                                        <td><a href="{{route('admin.products.getUpdate',['id'=>$item ->id])}}" class="btn btn-warning">Sửa</a></td>
+                                        <td><a href="{{route('admin.products.delete',['id'=>$item ->id])}}" class="btn btn-danger">Xóa</a></td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <td colspan="12">Data is not available</td>
+                            @endif
+                        @else
+                            <td colspan="12">Server error responses</td>
+                        @endif
                 </tbody>
             </table>
         </div>
