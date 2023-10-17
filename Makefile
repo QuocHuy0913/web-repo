@@ -1,5 +1,19 @@
-config:
-	- docker compose exec php php artisan config:cache
+build:
+	- docker compose build
+up-d:
+	- docker compose up -d
+stop: 
+	- docker compose stop
+composer-install:
+	- docker compose run composer install
+composer-autoload:
+	- docker compose run composer dump-autoload
+npm-install:
+	- docker compose run npm install
+npm-build:
+	- docker compose run npm run build
+key:
+	- docker compose exec php php artisan key:generate
 migrate:
 	- docker compose exec php php artisan migrate
 migrate-reset:
@@ -10,9 +24,6 @@ view:
 	- docker compose exec php php artisan make:view
 controller:
 	- docker compose exec php php artisan make:controller
-stop: 
-	- docker compose stop
-up-d:
-	- docker compose up -d
-build:
-	- docker compose build
+config:
+	- docker compose exec php php artisan config:cache
+

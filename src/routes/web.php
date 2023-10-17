@@ -61,7 +61,9 @@ Route::get('addToCart/{id}',[CartController::class,'addToCart'])->name('addToCar
 Route::get('updateItemListCart/{id}/{quantity}',[CartController::class,'updateItemListCart'])->name('updateItemListCart');
 Route::get('deleteItemListCart/{id}',[CartController::class,'deleteItemListCart'])->name('deleteItemListCart');
 Auth::routes();
-
+Route::get('home', function(){
+    return view('layouts.app');
+});
 
 
 

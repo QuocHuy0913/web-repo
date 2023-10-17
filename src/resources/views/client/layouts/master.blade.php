@@ -378,6 +378,10 @@
             color: #000;
             transition: 0.25s ease;
         }
+        .cmi-link:hover {
+            color: #fff;
+            background-color: #000;
+        }
         .cmi-wrap{
             position: relative;
             display: flex;
@@ -664,14 +668,25 @@
                         </div>
                         <div class="header-right" style="flex: 1 1 0px;">
                             <div class="header-content-inner" style=" justify-content:flex-end">
-                                <a href="javascript:" class="icon-wrap" id="btn-login-form">
-                                   <div class="icon">
-                                        <span class="material-symbols-outlined">
-                                        person
-                                        </span>
-                                        <span class="tooltiptext">Login</span>
-                                   </div>
-                                </a>
+                                @if (!Auth::user())
+                                    <a href="javascript:" class="icon-wrap" id="btn-login-form">
+                                        <div class="icon">
+                                            <span class="material-symbols-outlined">
+                                            person
+                                            </span>
+                                            <span class="tooltiptext">Login</span>
+                                        </div>
+                                    </a>
+                                @else
+                                    <a href="javascript:" class="icon-wrap">
+                                        <div class="icon">
+                                            <span class="material-symbols-outlined">
+                                            person
+                                            </span>
+                                            <span class="tooltiptext">Account</span>
+                                        </div>
+                                    </a>
+                                @endif
                                 <a href="" class="icon-wrap">
                                     <div class="icon">
                                         <span class="material-symbols-outlined">
@@ -784,7 +799,16 @@
                             </div>
                             <div class="header-below-right">
                                 <div class="header-content-inner">
+                                    @if(Auth::user())
+                                        <span style="margin-right:20px">Hello {{Auth::user()->name}} !</span>
+                                        <div class="logout" >
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" >
+                                                <button class="btn btn-danger">Logout</button>
+                                                @csrf
+                                            </form>
 
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -804,7 +828,7 @@
                 <div class="login-form-body">
                     <div class="container-login-form" id="container-id">
                         <div class="form-container-wrap sign-up-container">
-                            <form action="#" class="form-login">
+                            <form action="{{route('register')}}" class="form-login" method="POST">
                                 <h1 class="title-login-form">Create Account</h1>
                                 <div class="social-container">
                                     <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
@@ -812,14 +836,16 @@
                                     <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
                                 </div>
                                 <span class="subtitle-login-forn">or use your email for registration</span>
-                                <input type="text" placeholder="Name"  class="inp-login-form"/>
-                                <input type="email" placeholder="Email" class="inp-login-form"/>
-                                <input type="password" placeholder="Password" class="inp-login-form"/>
-                                <button class="btn-login-form">Sign Up</button>
+                                <input type="text" placeholder="Name"  class="inp-login-form" name="name"/>
+                                <input type="email" placeholder="Email" class="inp-login-form" name="email"/>
+                                <input type="password" placeholder="Password" class="inp-login-form" name="password"/>
+                                <input type="password" placeholder="Confirm Password" class="inp-login-form" name="password_confirmation"/>
+                                <button class="btn-login-form" type="submit">Sign Up</button>
+                                @csrf
                             </form>
                         </div>
                         <div class="form-container-wrap sign-in-container">
-                            <form action="#" class="form-sign-in">
+                            <form action="{{route('login')}}" class="form-sign-in" method="POST">
                                 <h1 class="title-login-form">Sign in</h1>
                                 <div class="social-container">
                                     <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
@@ -827,10 +853,11 @@
                                     <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
                                 </div>
                                 <span class="subtitle-login-forn">or use your account</span>
-                                <input type="email" placeholder="Email" class="inp-login-form"/>
-                                <input type="password" placeholder="Password" class="inp-login-form"/>
+                                <input type="email" placeholder="Email" class="inp-login-form" name="email"/>
+                                <input type="password" placeholder="Password" class="inp-login-form" name="password"/>
                                 <a class="forgot-pass-link" href="#">Forgot your password?</a>
-                                <button class="btn-login-form">Sign In</button>
+                                <button class="btn-login-form" type="submit">Sign In</button>
+                                @csrf
                             </form>
                         </div>
                         <div class="overlay-container">
