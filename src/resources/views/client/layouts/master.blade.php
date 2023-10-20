@@ -269,6 +269,9 @@
             border-radius: 0;
 
         }
+        .icon {
+            height: 24px;
+        }
         .icon-wrap {
             padding: 0 16px;
             position: relative;
@@ -669,7 +672,7 @@
                         <div class="header-right" style="flex: 1 1 0px;">
                             <div class="header-content-inner" style=" justify-content:flex-end">
                                 @if (!Auth::user())
-                                    <a href="javascript:" class="icon-wrap" id="btn-login-form">
+                                    <a href="javascript:" class="icon-wrap " id="init-login-form-1">
                                         <div class="icon">
                                             <span class="material-symbols-outlined">
                                             person
@@ -696,19 +699,35 @@
                                         <span class="tooltiptext">Wishlist</span>
                                     </div>
                                  </a>
-                                 <a href="{{route('cart')}}" class="icon-wrap">
-                                    <div class="icon">
-                                        <span class="material-symbols-outlined">
-                                            shopping_bag
-                                        </span>
-                                        @if (!empty(Session::has('Cart')))
-                                            <span id="icon-amount-orders">{{Session::get('Cart')->totalQuantity}}</span>
-                                        @else
-                                            <span id="icon-amount-orders">0</span>
-                                        @endif
-                                        <span class="tooltiptext">Cart</span>
-                                    </div>
-                                 </a>
+                                 @if (Auth::user())
+                                    <a href="{{route('cart')}}" class="icon-wrap">
+                                        <div class="icon">
+                                            <span class="material-symbols-outlined">
+                                                shopping_bag
+                                            </span>
+                                            @if (!empty(Session::has('Cart')))
+                                                <span id="icon-amount-orders">{{Session::get('Cart')->totalQuantity}}</span>
+                                            @else
+                                                <span id="icon-amount-orders">0</span>
+                                            @endif
+                                            <span class="tooltiptext">Cart</span>
+                                        </div>
+                                    </a>
+                                 @else
+                                    <a href="#" class="icon-wrap" id="init-login-form-2">
+                                        <div class="icon">
+                                            <span class="material-symbols-outlined">
+                                                shopping_bag
+                                            </span>
+                                            @if (!empty(Session::has('Cart')))
+                                                <span id="icon-amount-orders">{{Session::get('Cart')->totalQuantity}}</span>
+                                            @else
+                                                <span id="icon-amount-orders">0</span>
+                                            @endif
+                                            <span class="tooltiptext">Cart</span>
+                                        </div>
+                                    </a>
+                                 @endif
                             </div>
                         </div>
                     </div>
@@ -802,7 +821,7 @@
                                     @if(Auth::user())
                                         <span style="margin-right:20px">Hello {{Auth::user()->name}} !</span>
                                         <div class="logout" >
-                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" >
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="margin: 0">
                                                 <button class="btn btn-danger">Logout</button>
                                                 @csrf
                                             </form>
@@ -904,25 +923,34 @@
           }
           prevScrollpos = currentScrollPos;
         }
-        const loginForm = document.getElementById("login");
-        const sontran = document.getElementById("sontran");
-        const btnLoginForm = document.getElementById("btn-login-form");
-        btnLoginForm.addEventListener("click", function(){
-            loginForm.style.display = "block";
-            loginForm.style.top = window.scrollY + window.innerHeight / 2 + "px";
-            document.body.style.overflow = "hidden";
-            sontran.style.display = "block";
-            document.body.style.paddingRight = "17px";
-            document.addEventListener("click", (e) => {
-                if (!loginForm.contains(e.target) && !btnLoginForm.contains(e.target)) {
-                    loginForm.style.display = "none";
-                    loginForm.style.top = "36%";
-                    document.body.style.overflow = "visible";
-                    document.body.style.paddingRight = "";
-                    sontran.style.display = "none";
-                }
-            });
+
+        const btnLoginForm1 = document.querySelector("#init-login-form-1");
+        const btnLoginForm2 = document.querySelector("#init-login-form-2");
+        btnLoginForm1.addEventListener("click", () => {
+            console.log(1);
+            let loginForm = document.getElementById("login");
+            let sontran = document.getElementById("sontran");
+
+                loginForm.style.display = "block";
+                loginForm.style.top = window.scrollY + window.innerHeight / 2 + "px";
+                document.body.style.overflow = "hidden";
+                sontran.style.display = "block";
+                document.body.style.paddingRight = "17px";
+                document.addEventListener("click", (e) => {
+                    if (!loginForm.contains(e.target) && !btnLoginForm1.contains(e.target)) {
+                        loginForm.style.display = "none";
+                        loginForm.style.top = "36%";
+                        document.body.style.overflow = "visible";
+                        document.body.style.paddingRight = "";
+                        sontran.style.display = "none";
+                    }
+                });
         });
+        // btnLoginForm2.addEventListener("click", (event) => {
+        //     event.preventDefault();
+        //     console.log(2);
+        //     btnLoginForm1.click();
+        // })
 
 
     </script>

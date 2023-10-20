@@ -33,7 +33,7 @@ services:
       - app-network
   php:
     build:
-      context: "./src"
+      context: ""
       dockerfile: Dockerfile
     container_name: "php_${APP_NAME}"
     user: "${UID:-1000}:${GID:-1000}"
