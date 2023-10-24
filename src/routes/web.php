@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\BrandController as AdminBrandController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Client\DashboardController as ClientDashboardController;
 use App\Http\Controllers\Client\ProductController as ClientProductController;
+use App\Http\Controllers\Client\UserController;
 use App\Http\Controllers\Client\CartController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -65,6 +66,11 @@ Route::middleware('auth')->group(function () {
     Route::get('addToCart/{id}',[CartController::class,'addToCart'])->name('addToCart');
     Route::get('updateItemListCart/{id}/{quantity}',[CartController::class,'updateItemListCart'])->name('updateItemListCart');
     Route::get('deleteItemListCart/{id}',[CartController::class,'deleteItemListCart'])->name('deleteItemListCart');
+    Route::get('/userProfile', [UserController::class, 'getUserProfile'])->name('getUserProfile');
+    Route::post('/userProfile' , [UserController::class, 'postUserProfile'])->name('postUserProfile');
+    Route::get('/userOrder' , [UserController::class, 'getUserOrder'])->name('getUserOrder');
+    Route::get('/changePassword' , [UserController::class, 'getChangePassword'])->name('changePassword');
+    Route::post('/changePassword' , [UserController::class, 'postChangePassword'])->name('postChangePassword');
 });
 
 Auth::routes();

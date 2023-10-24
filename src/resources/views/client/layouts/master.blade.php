@@ -681,7 +681,7 @@
                                         </div>
                                     </a>
                                 @else
-                                    <a href="javascript:" class="icon-wrap">
+                                    <a href="{{route('getUserProfile')}}" class="icon-wrap">
                                         <div class="icon">
                                             <span class="material-symbols-outlined">
                                             person
