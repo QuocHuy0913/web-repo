@@ -44,4 +44,9 @@ class Cart extends Model
         $this->totalQuantity -= $this->products[$id]['quantity'];
         unset($this->products[$id]);
     }
+    public function deleteAllCart(){
+        $this->products = [];
+        $this->totalPrice = 0;
+        $this->totalQuantity = 0;
+    }
 }
