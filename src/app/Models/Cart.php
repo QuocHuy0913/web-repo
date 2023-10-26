@@ -11,6 +11,8 @@ class Cart extends Model
     public $products = null;
     public $totalPrice = 0;
     public $totalQuantity = 0;
+    public $phone = null;
+    public $address = null;
     public function __construct($cart) {
         if($cart){
             $this->products = $cart->products;
@@ -38,10 +40,23 @@ class Cart extends Model
         $this->products[$id]['price'] = $quantity * $this->products[$id]['productInfo']->price_sell;
         $this->totalQuantity += $this->products[$id]['quantity'];
         $this->totalPrice += $this->products[$id]['price'];
+        $this->phone = Session('Cart')->phone;
+        $this->address = Session('Cart')->address;
     }
     public function deleteItemCart($id){
         $this->totalPrice -= $this->products[$id]['price'];
         $this->totalQuantity -= $this->products[$id]['quantity'];
         unset($this->products[$id]);
+    }
+    public function deleteAllCart(){
+        $this->products = [];
+        $this->totalPrice = 0;
+        $this->totalQuantity = 0;
+        $this->phone = null;
+        $this->address = null;
+    }
+    public function updateInfo($phone, $address) {
+        $this->phone = $phone;
+        $this->address = $address;
     }
 }

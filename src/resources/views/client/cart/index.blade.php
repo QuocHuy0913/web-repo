@@ -5,111 +5,132 @@
         <div class="main-title">
             <h2>Shopping Cart</h2>
         </div>
-        <div id="main-cart">
-
-                <div id="content-left">
-                    @if (!empty(Session::has("Cart")))
-                    <div class="content-left-head ">
-                        <label for="" style="font-weight: inherit;margin-bottom: 0;">Tất cả sản phẩm</label>
-                        <span class="ta-c">Đơn giá</span>
-                        <span class="ta-c">Số lượng</span>
-                        <span class="ta-c">Thành tiền</span>
-                        <span><i class="fa-regular fa-trash-can fa-lg"></i></span>
-                    </div>
-                    <div class="content-left-main">
-                    @foreach (Session::get("Cart")->products as $item)
-                        <div class="test r-item" id="wrap-item-{{$item['productInfo']->id}}">
-                            <div class="">
-                                <div class="product-info">
-                                    <a href="" class="link-img">
-                                        <div class="block-product-img">
-                                            <img src="{{asset($item['productInfo']->images)}}" alt="" class="product-img">
+            <div id="main-cart">
+                @if (!empty(Session::has("Cart")))
+                    <div id="content-left">
+                        <div class="content-left-head ">
+                            <label for="" style="font-weight: inherit;margin-bottom: 0;">Tất cả sản phẩm</label>
+                            <span class="ta-c">Đơn giá</span>
+                            <span class="ta-c">Số lượng</span>
+                            <span class="ta-c">Thành tiền</span>
+                            <span><i class="fa-regular fa-trash-can fa-lg"></i></span>
+                        </div>
+                        <div class="content-left-main">
+                            @foreach (Session::get("Cart")->products as $item)
+                                <div class="test r-item" id="wrap-item-{{$item['productInfo']->id}}">
+                                    <div class="">
+                                        <div class="product-info">
+                                            <a href="" class="link-img">
+                                                <div class="block-product-img">
+                                                    <img src="{{asset($item['productInfo']->images)}}" alt="" class="product-img">
+                                                </div>
+                                            </a>
+                                            <div class="product-name">
+                                                <h5>{{$item['productInfo']->name}}</h5>
+                                            </div>
                                         </div>
-                                    </a>
-                                    <div class="product-name">
-                                        <h5>{{$item['productInfo']->name}}</h5>
+                                    </div>
+                                    <div class="ta-c">
+                                        <span >{{$item['productInfo']->price_sell}}</span>
+                                    </div>
+                                    <div class="">
+                                        <div class="qty-container">
+                                            <button class="qty-btn-minus btn-light" type="button" onclick="decreaseItem({{$item['productInfo']->id}})"><i class="fa fa-minus"></i></button>
+                                            <input type="text" name="qty" value="{{$item['quantity']}}" class="input-qty" id="item-cart-{{$item['productInfo']->id}}" max="{{$item['productInfo']->amount}}"/>
+                                            <button class="qty-btn-plus btn-light" type="button" onclick="increaseItem({{$item['productInfo']->id}}, {{$item['productInfo']->amount}})"><i class="fa fa-plus" ></i></button>
+                                        </div>
+                                    </div>
+                                    <div class="ta-c" id="item-price-{{$item['productInfo']->id}}">{{$item['price']}}</div>
+                                    <div class="" onclick="deleteItemListCart({{$item['productInfo']->id}})" style="cursor: pointer">
+                                        <span class="material-symbols-outlined">
+                                            delete
+                                        </span>
                                     </div>
                                 </div>
+                            @endforeach
+                        </div>
+                    </div>
+                    <div id="content-right">
+                        <div class="block-info-customer">
+                            <div class="content-bic">
+                                <div class="form-change-info"></div>
+                                <div class="head-content">
+                                    <h3 class="hcb-title">Giao tới</h3>
+                                    <a href="{{route('getChangeInfoOrder')}}" class="change-address">Change</a>
+                                </div>
+                                @if ((Session('Cart')->phone && Session('Cart')->address) || (Auth::user()->phone && Auth::user()->address))
+                                    <div class="customer-info">
+                                        <p class="customer-info-name">{{Auth::user()->name }}</p>
+                                        <i style="display: block;width: 1px;height: 20px;background-color: rgb(235, 235, 240); margin: 0px 8px;"></i>
+                                        <p class="customer-info-phone">{{Session('Cart')->phone ?? Auth::user()->phone }}</p>
+                                    </div>
+                                    <div class="address">
+                                        <span style="color: rgb(0, 171, 86);
+                                        background-color: rgb(239, 255, 244);
+                                        font-weight: 500;
+                                        font-size: 12px;
+                                        line-height: 16px;
+                                        padding: 0px 6px;
+                                        border-radius: 100px;
+                                        margin-right: 4px;
+                                        height: 18px;
+                                        display: inline-flex;
+                                        -webkit-box-align: center;
+                                        align-items: center;">Home</span>
+                                        {{Session('Cart')->address ?? Auth::user()->address }}
+                                    </div>
+                                @else
+                                <div class="customer-info">
+                                    <p class="customer-info-name">{{Auth::user()->name }}</p>
+                                </div>
+                                    <div class="address">
+                                        <span style="color: #d70018">Please change the shipping information because of its NULL</span>
+                                    </div>
+                                @endif
+
                             </div>
-                            <div class="ta-c">
-                                <span >{{$item['productInfo']->price_sell}}</span>
-                            </div>
-                            <div class="">
-                                <div class="qty-container">
-                                    <button class="qty-btn-minus btn-light" type="button" onclick="decreaseItem({{$item['productInfo']->id}})"><i class="fa fa-minus"></i></button>
-                                    <input type="text" name="qty" value="{{$item['quantity']}}" class="input-qty" id="item-cart-{{$item['productInfo']->id}}" max="{{$item['productInfo']->amount}}"/>
-                                    <button class="qty-btn-plus btn-light" type="button" onclick="increaseItem({{$item['productInfo']->id}}, {{$item['productInfo']->amount}})"><i class="fa fa-plus" ></i></button>
+                        </div>
+                        <div class="block-voucher">
+                            <div class="content-bv">
+                                <div class="head-content">
+                                    <h3 class="hcb-title" style="color: rgb(36, 36, 36);">Shop khuyến mãi</h3>
+                                    <h4 class="hcb-title" style="font-size: 14px">Tối đa chọn 1</h4>
+                                </div>
+                                <div class="head-content">
+                                    <input type="text" name="" id="" placeholder="Nhập mã khuyến mãi..." class="form-control" style="width: 180px;">
+                                    <a  class="btn btn-primary">Nhập</a>
                                 </div>
                             </div>
-                            <div class="ta-c" id="item-price-{{$item['productInfo']->id}}">{{$item['price']}}</div>
-                            <div class="" onclick="deleteItemListCart({{$item['productInfo']->id}})" style="cursor: pointer">
-                                <span class="material-symbols-outlined">
-                                    delete
-                                </span>
+                        </div>
+                        <div class="block-checkout">
+                            <ul class="price-items">
+                                <li class="price-item">
+                                    <span class="price-text">Tạm tính</span>
+                                    <span class="price-value" id ="pre-total-price">{{Session::get('Cart') ? Session::get('Cart')->totalPrice : 0}}</span>
+                                </li>
+                                <li class="price-item">
+                                    <span class="price-text">Giảm giá</span>
+                                    <span class="price-value">-500.000 đ</span>
+                                </li>
+                            </ul>
+                            <div class="price-total">
+                                <span class="price-text">Tổng tiền</span>
+                                <div style="text-align:right">
+                                    <span id="price-total-value">{{Session::get('Cart') ? Session::get('Cart')->totalPrice : 0}}</span>
+                                    <span class="notice-vat">(Đã bao gồm VAT nếu có)</span>
+                                </div>
                             </div>
                         </div>
-                    @endforeach
-
+                        <a href="javascript:" onclick="checkOut()" class="btn-checkout">Checkout</a>
                     </div>
-                    @else
-                    <h4 style="width:fit-content; color:#d70018;">Cart is null</h4>
-                    @endif
-                </div>
+                @else
+                <h4 style="width:fit-content; color:#d70018;">Cart is null</h4>
+                @endif
 
-
-            <div id="content-right">
-                <div class="block-info-customer">
-                    <div class="content-bic">
-                        <div class="head-content">
-                            <h3 class="hcb-title">Giao tới</h3>
-                            <a href="" class="change-address">Thay đổi</a>
-                        </div>
-                        <div class="customer-info">
-                            <p class="customer-info-name">Trần Vũ Hoàng Sơn</p>
-                            <i></i>
-                            <p class="customer-info-phone">0362284014</p>
-                        </div>
-                        <div class="address">
-                            <span style="color: rgb(0, 171, 86);background-color: rgb(239, 255, 244)">Nhà</span>
-
-                        </div>
-                    </div>
-                </div>
-                <div class="block-voucher">
-                    <div class="content-bv">
-                        <div class="head-content">
-                            <h3 class="hcb-title" style="color: rgb(36, 36, 36);">Shop khuyến mãi</h3>
-                            <h4 class="hcb-title" style="font-size: 14px">Tối đa chọn 1</h4>
-                        </div>
-                        <div class="head-content">
-                            <input type="text" name="" id="" placeholder="Nhập mã khuyến mãi..." class="form-control" style="width: 180px;">
-                            <button type="submit" class="btn btn-primary">Nhập</button>
-                        </div>
-                    </div>
-                </div>
-                <div class="block-checkout">
-                    <ul class="price-items">
-                        <li class="price-item">
-                            <span class="price-text">Tạm tính</span>
-                            <span class="price-value" id ="pre-total-price">{{Session::get('Cart') ? Session::get('Cart')->totalPrice : 0}}</span>
-                        </li>
-                        <li class="price-item">
-                            <span class="price-text">Giảm giá</span>
-                            <span class="price-value">-500.000 đ</span>
-                        </li>
-                    </ul>
-                    <div class="price-total">
-                        <span class="price-text">Tổng tiền</span>
-                        <div style="text-align:right">
-                            <span id="price-total-value">{{Session::get('Cart') ? Session::get('Cart')->totalPrice : 0}}</span>
-                            <span class="notice-vat">(Đã bao gồm VAT nếu có)</span>
-                        </div>
-                    </div>
-                </div>
-                <a href="javascript:" class="btn-checkout" onclick="deleteAll()">Đặt Hàng</a>
             </div>
 
-        </div>
+
+
     @else
         <h1>Hãy đăng nhập</h1>
     @endif
@@ -174,6 +195,35 @@
                     )
             });
         }
+        function checkOut(){
+            $.ajax({
+                url:'cart/checkout',
+                type:'GET',
+            }).done(function(response){
+                if(response.status === 'error') {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: `${response.des}`,
+                        showCancelButton: true,
+                        confirmButtonText: '<a href ="{{route("getChangeInfoOrder")}}" style ="color:white">Change</a>',
+                    })
+                } else if (response.status === 'success') {
+                    console.log(response);
+                    $("#content-left").html(`<h4 style="width:fit-content; color:#d70018;">Cart is null</h4>`);
+                    $("#content-right").html(``);
+                    $("#icon-amount-orders").text("0");
+                    $("#price-total-value").text("0");
+                    $("#pre-total-price").text("0");
+                    Swal.fire(
+                        'The order was checked out successful',
+                        'You clicked the button!',
+                        'success'
+                    )
+                }
+            });
+        }
+
         // function deleteAll(){
         //     $.ajax({
         //         url:'cart/checkOut',
@@ -296,7 +346,6 @@
     }
     .customer-info {
         display: flex;
-        -webkit-box-align: center;
         align-items: center;
         color: rgb(56, 56, 61);
         margin-bottom: 2px;
@@ -381,7 +430,7 @@
     }
     #price-total-value {
         color: rgb(254, 56, 52);
-        font-size: 22px;
+        font-size: 24px;
         font-weight: 400;
         text-align: right;
     }
