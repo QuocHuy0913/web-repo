@@ -4,11 +4,12 @@ namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use Hash;
 class DashBoardController extends Controller
 {
     //
     public function home(){
+
         return view('client.home.index');
     }
     public function shop(){
@@ -18,6 +19,7 @@ class DashBoardController extends Controller
         return view('client.blog.index');
     }
     public function more(){
+
         return view('client.more.index');
     }
 
