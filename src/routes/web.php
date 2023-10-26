@@ -63,6 +63,7 @@ Route::get('/blog', [ClientDashboardController::class, 'blog'])->name('blog');
 Route::get('/more', [ClientDashboardController::class, 'more'])->name('more');
 Route::middleware('auth')->group(function () {
     Route::get('/cart', [CartController::class,'showCart'])->name('cart');
+    Route::post('/cart', [CartController::class,'checkout'])->name('checkOut');
     Route::get('addToCart/{id}',[CartController::class,'addToCart'])->name('addToCart');
     Route::get('updateItemListCart/{id}/{quantity}',[CartController::class,'updateItemListCart'])->name('updateItemListCart');
     Route::get('deleteItemListCart/{id}',[CartController::class,'deleteItemListCart'])->name('deleteItemListCart');
