@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
-use App\Http\Controllers\API\App\ProductController;
+use App\Http\Controllers\API\DashboardController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,24 +22,15 @@ use Illuminate\Support\Facades\Auth;
 Route::post('login', [AuthController::class,'login']);
 Route::post('register', [AuthController::class,'register']);
 Route::group(['middleware' => ['auth:sanctum'], 'as' => 'api.'], function () {
-    Route::get('products', function () {
-        return response()->json("welcome",200);
-    });
-    Route::get('products',[ProductController::class,'getList']);
-    Route::get('brands',function(){
-        $list = getAllBrand();
-        if(!empty($list) && count($list) > 0) {
-            return response($list,200);
-            }
-        return response("Not found",404);
-    });
-    Route::get('categories',function(){
-        $list = getAllCategory();
-        if(!empty($list) && count($list) > 0) {
-            return response($list,200);
-            }
-        return response("Not found",404);
-    });
+    Route::get('user', [AuthController::class, 'getProfile']);
+    Route::get('products',[DashboardController::class,'getListProduct']);
+    Route::get('categories',[DashboardController::class,'getListCategory']);
+    Route::get('brands',[DashboardController::class,'getListBrand']);
+    Route::get('orders',[DashboardController::class,'getListOrder']);
+    Route::post('orders',[DashboardController::class,'createOrder']);
+    Route::get('orderdetails/{id}',[DashboardController::class,'getListOrderDetail']);
+    Route::post('orderdetails',[DashboardController::class,'createOrderDetail']);
+
 });
 
 

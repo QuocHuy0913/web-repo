@@ -63,7 +63,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="">Buying Prices</label>
-                        <input type="number" name="price_buy" class="form-control w-50" placeholder="Product Buying..." value="{{old('buy')}}">
+                        <input type="number" name="price_buy" class="form-control w-50" placeholder="Product Buying..." value="{{old('price_buy')}}">
                         @error('price_buy')
                             <span style="color: red">{{$message}}</span>
                         @enderror
@@ -78,7 +78,7 @@
 
                     <div class="mb-3">
                         <label for="">Selling Prices</label>
-                        <input type="number" name="price_sell" class="form-control w-50" placeholder="Product Selling..." value="{{old('sell')}}">
+                        <input type="number" name="price_sell" class="form-control w-50" placeholder="Product Selling..." value="{{old('price_sell')}}">
                         @error('price_sell')
                             <span style="color: red">{{$message}}</span>
                         @enderror
@@ -92,7 +92,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="">Storages</label>
-                        <input type="number" name="storage" class="form-control w-50" placeholder="Product Storages..." value="{{old('sell')}}">
+                        <input type="number" name="storage" class="form-control w-50" placeholder="Product Storages..." value="{{old('storage')}}">
                         @error('storage')
                             <span style="color: red">{{$message}}</span>
                         @enderror

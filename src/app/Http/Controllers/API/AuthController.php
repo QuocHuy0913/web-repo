@@ -49,4 +49,9 @@ class AuthController extends Controller
             'access_token' => $authToken,
         ],200);
     }
+    public function getProfile(){
+        return response()->json([
+            'data' => Auth::user()
+        ], 200);
+    }
 }

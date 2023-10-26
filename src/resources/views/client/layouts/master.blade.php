@@ -269,6 +269,9 @@
             border-radius: 0;
 
         }
+        .icon {
+            height: 24px;
+        }
         .icon-wrap {
             padding: 0 16px;
             position: relative;
@@ -377,6 +380,10 @@
             line-height: 24px;
             color: #000;
             transition: 0.25s ease;
+        }
+        .cmi-link:hover {
+            color: #fff;
+            background-color: #000;
         }
         .cmi-wrap{
             position: relative;
@@ -664,14 +671,25 @@
                         </div>
                         <div class="header-right" style="flex: 1 1 0px;">
                             <div class="header-content-inner" style=" justify-content:flex-end">
-                                <a href="javascript:" class="icon-wrap" id="btn-login-form">
-                                   <div class="icon">
-                                        <span class="material-symbols-outlined">
-                                        person
-                                        </span>
-                                        <span class="tooltiptext">Login</span>
-                                   </div>
-                                </a>
+                                @if (!Auth::user())
+                                    <a href="javascript:" class="icon-wrap " id="init-login-form-1">
+                                        <div class="icon">
+                                            <span class="material-symbols-outlined">
+                                            person
+                                            </span>
+                                            <span class="tooltiptext">Login</span>
+                                        </div>
+                                    </a>
+                                @else
+                                    <a href="{{route('getUserProfile')}}" class="icon-wrap">
+                                        <div class="icon">
+                                            <span class="material-symbols-outlined">
+                                            person
+                                            </span>
+                                            <span class="tooltiptext">Account</span>
+                                        </div>
+                                    </a>
+                                @endif
                                 <a href="" class="icon-wrap">
                                     <div class="icon">
                                         <span class="material-symbols-outlined">
@@ -681,19 +699,35 @@
                                         <span class="tooltiptext">Wishlist</span>
                                     </div>
                                  </a>
-                                 <a href="{{route('cart')}}" class="icon-wrap">
-                                    <div class="icon">
-                                        <span class="material-symbols-outlined">
-                                            shopping_bag
-                                        </span>
-                                        @if (!empty(Session::has('Cart')))
-                                            <span id="icon-amount-orders">{{Session::get('Cart')->totalQuantity}}</span>
-                                        @else
-                                            <span id="icon-amount-orders">0</span>
-                                        @endif
-                                        <span class="tooltiptext">Cart</span>
-                                    </div>
-                                 </a>
+                                 @if (Auth::user())
+                                    <a href="{{route('cart')}}" class="icon-wrap">
+                                        <div class="icon">
+                                            <span class="material-symbols-outlined">
+                                                shopping_bag
+                                            </span>
+                                            @if (!empty(Session::has('Cart')))
+                                                <span id="icon-amount-orders">{{Session::get('Cart')->totalQuantity}}</span>
+                                            @else
+                                                <span id="icon-amount-orders">0</span>
+                                            @endif
+                                            <span class="tooltiptext">Cart</span>
+                                        </div>
+                                    </a>
+                                 @else
+                                    <a href="#" class="icon-wrap" id="init-login-form-2">
+                                        <div class="icon">
+                                            <span class="material-symbols-outlined">
+                                                shopping_bag
+                                            </span>
+                                            @if (!empty(Session::has('Cart')))
+                                                <span id="icon-amount-orders">{{Session::get('Cart')->totalQuantity}}</span>
+                                            @else
+                                                <span id="icon-amount-orders">0</span>
+                                            @endif
+                                            <span class="tooltiptext">Cart</span>
+                                        </div>
+                                    </a>
+                                 @endif
                             </div>
                         </div>
                     </div>
@@ -784,7 +818,16 @@
                             </div>
                             <div class="header-below-right">
                                 <div class="header-content-inner">
+                                    @if(Auth::user())
+                                        <span style="margin-right:20px">Hello {{Auth::user()->name}} !</span>
+                                        <div class="logout" >
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="margin: 0">
+                                                <button class="btn btn-danger">Logout</button>
+                                                @csrf
+                                            </form>
 
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>
@@ -804,7 +847,7 @@
                 <div class="login-form-body">
                     <div class="container-login-form" id="container-id">
                         <div class="form-container-wrap sign-up-container">
-                            <form action="#" class="form-login">
+                            <form action="{{route('register')}}" class="form-login" method="POST">
                                 <h1 class="title-login-form">Create Account</h1>
                                 <div class="social-container">
                                     <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
@@ -812,14 +855,16 @@
                                     <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
                                 </div>
                                 <span class="subtitle-login-forn">or use your email for registration</span>
-                                <input type="text" placeholder="Name"  class="inp-login-form"/>
-                                <input type="email" placeholder="Email" class="inp-login-form"/>
-                                <input type="password" placeholder="Password" class="inp-login-form"/>
-                                <button class="btn-login-form">Sign Up</button>
+                                <input type="text" placeholder="Name"  class="inp-login-form" name="name"/>
+                                <input type="email" placeholder="Email" class="inp-login-form" name="email"/>
+                                <input type="password" placeholder="Password" class="inp-login-form" name="password"/>
+                                <input type="password" placeholder="Confirm Password" class="inp-login-form" name="password_confirmation"/>
+                                <button class="btn-login-form" type="submit">Sign Up</button>
+                                @csrf
                             </form>
                         </div>
                         <div class="form-container-wrap sign-in-container">
-                            <form action="#" class="form-sign-in">
+                            <form action="{{route('login')}}" class="form-sign-in" method="POST">
                                 <h1 class="title-login-form">Sign in</h1>
                                 <div class="social-container">
                                     <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
@@ -827,10 +872,11 @@
                                     <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
                                 </div>
                                 <span class="subtitle-login-forn">or use your account</span>
-                                <input type="email" placeholder="Email" class="inp-login-form"/>
-                                <input type="password" placeholder="Password" class="inp-login-form"/>
+                                <input type="email" placeholder="Email" class="inp-login-form" name="email"/>
+                                <input type="password" placeholder="Password" class="inp-login-form" name="password"/>
                                 <a class="forgot-pass-link" href="#">Forgot your password?</a>
-                                <button class="btn-login-form">Sign In</button>
+                                <button class="btn-login-form" type="submit">Sign In</button>
+                                @csrf
                             </form>
                         </div>
                         <div class="overlay-container">
@@ -877,25 +923,34 @@
           }
           prevScrollpos = currentScrollPos;
         }
-        const loginForm = document.getElementById("login");
-        const sontran = document.getElementById("sontran");
-        const btnLoginForm = document.getElementById("btn-login-form");
-        btnLoginForm.addEventListener("click", function(){
-            loginForm.style.display = "block";
-            loginForm.style.top = window.scrollY + window.innerHeight / 2 + "px";
-            document.body.style.overflow = "hidden";
-            sontran.style.display = "block";
-            document.body.style.paddingRight = "17px";
-            document.addEventListener("click", (e) => {
-                if (!loginForm.contains(e.target) && !btnLoginForm.contains(e.target)) {
-                    loginForm.style.display = "none";
-                    loginForm.style.top = "36%";
-                    document.body.style.overflow = "visible";
-                    document.body.style.paddingRight = "";
-                    sontran.style.display = "none";
-                }
-            });
+
+        const btnLoginForm1 = document.querySelector("#init-login-form-1");
+        const btnLoginForm2 = document.querySelector("#init-login-form-2");
+        btnLoginForm1.addEventListener("click", () => {
+            console.log(1);
+            let loginForm = document.getElementById("login");
+            let sontran = document.getElementById("sontran");
+
+                loginForm.style.display = "block";
+                loginForm.style.top = window.scrollY + window.innerHeight / 2 + "px";
+                document.body.style.overflow = "hidden";
+                sontran.style.display = "block";
+                document.body.style.paddingRight = "17px";
+                document.addEventListener("click", (e) => {
+                    if (!loginForm.contains(e.target) && !btnLoginForm1.contains(e.target)) {
+                        loginForm.style.display = "none";
+                        loginForm.style.top = "36%";
+                        document.body.style.overflow = "visible";
+                        document.body.style.paddingRight = "";
+                        sontran.style.display = "none";
+                    }
+                });
         });
+        // btnLoginForm2.addEventListener("click", (event) => {
+        //     event.preventDefault();
+        //     console.log(2);
+        //     btnLoginForm1.click();
+        // })
 
 
     </script>

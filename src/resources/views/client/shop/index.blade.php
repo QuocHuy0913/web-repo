@@ -28,13 +28,6 @@
             justify-content: center;
         }
 
-        img {
-            width: 90%;
-            height: 100%;
-            object-fit: cover;
-            object-position: center;
-        }
-
         .card:hover .card__img {
             transform: translateY(-90px);
         }
@@ -178,13 +171,14 @@
                 <div class="container">
                     <div class="row">
                         @if (!empty($list))
+
                             @foreach ($list as $item)
                                 <div class="col-md-3">
                                     <div class="card">
                                         <span class="like"><i class='bx bx-heart'></i></span>
                                         <span class="cart"><i class='bx bx-cart-alt' ></i></span>
                                         <div class="card__img">
-                                            <img src="{{asset($item->images)}}" alt="" />
+                                            <img src="{{asset($item->images)}}" alt="" style="width:90%"/>
                                         </div>
                                         <h2 class="card__title">{{$item->name}}</h2>
                                         <p class="card__price">{{$item->price_sell}}</p>
@@ -205,6 +199,7 @@
                                     </div>
                                 </div>
                             @endforeach
+
                         @else
                                 <h2>Data not available</h2>
                         @endif

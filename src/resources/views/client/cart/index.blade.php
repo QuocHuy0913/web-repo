@@ -37,8 +37,8 @@
                             <div class="">
                                 <div class="qty-container">
                                     <button class="qty-btn-minus btn-light" type="button" onclick="decreaseItem({{$item['productInfo']->id}})"><i class="fa fa-minus"></i></button>
-                                    <input type="text" name="qty" value="{{$item['quantity']}}" class="input-qty" id="item-cart-{{$item['productInfo']->id}}"/>
-                                    <button class="qty-btn-plus btn-light" type="button" onclick="increaseItem({{$item['productInfo']->id}})"><i class="fa fa-plus" ></i></button>
+                                    <input type="text" name="qty" value="{{$item['quantity']}}" class="input-qty" id="item-cart-{{$item['productInfo']->id}}" max="{{$item['productInfo']->amount}}"/>
+                                    <button class="qty-btn-plus btn-light" type="button" onclick="increaseItem({{$item['productInfo']->id}}, {{$item['productInfo']->amount}})"><i class="fa fa-plus" ></i></button>
                                 </div>
                             </div>
                             <div class="ta-c" id="item-price-{{$item['productInfo']->id}}">{{$item['price']}}</div>
@@ -137,15 +137,18 @@
             }
 
         }
-        function increaseItem(id){
+        function increaseItem(id, amount){
             var $n = $("#item-cart-"+id);
-            $n.val(Number($n.val())+1);
-            $.ajax({
-                url:'updateItemListCart/' +id+ '/' +$("#item-cart-"+id).val() ,
-                type:'GET',
-            }).done(function(response){
-                renderListCart(response, id);
-            });
+            console.log(amount);
+            if($n.val() < amount) {
+                $n.val(Number($n.val())+1);
+                $.ajax({
+                    url:'updateItemListCart/' +id+ '/' +$("#item-cart-"+id).val() ,
+                    type:'GET',
+                }).done(function(response){
+                    renderListCart(response, id);
+                });
+            }
         }
 
         function deleteItemListCart(id) {
