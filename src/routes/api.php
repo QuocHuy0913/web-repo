@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Auth;
 Route::post('login', [AuthController::class,'login']);
 Route::post('register', [AuthController::class,'register']);
 Route::group(['middleware' => ['auth:sanctum'], 'as' => 'api.'], function () {
+    Route::post('logout', [AuthController::class,'logout']);
     Route::get('user', [AuthController::class, 'getProfile']);
     Route::get('products',[DashboardController::class,'getListProduct']);
     Route::get('categories',[DashboardController::class,'getListCategory']);

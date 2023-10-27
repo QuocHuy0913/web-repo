@@ -52,9 +52,11 @@
         }
 
         .card:hover .card__price {
-            transform: translate(-92px, -60px);
+            transform: translate(-76px, -60px);
         }
-
+        .card:hover {
+            cursor: pointer;
+        }
         .card__size,
         .card__color,
         .card__action {
@@ -181,7 +183,7 @@
                                             <img src="{{asset($item->images)}}" alt="" style="width:90%"/>
                                         </div>
                                         <h2 class="card__title">{{$item->name}}</h2>
-                                        <p class="card__price">{{$item->price_sell}}</p>
+                                        <p class="card__price">{{$item->price_sell}}$</p>
                                         <div class="card__size">
                                             <h3 style="font-size: 16px; margin : 0 12px 0 0">Storage:</h3>
                                             <span>{{$item->storage}}</span>
