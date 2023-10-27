@@ -620,6 +620,18 @@
             height: 40px;
             width: 40px;
         }
+        #change-info-order {
+            width:40%;
+            height:30%;
+            background: #fff;
+            top: 50%;
+            left: 50%;
+            position: absolute;
+            transform: translate(-50%, -50%);
+            display: none;
+            padding: 20px;
+            border-radius: 4px;
+        }
     </style>
     <div style="position: sticky">
         <div id="page-top-bar">
@@ -681,7 +693,7 @@
                                         </div>
                                     </a>
                                 @else
-                                    <a href="javascript:" class="icon-wrap">
+                                    <a href="{{route('getUserProfile')}}" class="icon-wrap">
                                         <div class="icon">
                                             <span class="material-symbols-outlined">
                                             person
@@ -800,7 +812,7 @@
                                                 <li class="menu-item">
                                                     <a href="{{route('blog')}}" class="rm-rf underline-hover-effect">
                                                         <div class="menu-item-wrap">
-                                                            <span class="menu-item-title">Blog</span>
+                                                            <span class="menu-item-title">About</span>
                                                         </div>
                                                     </a>
                                                 </li>
@@ -820,13 +832,6 @@
                                 <div class="header-content-inner">
                                     @if(Auth::user())
                                         <span style="margin-right:20px">Hello {{Auth::user()->name}} !</span>
-                                        <div class="logout" >
-                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="margin: 0">
-                                                <button class="btn btn-danger">Logout</button>
-                                                @csrf
-                                            </form>
-
-                                        </div>
                                     @endif
                                 </div>
                             </div>
@@ -835,61 +840,63 @@
                 </div>
             </div>
         </header>
-        <div class="page-content">
+        <div class="page-content" style ="margin-top: 12px">
             @yield('content')
         </div>
     </div>
     <div id="sontran" style=" display:none ;position: absolute;top: 0;left: 0;bottom: 0;right: 0;background: #000; opacity: 0.5;">
     </div>
-    <div id="login" class="login-form" role="dialog">
-        <div class="login-form-dialog">
-            <div class="login-form-content">
-                <div class="login-form-body">
-                    <div class="container-login-form" id="container-id">
-                        <div class="form-container-wrap sign-up-container">
-                            <form action="{{route('register')}}" class="form-login" method="POST">
-                                <h1 class="title-login-form">Create Account</h1>
-                                <div class="social-container">
-                                    <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                                    <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                                    <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-                                </div>
-                                <span class="subtitle-login-forn">or use your email for registration</span>
-                                <input type="text" placeholder="Name"  class="inp-login-form" name="name"/>
-                                <input type="email" placeholder="Email" class="inp-login-form" name="email"/>
-                                <input type="password" placeholder="Password" class="inp-login-form" name="password"/>
-                                <input type="password" placeholder="Confirm Password" class="inp-login-form" name="password_confirmation"/>
-                                <button class="btn-login-form" type="submit">Sign Up</button>
-                                @csrf
-                            </form>
-                        </div>
-                        <div class="form-container-wrap sign-in-container">
-                            <form action="{{route('login')}}" class="form-sign-in" method="POST">
-                                <h1 class="title-login-form">Sign in</h1>
-                                <div class="social-container">
-                                    <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                                    <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                                    <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
-                                </div>
-                                <span class="subtitle-login-forn">or use your account</span>
-                                <input type="email" placeholder="Email" class="inp-login-form" name="email"/>
-                                <input type="password" placeholder="Password" class="inp-login-form" name="password"/>
-                                <a class="forgot-pass-link" href="#">Forgot your password?</a>
-                                <button class="btn-login-form" type="submit">Sign In</button>
-                                @csrf
-                            </form>
-                        </div>
-                        <div class="overlay-container">
-                            <div class="overlay">
-                                <div class="overlay-panel overlay-left">
-                                    <h1 class="title-login-form">Welcome Back!</h1>
-                                    <p class="guide-login-form">To keep connected with us please login with your personal info</p>
-                                    <button class="ghost btn-login-form" id="signIn">Sign In</button>
-                                </div>
-                                <div class="overlay-panel overlay-right">
-                                    <h1 class="title-login-form">Hello, Friend!</h1>
-                                    <p class="guide-login-form">Enter your personal details and start journey with us</p>
-                                    <button class="ghost btn-login-form" id="signUp">Sign Up</button>
+    @if (!Auth::user())
+        <div id="login" class="login-form" role="dialog">
+            <div class="login-form-dialog">
+                <div class="login-form-content">
+                    <div class="login-form-body">
+                        <div class="container-login-form" id="container-id">
+                            <div class="form-container-wrap sign-up-container">
+                                <form action="{{route('register')}}" class="form-login" method="POST">
+                                    <h1 class="title-login-form">Create Account</h1>
+                                    <div class="social-container">
+                                        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                                        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+                                        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+                                    </div>
+                                    <span class="subtitle-login-forn">or use your email for registration</span>
+                                    <input type="text" placeholder="Name"  class="inp-login-form" name="name"/>
+                                    <input type="email" placeholder="Email" class="inp-login-form" name="email"/>
+                                    <input type="password" placeholder="Password" class="inp-login-form" name="password"/>
+                                    <input type="password" placeholder="Confirm Password" class="inp-login-form" name="password_confirmation"/>
+                                    <button class="btn-login-form" type="submit">Sign Up</button>
+                                    @csrf
+                                </form>
+                            </div>
+                            <div class="form-container-wrap sign-in-container">
+                                <form action="{{route('login')}}" class="form-sign-in" method="POST">
+                                    <h1 class="title-login-form">Sign in</h1>
+                                    <div class="social-container">
+                                        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                                        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+                                        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+                                    </div>
+                                    <span class="subtitle-login-forn">or use your account</span>
+                                    <input type="email" placeholder="Email" class="inp-login-form" name="email"/>
+                                    <input type="password" placeholder="Password" class="inp-login-form" name="password"/>
+                                    <a class="forgot-pass-link" href="#">Forgot your password?</a>
+                                    <button class="btn-login-form" type="submit">Sign In</button>
+                                    @csrf
+                                </form>
+                            </div>
+                            <div class="overlay-container">
+                                <div class="overlay">
+                                    <div class="overlay-panel overlay-left">
+                                        <h1 class="title-login-form">Welcome Back!</h1>
+                                        <p class="guide-login-form">To keep connected with us please login with your personal info</p>
+                                        <button class="ghost btn-login-form" id="signIn">Sign In</button>
+                                    </div>
+                                    <div class="overlay-panel overlay-right">
+                                        <h1 class="title-login-form">Hello, Friend!</h1>
+                                        <p class="guide-login-form">Enter your personal details and start journey with us</p>
+                                        <button class="ghost btn-login-form" id="signUp">Sign Up</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -897,7 +904,31 @@
                 </div>
             </div>
         </div>
-    </div>
+    @else
+            {{-- <div id="change-info-order">
+                <h4>Change Information Order</h4>
+                <form action="{{route('changeInfo')}}" method="POST">
+                    <div class="mb-3">
+                        <label for="">Phone</label>
+                        <input type="text" name="phone" class="form-control w-50" placeholder="Your Phone..." autocomplete="off" value="{{old('phone')}}">
+                        @error('phone')
+                            <span style="color: red">{{$message}}</span>
+                        @enderror
+                    </div>
+                    <div class="mb-3">
+                        <label for="">Address</label>
+                        <input type="text" name="address" class="form-control w-50" placeholder="Your Adress..." autocomplete="off" value="{{old('address')}}">
+                        @error('address')
+                            <span style="color: red">{{$message}}</span>
+                        @enderror
+                    </div>
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div> --}}
+    @endif
+
     <script src="https://kit.fontawesome.com/f9275dded9.js" crossorigin="anonymous"></script>
     <script>
         const signUpButton = document.getElementById('signUp');
@@ -925,7 +956,6 @@
         }
 
         const btnLoginForm1 = document.querySelector("#init-login-form-1");
-        const btnLoginForm2 = document.querySelector("#init-login-form-2");
         btnLoginForm1.addEventListener("click", () => {
             console.log(1);
             let loginForm = document.getElementById("login");
@@ -941,7 +971,7 @@
                         loginForm.style.display = "none";
                         loginForm.style.top = "36%";
                         document.body.style.overflow = "visible";
-                        document.body.style.paddingRight = "";
+                        document.body.style.paddingRight = "17px";
                         sontran.style.display = "none";
                     }
                 });
