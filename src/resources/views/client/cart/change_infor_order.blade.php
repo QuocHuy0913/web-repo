@@ -9,6 +9,16 @@
                 <h4>Change Information Order</h4>
                 <form action="" method="POST">
                         <div class="mb-1">
+                            <label for="">Name</label>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" name="nickName" class="form-control w-50" placeholder="name..." autocomplete="off"  value="{{old('nickName') ?? Auth()->user()->name}}">
+                            @error('nickName')
+                                <span style="color: red">{{$message}}</span>
+                            @enderror
+                        </div>
+
+                        <div class="mb-1">
                             <label for="">Phone</label>
                         </div>
                         <div class="mb-3">

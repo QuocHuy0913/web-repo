@@ -115,6 +115,34 @@
                     </div>
                 </div>
             </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#Discounts"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Discounts</span>
+                </a>
+                <div id="Discounts" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Custom Discounts:</h6>
+                        <a class="collapse-item" href="{{route('admin.discount.getList')}}">Show List</a>
+                        <a class="collapse-item" href="{{route('admin.discount.getAdd')}}">Add New</a>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#Ranks"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Ranks</span>
+                </a>
+                <div id="Ranks" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Custom Ranks:</h6>
+                        <a class="collapse-item" href="{{route('admin.rank.getList')}}">Show List</a>
+                        <a class="collapse-item" href="{{route('admin.rank.getAdd')}}">Add New</a>
+                    </div>
+                </div>
+            </li>
 
 
 
