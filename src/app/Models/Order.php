@@ -33,6 +33,10 @@ class Order extends Model
         $data[] = $id;
         return DB::update('UPDATE '.$this->table.' SET total = ? where id = ?',$data);
     }
+    public function updateDiscount($id, $data){
+        $data[] = $id;
+        return DB::update('UPDATE '.$this->table.' SET discount_id = ? where id = ?', $data);
+    }
     public function updateStatusOrder($id,$status){
         return orders::where('id',$id)->update(['status' => $status]);
     }

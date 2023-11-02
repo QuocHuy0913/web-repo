@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('discounts', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
+            $table->string('code')->nullable();
             $table->integer('price')->nullable();
             $table->bigInteger('rank_id')->nullable()->unsigned();
             $table->integer('amount')->nullable();

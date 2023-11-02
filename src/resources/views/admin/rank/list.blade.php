@@ -1,24 +1,26 @@
 @extends('admin.layouts.master')
 
-@section('title', 'Orders')
+@section('title', 'Ranks')
 
 @section('content')
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">List of Orders</h6>
+        <h6 class="m-0 font-weight-bold text-primary">List of Ranks</h6>
     </div>
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th width="20%">Name</th>
-                        <th width="15%">Total</th>
-                        <th width="10%">Phone</th>
-                        <th width ="20%">Address</th>
-                        <th width ="20%">Discount</th>
-                        <th width ="20%">Status</th>
-                        <th width ="20%">Detail</th>
+                        <th>Name</th>
+                        <th>Discount %</th>
+                        <th>Value</th>
+                        <th>Description</th>
+                        <th width="20%">Created_At</th>
+                        <th width="20%">Updated_At</th>
+                        <th width ="2%"></th>
+                        <th width ="2%"></th>
+
                     </tr>
                 </thead>
                 <tbody>
@@ -27,12 +29,13 @@
                             @foreach ($list as $item)
                                 <tr>
                                     <td>{{$item -> name}}</td>
-                                    <td>{{$item -> total}}</td>
-                                    <td>{{$item -> phone}}</td>
-                                    <td>{{$item -> address}}</td>
                                     <td>{{$item -> discount}}</td>
-                                    <td>{{$item -> status}}</td>
-                                    <td><a href="#" class="btn btn-warning">Detail</a></td>
+                                    <td>{{$item -> value}}</td>
+                                    <td>{{$item -> description}}</td>
+                                    <td>{{$item -> created_at}}</td>
+                                    <td>{{$item -> updated_at}}</td>
+                                    <td><a href="{{route('admin.rank.getUpdate',['id'=>$item ->id])}}" class="btn btn-warning">Sửa</a></td>
+                                    <td><a onclick="return confirm('Are you sure :))) ?')" href="{{route('admin.rank.delete',['id'=>$item ->id])}}" class="btn btn-danger">Xóa</a></td>
                                 </tr>
                             @endforeach
                         @else
@@ -62,6 +65,5 @@
 
 <!-- Page level custom scripts -->
 <script src="{{asset ('admins')}}/js/demo/datatables-demo.js"></script>
-
 
 @endsection
