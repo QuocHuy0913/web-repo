@@ -51,6 +51,28 @@
                         </div>
                     </div>
                     <div id="content-right">
+                        @if(Session::get('discount'))
+                            @foreach(Session::get('discount') as $key=>$item)
+                                @if(!empty($item['price']))
+                                    <form method="POST" action="{{route('checkDiscount')}}">
+                                        <div class="head-content">
+                                        <input type="text" name="voucher" placeholder="Nhập mã khuyến mãi..." class="customer-voucher form-control" value="{{$item['code']}}" style="width: 392px;" >
+                                        <button type="submit" class="btn btn-primary">Add</button>
+                                        </div>
+                                        @csrf
+                                    </form>
+                                @endif
+                            @endforeach
+                        @else
+                            <form method="POST" action="{{route('checkDiscount')}}">
+                                <div class="head-content">
+                                <input type="text" name="voucher" placeholder="Nhập mã khuyến mãi..." class="customer-voucher form-control" style="width: 392px;" >
+                                <button type="submit" class="btn btn-primary">Add</button>
+                                </div>
+                                @csrf
+                            </form>
+                        @endif
+                    <form method="POST" action="">
                         <div class="block-info-customer">
                             <div class="content-bic">
                                 <div class="form-change-info"></div>
@@ -58,9 +80,9 @@
                                     <h3 class="hcb-title">Giao tới</h3>
                                     <a href="{{route('getChangeInfoOrder')}}" class="change-address">Change</a>
                                 </div>
-                                @if ((Session('Cart')->phone && Session('Cart')->address) || (Auth::user()->phone && Auth::user()->address))
+                                @if ((Session('Cart')->nickName && Session('Cart')->phone && Session('Cart')->address) || (Auth::user()->phone && Auth::user()->address))
                                     <div class="customer-info">
-                                        <p class="customer-info-name">{{Auth::user()->name }}</p>
+                                        <p class="customer-info-name">{{Session('Cart')->nickName ?? Auth::user()->name }}</p>
                                         <i style="display: block;width: 1px;height: 20px;background-color: rgb(235, 235, 240); margin: 0px 8px;"></i>
                                         <p class="customer-info-phone">{{Session('Cart')->phone ?? Auth::user()->phone }}</p>
                                     </div>
@@ -96,10 +118,10 @@
                                     <h3 class="hcb-title" style="color: rgb(36, 36, 36);">Shop khuyến mãi</h3>
                                     <h4 class="hcb-title" style="font-size: 14px">Tối đa chọn 1</h4>
                                 </div>
-                                <div class="head-content">
+                                {{-- <div class="head-content">
                                     <input type="text" name="" id="" placeholder="Nhập mã khuyến mãi..." class="form-control" style="width: 180px;">
                                     <a  class="btn btn-primary">Nhập</a>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                         <div class="block-checkout">
@@ -109,28 +131,75 @@
                                     <span class="price-value" id ="pre-total-price">{{Session::get('Cart') ? Session::get('Cart')->totalPrice : 0}}</span>
                                 </li>
                                 <li class="price-item">
-                                    <span class="price-text">Giảm giá</span>
-                                    <span class="price-value">-500.000 đ</span>
+                                    @if(!empty($nameRank))
+                                        @if(!empty($discount))
+                                            <span class="price-text">Hạng {{$nameRank}}</span>
+                                            <span class="price-value" id ="price-discount-rank">-{{Session::get('Cart') ? ((Session::get('Cart')->totalPrice)*$discount)/100 : 0}}</span>
+                                        @endif
+                                    @else
+                                        <span class="price-text">Not Rank</span>
+                                    @endif
                                 </li>
+                                @if(Session::get('discount'))
+                                    @foreach(Session::get('discount') as $key=>$item)
+                                        @if(!empty($item['price']))
+                                            <li class="price-item">
+                                                <span class="price-text">Giảm giá</span>
+                                                <div class="price-value">-{{$item['price'] ?? 0}}</div>
+                                            </li>
+                                        @endif
+                                        @if(!empty($item['name']))
+                                            <li class="price-item">
+                                                <span class="price-text">Voucher</span>
+                                                <div class="price-value">{{$item['name'] ?? 0}}</div>
+                                            </li>
+                                        @endif
+                                    @endforeach
+                                @else
+                                    <li class="price-item">
+                                        <span class="price-text">Giảm giá</span>
+                                        <div class="price-value">0</div>
+                                    </li>
+                                @endif
                             </ul>
                             <div class="price-total">
                                 <span class="price-text">Tổng tiền</span>
                                 <div style="text-align:right">
-                                    <span id="price-total-value">{{Session::get('Cart') ? Session::get('Cart')->totalPrice : 0}}</span>
+                                    @if(!empty($discount))
+                                        @if(Session::get('discount'))
+                                            @foreach(Session::get('discount') as $key=>$item)
+                                                    @if(!empty($item['price']))
+                                                        <span id="price-total-value">{{(Session::get('Cart')->totalPrice - ((Session::get('Cart')->totalPrice *$discount)/100)) - $item['price'] ?? 0}}</span>
+                                                    @else
+                                                        <span id="price-total-value">{{(Session::get('Cart')->totalPrice - ((Session::get('Cart')->totalPrice *$discount)/100)) ?? 0}}</span>
+                                                    @endif
+                                            @endforeach
+                                        @else
+                                            <span id="price-total-value">{{Session::get('Cart') ? Session::get('Cart')->totalPrice - (((Session::get('Cart')->totalPrice)*$discount)/100) : 0}}</span>
+                                        @endif
+                                    @else
+                                            @if(Session::get('discount'))
+                                                @foreach(Session::get('discount') as $key=>$item)
+                                                        @if(!empty($item['price']))
+                                                            <span id="price-total-value">{{(Session::get('Cart')->totalPrice) - $item['price'] ?? 0}}</span>
+                                                        @endif
+                                                @endforeach
+                                            @else
+                                                <span id="price-total-value">{{Session::get('Cart') ? Session::get('Cart')->totalPrice : 0}}</span>
+                                            @endif
+                                    @endif
                                     <span class="notice-vat">(Đã bao gồm VAT nếu có)</span>
                                 </div>
                             </div>
                         </div>
-                        <a href="javascript:" onclick="checkOut()" class="btn-checkout">Checkout</a>
+                        <button type="submit" class="btn-checkout">Checkout</button>
+                        @csrf
+                    </form>
                     </div>
                 @else
                 <h4 style="width:fit-content; color:#d70018;">Cart is null</h4>
                 @endif
-
             </div>
-
-
-
     @else
         <h1>Hãy đăng nhập</h1>
     @endif
@@ -141,8 +210,9 @@
             $("#item-cart-"+id).val(`${response[0].quantity}`);
             $("#item-price-"+id).text(response[0].price);
             $("#icon-amount-orders").text(response[1]);
-            $("#price-total-value").text(response[2]);
+            $("#price-total-value").text(response[3]);
             $("#pre-total-price").text(response[2]);
+            $("#price-discount-rank").text(response[4]);
         }
         function decreaseItem(id) {
             var $n =  $("#item-cart-"+id)

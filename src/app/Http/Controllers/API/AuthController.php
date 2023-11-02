@@ -13,13 +13,17 @@ class AuthController extends Controller
         $req->validate([
             'name' => 'required',
             'email' => 'required|email',
-            'password' => 'required|min:6'
+            'password' => 'required|min:6',
+            'phone' => 'required',
+            'address' => 'required',
         ]);
 
         $user = User::create([
             'name' => $req->name,
             'email' => $req->email,
-            'password' => bcrypt($req->password),
+            'password' => $req->password,
+            'phone' => $req->phone,
+            'address' => $req->address
         ]);
 
         return response()->json($user,201);
@@ -48,6 +52,18 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $authToken,
         ],200);
+    }
+    public function logout(Request $req) {
+        $req->user()->currentAccessToken()->delete();
+        if($req) {
+            return response()->json([
+                'status' => 'success'
+            ],200);
+        } else {
+            return response()->json([
+                'status' => 'error'
+            ],400);
+        }
     }
     public function getProfile(){
         return response()->json([

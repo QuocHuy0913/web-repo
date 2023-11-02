@@ -45,6 +45,10 @@ class DashboardController extends Controller
     public function createOrder(Request $req){
         $order = new Order;
         $order->user_id = Auth::user()->id;
+        $order->phone = Auth::user()->phone;
+        $order->address = Auth::user()->address;
+        $order->status = 0;
+        $order->total = $req->total_price;
         $order->save();
         return response([
             "data" => $order

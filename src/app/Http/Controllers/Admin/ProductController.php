@@ -98,7 +98,16 @@ class ProductController extends Controller
     }
         return redirect()->route('admin.products.getList');
     }
-    public function deleteItem(){
-
+    public function deleteItem($id=0){
+        if(!empty($id) && ctype_digit($id)){
+            $product = Product::find($id);
+            if(!empty($product)) {
+                $check = $product->delete();
+                if($check) {
+                    return redirect()->route('admin.products.getList',compact('check'));
+                }
+            }
+        }
+        return redirect()->route('admin.products.getList');
     }
 }

@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('ranks', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
+            $table->integer('value');
+            $table->integer('discount');
             $table->text('description')->nullable();
             $table->timestamps();
         });

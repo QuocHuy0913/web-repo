@@ -11,6 +11,7 @@ class Cart extends Model
     public $products = null;
     public $totalPrice = 0;
     public $totalQuantity = 0;
+    public $nickName = null;
     public $phone = null;
     public $address = null;
     public function __construct($cart) {
@@ -55,7 +56,8 @@ class Cart extends Model
         $this->phone = null;
         $this->address = null;
     }
-    public function updateInfo($phone, $address) {
+    public function updateInfo($name, $phone, $address) {
+        $this->nickName = $name;
         $this->phone = $phone;
         $this->address = $address;
     }
