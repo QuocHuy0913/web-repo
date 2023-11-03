@@ -14,6 +14,8 @@ npm-build:
 	- docker compose run npm run build
 key:
 	- docker compose exec php php artisan key:generate
+link:
+	- docker compose exec php php artisan storage:link
 migrate:
 	- docker compose exec php php artisan migrate
 migrate-reset:

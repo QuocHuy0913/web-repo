@@ -18,14 +18,13 @@ class AuthController extends Controller
             'address' => 'required',
         ]);
 
-        $user = User::create([
-            'name' => $req->name,
-            'email' => $req->email,
-            'password' => $req->password,
-            'phone' => $req->phone,
-            'address' => $req->address
-        ]);
-
+        $user = new User;
+        $user->name = $req->name;
+        $user->email = $req->email;
+        $user->password = $req->password;
+        $user->phone = $req->phone;
+        $user->address = $req->address;
+        $user->save();
         return response()->json($user,201);
     }
     public function login(Request $req) {

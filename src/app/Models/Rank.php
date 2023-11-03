@@ -13,35 +13,35 @@ class Rank extends Model
     use HasFactory;
     protected $table = "ranks";
     public function getList(){
-        return ranks::all();
+        return Rank::all();
     }
     public function add($data){
-        return ranks::insert($data);
+        return Rank::insert($data);
     }
     public function getDetail($id){
-        return ranks::where('id',$id)->first();
+        return Rank::where('id',$id)->first();
     }
     public function updateRank($id,$data){
-        return ranks::where('id',$id)->update($data);
+        return Rank::where('id',$id)->update($data);
     }
     public function deleteItem($id){
-        return ranks::where('id',$id)->delete();
+        return Rank::where('id',$id)->delete();
     }
     public function getNameRank($id){
         if(!empty($id)){
-            $rank = ranks::where('id',$id)->select('name')->get();
+            $rank = Rank::where('id',$id)->select('name')->get();
         }
-         
+
         return $rank;
     }
     public function getValue($id){
-        return ranks::where('id',$id)->select('value')->get();
+        return Rank::where('id',$id)->select('value')->get();
     }
     public function setupRank($id){
         if(!empty($id)){
-            $allPrice = order::where('user_id',$id)->select('total')->get();
-            $idRank = user::where('id',$id)->select('rank_id')->get();
-            
+            $allPrice = Order::where('user_id',$id)->select('total')->get();
+            $idRank = User::where('id',$id)->select('rank_id')->get();
+
             if(!empty($allPrice)){
                 $price = 0;
                 //var_dump($price);
