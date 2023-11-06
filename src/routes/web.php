@@ -85,6 +85,7 @@ Route::get('addToCart/{id}',[CartController::class,'addToCart'])->name('addToCar
 Route::middleware('auth')->group(function () {
     Route::get('cart', [CartController::class,'showCart'])->name('cart');
     Route::get('cart/checkout',[CartController::class,'checkout'])->name('checkOut');
+    Route::post('cart/payment',[CartController::class,'checkPayment'])->name('checkPayment');
     Route::post('checkDiscount',[CartController::class,'checkDiscount'])->name('checkDiscount');
     Route::get('/cart/change-info', [CartController::class,'getChangeInfoOrder'])->name('getChangeInfoOrder');
     Route::post('/cart/change-info', [CartController::class,'postChangeInfoOrder'])->name('postChangeInfoOrder');

@@ -191,6 +191,10 @@
                             </div>
                         </div>
                         <a href="javascript:" onclick="checkOut()" class="btn-checkout">Checkout</a>
+                        <form action="{{route('checkPayment')}}" method="POST" style="margin-top: 12px">
+                            <button type="submit" class="btn btn-primary" name="redirect" style="width:100%">Check Payment</button>
+                            @csrf
+                        </form>
                     </div>
                 @else
                 <h4 style="width:fit-content; color:#d70018;">Cart is null</h4>
@@ -320,7 +324,7 @@
     </script>
 @endsection
 <style>
-   
+
     .test {
         display: grid;
         grid-template-columns: 358px 150px 120px 150px 30px;

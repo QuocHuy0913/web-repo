@@ -790,6 +790,39 @@
                 display: none;
             }
         }
+        #vouchers-wrap {
+        padding: 20px;
+        background-color: white;
+        top: 20%;
+        left: 50%;
+        position: absolute;
+        min-width: 400px;
+        min-height: 600px;
+        display: none;
+        border-radius: 4px;
+    }
+        #vouchers-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+        #voucher-link {
+            color: blue;
+            cursor: pointer;
+        }
+        .voucher-item-name {
+            flex: 0 0 80%;
+        }
+        #close-vouchers-wrap {
+            position: absolute;
+            top: 4%;
+            right: 4%;
+            color: grey;
+            cursor: pointer;
+        }
+    .voucher-item {
+        margin: 12px;
+    }
 
     </style>
     <div style="position: sticky">
@@ -1126,28 +1159,52 @@
             </div>
         </div>
     @else
-            {{-- <div id="change-info-order">
-                <h4>Change Information Order</h4>
-                <form action="{{route('changeInfo')}}" method="POST">
-                    <div class="mb-3">
-                        <label for="">Phone</label>
-                        <input type="text" name="phone" class="form-control w-50" placeholder="Your Phone..." autocomplete="off" value="{{old('phone')}}">
-                        @error('phone')
-                            <span style="color: red">{{$message}}</span>
-                        @enderror
-                    </div>
-                    <div class="mb-3">
-                        <label for="">Address</label>
-                        <input type="text" name="address" class="form-control w-50" placeholder="Your Adress..." autocomplete="off" value="{{old('address')}}">
-                        @error('address')
-                            <span style="color: red">{{$message}}</span>
-                        @enderror
-                    </div>
-                    <div class="mb-3">
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </div>
-                </form>
-            </div> --}}
+        <div id="vouchers-wrap">
+            <span id="close-vouchers-wrap">X</span>
+            <div class="head-content" style="margin-bottom: 24px;">
+                <h5>Techstore vouchers</h5>
+            </div>
+            <div id="vouchers-block">
+                <ul id="vouchers-list">
+                    <li class="voucher-item">
+                        <div class="row" style="align-items: center; margin-right:0; margin-left:0;">
+                            <span class="voucher-item-name">Hello</span>
+                            <div>
+                                <form action="">
+                                    <input type="hidden">
+                                    <button class="btn btn-primary" type="submit">Add</button>
+                                </form>
+                            </div>
+                        </div>
+                        <hr>
+                    </li>
+                    <li class="voucher-item">
+                        <div class="row" style="align-items: center; margin-right:0; margin-left:0;">
+                            <span class="voucher-item-name">Hello</span>
+                            <div>
+                                <form action="">
+                                    <input type="hidden">
+                                    <button class="btn btn-primary" type="submit">Add</button>
+                                </form>
+                            </div>
+                        </div>
+                        <hr>
+                    </li>
+                    <li class="voucher-item">
+                        <div class="row" style="align-items: center; margin-right:0; margin-left:0;">
+                            <span class="voucher-item-name">Hello</span>
+                            <div>
+                                <form action="">
+                                    <input type="hidden">
+                                    <button class="btn btn-primary" type="submit">Add</button>
+                                </form>
+                            </div>
+                        </div>
+                        <hr>
+                    </li>
+                </ul>
+            </div>
+        </div>
     @endif
 
     <script src="https://kit.fontawesome.com/f9275dded9.js" crossorigin="anonymous"></script>
