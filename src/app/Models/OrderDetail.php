@@ -12,10 +12,10 @@ class OrderDetail extends Model
     protected $table = 'order_details';
     public function getList($id=null){
         if(!empty($id)){
-            $list = order_details::where('order_id',$id)->orderBy('created_at','DESC')->get();
+            $list = OrderDetail::where('order_id',$id)->orderBy('created_at','DESC')->get();
             return $list;
         }else{
-            $list = order_details::orderBy('created_at','DESC')->get();
+            $list = OrderDetail::orderBy('created_at','DESC')->get();
             return $list;
         }
     }

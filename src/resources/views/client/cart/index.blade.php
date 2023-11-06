@@ -51,28 +51,6 @@
                         </div>
                     </div>
                     <div id="content-right">
-                        @if(Session::get('discount'))
-                            @foreach(Session::get('discount') as $key=>$item)
-                                @if(!empty($item['price']))
-                                    <form method="POST" action="{{route('checkDiscount')}}">
-                                        <div class="head-content">
-                                        <input type="text" name="voucher" placeholder="Nhập mã khuyến mãi..." class="customer-voucher form-control" value="{{$item['code']}}" style="width: 392px;" >
-                                        <button type="submit" class="btn btn-primary">Add</button>
-                                        </div>
-                                        @csrf
-                                    </form>
-                                @endif
-                            @endforeach
-                        @else
-                            <form method="POST" action="{{route('checkDiscount')}}">
-                                <div class="head-content">
-                                <input type="text" name="voucher" placeholder="Nhập mã khuyến mãi..." class="customer-voucher form-control" style="width: 392px;" >
-                                <button type="submit" class="btn btn-primary">Add</button>
-                                </div>
-                                @csrf
-                            </form>
-                        @endif
-                    <form method="POST" action="">
                         <div class="block-info-customer">
                             <div class="content-bic">
                                 <div class="form-change-info"></div>
@@ -118,10 +96,30 @@
                                     <h3 class="hcb-title" style="color: rgb(36, 36, 36);">Shop khuyến mãi</h3>
                                     <h4 class="hcb-title" style="font-size: 14px">Tối đa chọn 1</h4>
                                 </div>
-                                {{-- <div class="head-content">
-                                    <input type="text" name="" id="" placeholder="Nhập mã khuyến mãi..." class="form-control" style="width: 180px;">
-                                    <a  class="btn btn-primary">Nhập</a>
-                                </div> --}}
+                                    @if(Session::get('discount'))
+                                        @foreach(Session::get('discount') as $key=>$item)
+                                            @if(!empty($item['price']))
+                                                <form method="POST" action="{{route('checkDiscount')}}">
+                                                    <div class="head-content">
+                                                    <input type="text" name="voucher" placeholder="Nhập mã khuyến mãi..." class="customer-voucher form-control" value="{{$item['code']}}" style="width: 240px;" >
+                                                    <button type="submit" class="btn btn-primary">Add</button>
+                                                    </div>
+                                                    @csrf
+                                                </form>
+                                            @endif
+                                        @endforeach
+                                    @else
+                                        <form method="POST" action="{{route('checkDiscount')}}">
+                                            <div class="head-content">
+                                            <input type="text" name="voucher" placeholder="Nhập mã khuyến mãi..." class="customer-voucher form-control" style="width: 240px;" >
+                                            <button type="submit" class="btn btn-primary">Add</button>
+                                            </div>
+                                            @csrf
+                                        </form>
+                                    @endif
+                                <div class="head-content">
+                                    <span id="voucher-link">Select Your Voucher</span>
+                                </div>
                             </div>
                         </div>
                         <div class="block-checkout">
@@ -192,14 +190,13 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="btn-checkout">Checkout</button>
-                        @csrf
-                    </form>
+                        <a href="javascript:" onclick="checkOut()" class="btn-checkout">Checkout</a>
                     </div>
                 @else
                 <h4 style="width:fit-content; color:#d70018;">Cart is null</h4>
                 @endif
             </div>
+
     @else
         <h1>Hãy đăng nhập</h1>
     @endif
@@ -293,7 +290,19 @@
                 }
             });
         }
-
+            let voucherLink = document.getElementById('voucher-link');
+            voucherLink.addEventListener('click', () => {
+                let voucherWrap = document.getElementById('vouchers-wrap');
+                let sontran = document.getElementById("sontran");
+                voucherWrap.style.display = "block";
+                voucherWrap.style.transform = "translate(-50%, -13%)";
+                let closeVoucher = document.getElementById('close-vouchers-wrap');
+                sontran.style.display = "block";
+                closeVoucher.addEventListener('click', () => {
+                    voucherWrap.style.display = "none";
+                    sontran.style.display = "none";
+                })
+            })
         // function deleteAll(){
         //     $.ajax({
         //         url:'cart/checkOut',
@@ -311,6 +320,7 @@
     </script>
 @endsection
 <style>
+   
     .test {
         display: grid;
         grid-template-columns: 358px 150px 120px 150px 30px;
@@ -374,7 +384,9 @@
     .ta-c {
         text-align: center;
     }
-
+    form {
+        margin: 0;
+    }
 
     .product-info {
         display: flex;

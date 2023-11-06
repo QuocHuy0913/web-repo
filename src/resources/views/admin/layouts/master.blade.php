@@ -9,8 +9,8 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title> Admin Dashboard</title>
-
+    <title> Admin </title>
+    <link rel="shortcut icon" href="{{asset('/images/laravel-logo.png')}}">
     <!-- Custom fonts for this template-->
     <link href="{{asset('admins')}}/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link

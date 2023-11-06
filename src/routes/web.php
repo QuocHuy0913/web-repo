@@ -84,7 +84,7 @@ Route::get('/more', [ClientDashboardController::class, 'more'])->name('more');
 Route::get('addToCart/{id}',[CartController::class,'addToCart'])->name('addToCart');
 Route::middleware('auth')->group(function () {
     Route::get('cart', [CartController::class,'showCart'])->name('cart');
-    Route::post('cart',[CartController::class,'checkout'])->name('checkOut');
+    Route::get('cart/checkout',[CartController::class,'checkout'])->name('checkOut');
     Route::post('checkDiscount',[CartController::class,'checkDiscount'])->name('checkDiscount');
     Route::get('/cart/change-info', [CartController::class,'getChangeInfoOrder'])->name('getChangeInfoOrder');
     Route::post('/cart/change-info', [CartController::class,'postChangeInfoOrder'])->name('postChangeInfoOrder');

@@ -79,7 +79,7 @@ class CartController extends Controller
                         Session('Cart')->totalPrice = Session('Cart')->totalPrice - $item['price'];
                         Session('Cart')->totalPrice = Session('Cart')->totalPrice - $discount_rank;
                         $data = [
-                            Session('Cart')->totalPrice 
+                            Session('Cart')->totalPrice
                         ];
                         $discount = Discount::find($item['id']);
                         $discount->amount = $discount->amount - 1;
@@ -94,18 +94,22 @@ class CartController extends Controller
                 {
                     $this->order->updateDiscount($idOrder,$discount);
                 }
-               
+
                 $user = User::find(Auth()->user()->id);
                 $user->rank_id = $this->rank->setupRank($user->id) ;
-                $user->save(); 
+                $user->save();
                 $oldCart = Session('Cart') ? Session('Cart'):null;
                 // $newCart = new Cart($oldCart);
                 $oldCart->deleteAllCart();
                 $req->session()->forget('Cart');
                 $req->session()->forget('discount');
-                return redirect()->route('cart');
+                return response([
+                    "status" => "success"
+                ]);
             }else{
-                return redirect()->route('cart');
+                return response([
+                    "status" => "cant"
+                ]);
             }
         }
 
@@ -145,7 +149,7 @@ class CartController extends Controller
                         $discountRank
                     ]);
                 }
-                    
+
             }else{
                 return response([
                     Session('Cart')->products[$id],
@@ -164,7 +168,7 @@ class CartController extends Controller
                 0
             ]);
         }
-    }     
+    }
     public function deleteItemListCart(Request $req, $id){
         $oldCart = Session('Cart') ? Session('Cart') : null;
         $newCart = new Cart($oldCart);
@@ -235,7 +239,7 @@ class CartController extends Controller
             }else{
                 return redirect()->back();
             }
-            
+
         }else{
             return redirect()->back();
        }

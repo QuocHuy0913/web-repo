@@ -632,6 +632,165 @@
             padding: 20px;
             border-radius: 4px;
         }
+
+        #search-icon {
+            display: none;
+        }
+
+        #menu-toggle {
+            display: none;
+        }
+        #menu {
+            display: none;
+        }
+
+        @media (max-width:890px){
+            .container {
+                padding: 0;
+            }
+            .header-categories-nav>.inner {
+                position: relative;
+                width: 200px;
+                margin: 0;
+            }
+            .page-nav .menu .menu-wrap .menu-item {
+                padding: 16px 20px;
+            }
+
+            .search_wrap .search_box{
+                position: relative;
+                width: 390px;
+                height: 44px;
+                margin: 20px;
+            }
+
+            .search_wrap{
+                width: auto;
+            }
+
+            .icon-wrap {
+                padding: 0 10px;
+                position: relative;
+            }
+
+            .top-bar-tag {
+                margin-left: 9px;
+            }
+        }
+
+        @media screen and (max-width:700px) {
+            .search_box{
+                display: none;
+            }
+
+            #search-icon {
+                display: inline;
+            }
+            .btn.btn_common {
+                background-color: white;
+            }
+
+            #menu-toggle {
+                display: block;
+                margin-left: 10px;
+                cursor: pointer;
+            }
+
+            #menu {
+                display:block;
+                left: -500px;
+                box-shadow: 5px 0px 5px lightgrey;
+                position: fixed;
+                transition: top 0.3s ease;
+            }
+
+            #menu .menu__nav {
+                height: 5%;
+                background-color: #f5f7f7;
+                border-bottom: 1px lightgrey solid;
+            }
+
+            #menu .menu__nav .menu_nav_option {
+                width: 50%;
+                height: 50px;
+                display: flex;
+                justify-content:center;
+                align-items:center;
+                font-weight: bold;
+                border-bottom: 2px black solid;
+            }
+
+            #menu .menu__nav .categories_nav_option {
+                width: 50%;
+                height: 50px;
+                display: flex;
+                justify-content:center;
+                align-items:center;
+                font-weight: bold;
+            }
+            #menu .menu_option {
+                display: flex;
+                height: 7%;
+                align-items:center;
+                padding: 20px;
+            }
+
+            #menu .categories_option {
+                display: flex;
+                height: 7%;
+                align-items:center;
+                padding: 20px;
+            }
+
+            #menu .menu__nav .menu_nav_option:hover {
+                cursor: pointer;
+                background-color: lightgray;
+                transition: 0.1s;
+            }
+
+            #menu .menu__nav .categories_nav_option:hover {
+                cursor: pointer;
+                background-color: lightgray;
+                transition: 0.1s;
+            }
+
+            #menu .menu_option:hover {
+                background-color: lightgray;
+                transition: 0.5s;
+            }
+
+            #menu .categories_option:hover {
+                background-color: lightgray;
+                transition: 0.5s;
+            }
+
+            #menu .menu_option a {
+                margin: 15px;
+                font-size: 20px;
+                font-weight: bold;
+                color: black;
+            }
+
+            #menu .categories_option a {
+                margin: 15px;
+                font-size: 20px;
+                font-weight: bold;
+                color: black;
+            }
+
+            .header-below {
+                display: none;
+            }
+
+            .branding {
+                display: none;
+            }
+
+            #menu .categories__container{
+                display: none;
+            }
+        }
+
     </style>
     <div style="position: sticky">
         <div id="page-top-bar">
@@ -652,6 +811,7 @@
                 </div>
             </div>
         </div>
+
         <header id="page-header">
             <div class="page-header-wrap">
                 <div class="container" style="max-width: 1270px;">
@@ -664,6 +824,9 @@
                                         <img src="{{asset('images/logo.png')}}">
                                         </a>
                                     </div>
+                                </div>
+                                <div id="menu-toggle">
+                                    <span class="material-symbols-outlined">menu</span>
                                 </div>
                             </div>
                         </div>
@@ -683,6 +846,7 @@
                         </div>
                         <div class="header-right" style="flex: 1 1 0px;">
                             <div class="header-content-inner" style=" justify-content:flex-end">
+                                <span id="search-icon" class="material-symbols-outlined" style="margin:10px;">search</span>
                                 @if (!Auth::user())
                                     <a href="javascript:" class="icon-wrap " id="init-login-form-1">
                                         <div class="icon">
@@ -844,6 +1008,63 @@
             @yield('content')
         </div>
     </div>
+
+    <div id="menu" style="position: absolute; top:0; height:100%; width: 300px; background-color:white;">
+        <div style="position: fixed; width:300px;">
+            <div style="background-color: #f5f7f7">
+                <img style="width: 50%; margin: 25px 20px;" src="{{asset('images/logo.png')}}">
+                <div class="menu__nav" style="display: flex; justify-content:center; margin-top: 5px;">
+                    <div id="menu_nav_option" class="menu_nav_option">Menu</div>
+                    <div id="categories_nav_option" class="categories_nav_option">Categories</div>
+                </div>
+            </div>
+            <div class="menu__container" style="background-color:white">
+                <div class="menu_option">
+                    <span style="font-size: 25px" class="material-symbols-outlined">home</span>
+                    <a href="{{route('home')}}">Home</a>
+                </div>
+                <div class="menu_option">
+                    <span class="material-symbols-outlined">storefront</span>
+                    <a href="{{route('shop')}}">Shop</a>
+                </div>
+                <div class="menu_option">
+                    <span class="material-symbols-outlined">note_stack</span>
+                    <a href="{{route('blog')}}">About</a>
+                </div>
+                <div class="menu_option">
+                    <span class="material-symbols-outlined">more_horiz</span>
+                    <a href="{{route('more')}}">More</a>
+                </div>
+                @if (Auth::user())
+                    <div style="margin: 45% 10px 10px 10px;">
+                        <div>
+                            <div style="display:flex; align-items:center;">
+                                <span class="material-symbols-outlined" style="font-size: 30px; margin: 0 10px"> account_circle </span>
+                                <h5 style="font-weight: bold; color: black; margin-bottom:0; display:inline">{{Auth::user()->name ?? null}}</h5>
+                            </div>
+                        </div>
+
+                        <form id="form-logout" action="{{route('logout')}}" method="POST" style="margin: 20px 20px 0 10px">
+                            <button class="btn btn-dark" type="submit" style="width: 100%; font-weight:bold">Logout</button>
+                            @csrf
+                        </form>
+                    </div>
+                @endif
+            </div>
+            <div class="categories__container">
+                <div class="categories_option">
+                    <a href="#">Phone</a>
+                </div>
+                <div class="categories_option">
+                    <a href="#">Laptop</a>
+                </div>
+                <div class="categories_option">
+                    <a href="#">Watch</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div id="sontran" style=" display:none ;position: absolute;top: 0;left: 0;bottom: 0;right: 0;background: #000; opacity: 0.5;">
     </div>
     @if (!Auth::user())
@@ -984,6 +1205,49 @@
 
 
     </script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+         $(document).ready(function() {
+            var menuVisible = false;
+
+            $('#menu-toggle').click(function() {
+                if (menuVisible) {
+                    $('#menu').animate({ left: '-250px' });
+                } else {
+                    $('#menu').animate({ left: '0px' });
+                }
+                menuVisible = !menuVisible;
+            });
+
+            $(document).click(function(event) {
+                if (menuVisible && !$(event.target).closest('#menu').length && !$(event.target).closest('#menu-toggle').length) {
+                    $('#menu').animate({ left: '-500px' });
+                    menuVisible = false;
+                }
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+            $('.menu_nav_option').click(function() {
+                $('.menu_nav_option').css('border-bottom', '2px solid black');
+                $('.categories_nav_option').css('border-bottom', '0');
+                $('.menu__container').css('display', 'block');
+                $('.categories__container').css('display', 'none');
+            })
+        })
+        $(document).ready(function() {
+            $('.categories_nav_option').click(function() {
+                $('.categories_nav_option').css('border-bottom', '2px solid black');
+                $('.menu_nav_option').css('border-bottom', '0');
+                $('.menu__container').css('display', 'none');
+                $('.categories__container').css('display', 'block');
+            })
+        })
+    </script>
+
     <script src="{{asset('admins')}}/vendor/jquery/jquery.min.js"></script>
     <script src="{{asset('admins')}}/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
