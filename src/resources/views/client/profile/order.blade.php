@@ -1,18 +1,18 @@
 @extends('client.profile.master-profile')
 @section('profile-content')
-<div class="row" style="display:flex; justify-content:center">
+<div class="row" style="width: 100%">
     <div style="width:95%">
-        <h2 style="float: left; margin-top: 5%">Order</h2>
+        <h2 style="float: left; margin: 5% 0 0 10px">Order</h2>
     </div>
-    <div class="password" style="width:95%">
-        <table class="table table-bordered" style="margin-top: 20px;">
+    <div class="table-order">
+        <table class="table table-bordered" style="margin: 20px 10px 10px 0;">
             <thead>
                 <tr>
-                    <th style="width:23%">Detail</th>
-                    <th style="width:17%">Total</th>
-                    <th style="width:17%">Discount</th>
-                    <th style="width:23%">Status</th>
-                    <th style="width:20%">Create at</th>
+                    <th class="detail">Detail</th>
+                    <th class="total" style="width: 15%">Total</th>
+                    <th class="discount" style="width: 20%">Discount</th>
+                    <th class="status">Status</th>
+                    <th class="created" style="width: 20%">Created at</th>
                 </tr>
             </thead>
             <tbody>
@@ -27,10 +27,31 @@
 </div>
 @endsection
 <style>
+    .table-order {
+        width: 95%;
+    }
+
     th {
         text-align: center;
         vertical-align: middle;
         align-items:center;
         padding: auto;
+    }
+
+    @media (max-width: 567px) {
+        th {
+            font-size: 12px;
+        }
+    }
+
+    @media (max-width: 391px) {
+        .table-order {
+            width: 90%;
+            margin-left: 0;
+        }
+
+        .table {
+            width: 95%;
+        }
     }
 </style>

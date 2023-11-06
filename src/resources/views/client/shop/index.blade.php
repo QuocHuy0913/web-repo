@@ -165,6 +165,69 @@
             width: 30%;
             max-height: 1000px;
         }
+
+        .product_item{
+            width: 24%;
+            margin: 5px;
+        }
+        @media (max-width:1200px){
+            .card__action button{
+                margin-right:0;
+                width: 50%;
+                font-size: 12px;
+            }
+            .card__action a{
+                font-size: 13px;
+            }
+
+            .card:hover .card__price {
+                transform: translate(-50px, -60px);
+            }
+
+            .product_item{
+                width: 24%;
+                margin: 3px;
+            }
+        }
+
+        @media (max-width:990px){
+            .product_item{
+                width: 30%;
+            }
+
+            .card__action button{
+                margin-right:0;
+                width: 85px;
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width:770px){
+            .shell {
+                margin-left: 40px;
+            }
+            .product_item{
+                width: 45%;
+            }
+        }
+
+        @media (max-width:471px){
+            .shell {
+                margin-left: 0;
+            }
+            .row {
+                justify-content: center;
+            }
+            .product_item{
+                width: 55%;
+            }
+        }
+
+        @media (max-width:395px){
+            .product_item{
+                width: 65%;
+            }
+        }
     </style>
     <div class="container" style="max-width: 1270px; margin-top: 16px;">
             {{-- <div class="filter">
@@ -175,10 +238,10 @@
                         @if (!empty($list))
 
                             @foreach ($list as $item)
-                                <div class="col-md-3">
+                                <div class="product_item">
                                     <div class="card">
-                                        <span class="like"><i class='bx bx-heart'></i></span>
-                                        <span class="cart"><i class='bx bx-cart-alt' ></i></span>
+                                        {{-- <span class="like"><i class='bx bx-heart'></i></span>
+                                        <span class="cart"><i class='bx bx-cart-alt' ></i></span> --}}
                                         <div class="card__img">
                                             <img src="{{asset($item->images)}}" alt="" style="width:90%"/>
                                         </div>
@@ -195,8 +258,8 @@
                                             <span class="black"></span>
                                         </div>
                                         <div class="card__action">
-                                            <button class="buy-now" style="font-size: 16px;">Buy now</button>
-                                            <a onclick="addToCart({{$item ->id}})" href="javascript:" class="add-cart btn" style="font-size: 16px; color:#fff">Add cart</a>
+                                            <button class="buy-now">Buy now</button>
+                                            <a onclick="addToCart({{$item ->id}})" href="javascript:" class="add-cart btn" style="color:#fff">Add cart</a>
                                         </div>
                                     </div>
                                 </div>

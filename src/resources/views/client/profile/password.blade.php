@@ -69,11 +69,11 @@
     }
 
     fieldset {
+        margin-right: 10px !important;
         border: 2px solid lightgrey !important;
         border-radius: 10px;
         padding:10px !important;
-        width: 100% !important;
-        margin: 20px 0 0 0 !important;
+        width: 95% !important;
     }
 
     legend {
@@ -83,4 +83,26 @@
         padding: 0px 20px 0 !important;
         font-size: 20px !important;
     }
+
+    @media (max-width:1140px){
+        .user {
+            height: 28%;;
+        }
+    }
+
+    @media (max-width: 760px){
+        fieldset {
+            margin-right: 7px !important;
+            padding:5px !important;
+            width: 98% !important;
+        }
+    }
+
+    @media (max-width: 391px){
+        fieldset {
+            width: 93% !important;
+            margin-right: 10px !important;
+        }
+    }
+
 </style>
