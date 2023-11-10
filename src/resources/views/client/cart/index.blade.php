@@ -305,6 +305,7 @@
                 closeVoucher.addEventListener('click', () => {
                     voucherWrap.style.display = "none";
                     sontran.style.display = "none";
+                    
                 })
             })
         // function deleteAll(){

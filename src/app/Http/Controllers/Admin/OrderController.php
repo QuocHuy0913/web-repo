@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
-use App\models\OrderDetail;
+use App\Models\OrderDetail;
 class OrderController extends Controller
 {
     //
@@ -25,18 +25,18 @@ class OrderController extends Controller
     }
     public function getOrderDetail($id) {
         $orderDetailList = OrderDetail::find($id)->first();
-        return view('admin.order.list_detail_order',compact('orderDetailList','title'));
+        return view('admin.order.list_detail_order',compact('orderDetailList'));
     }
     public function getOrderHistory() {
-        $order = OrderDetail::getList(auth()->user()->id);
+        $order = $this->order->getList(auth()->user()->id);
         return view('client.order_history',compact('order'));
     }
     public function getUpdateStatusOrder($id){
-        $order = OrderDetail::getListByIdOrder($id)[0];
+        $order = $this->order->getListByIdOrder($id)[0];
         return view('admin.order.update',compact('order'));
     }
-    public function postUpdateStatusOrder(Request $req, $id) {
-        OrderDetail::updateStatusOrder($req->maOrder,$req->status);
-        return back()->with('msg','Cập nhật đơn hàng thành công');
+    public function postUpdateStatusOrder(Request $request, $id) {
+        $this->order->updateStatusOrder($request->code,$request->status);
+        return redirect()->route('admin.orders.getList')->with('msg','Cập nhật đơn hàng thành công');
     }
 }

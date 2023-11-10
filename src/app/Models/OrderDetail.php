@@ -24,4 +24,12 @@ class OrderDetail extends Model
         //$order = order_details::insert($data);
         return $order;
     }
+    public function getTotal($id)
+    {
+        if(!empty($id)){
+            $list = DB::table($this->table)->where('order_id',$id)->select('price')->get();
+            return $list;
+        }
+            return 0;
+    }
 }
