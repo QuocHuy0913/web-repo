@@ -1165,43 +1165,24 @@
                 <h5>Techstore vouchers</h5>
             </div>
             <div id="vouchers-block">
-                <ul id="vouchers-list">
-                    <li class="voucher-item">
-                        <div class="row" style="align-items: center; margin-right:0; margin-left:0;">
-                            <span class="voucher-item-name">Hello</span>
-                            <div>
-                                <form action="">
-                                    <input type="hidden">
-                                    <button class="btn btn-primary" type="submit">Add</button>
-                                </form>
-                            </div>
-                        </div>
-                        <hr>
-                    </li>
-                    <li class="voucher-item">
-                        <div class="row" style="align-items: center; margin-right:0; margin-left:0;">
-                            <span class="voucher-item-name">Hello</span>
-                            <div>
-                                <form action="">
-                                    <input type="hidden">
-                                    <button class="btn btn-primary" type="submit">Add</button>
-                                </form>
-                            </div>
-                        </div>
-                        <hr>
-                    </li>
-                    <li class="voucher-item">
-                        <div class="row" style="align-items: center; margin-right:0; margin-left:0;">
-                            <span class="voucher-item-name">Hello</span>
-                            <div>
-                                <form action="">
-                                    <input type="hidden">
-                                    <button class="btn btn-primary" type="submit">Add</button>
-                                </form>
-                            </div>
-                        </div>
-                        <hr>
-                    </li>
+                <ul id="vouchers-list">                    
+                        @foreach(getDiscountUser(Auth()->user()->rank_id) as $item)
+                                <li class="voucher-item">
+                                    <form method="POST" action="{{route('checkDiscountSelect')}}">
+                                        <div class="row" style="align-items: center; margin-right:0; margin-left:0;">
+                                            <p class="voucher-item-name">{{$item->name}}</p>
+                                            <p class="voucher-item-name">{{$item->price}}</p>
+                                            <input name="voucher" value="{{$item->code}}" class="voucher-item-name" readonly/>
+                                            <div>
+                                                <input type="hidden">
+                                                <button class="btn btn-primary" type="submit">Add</button>     
+                                            </div>
+                                        </div>
+                                        @csrf
+                                    </form>
+                                    <hr>
+                                </li>
+                        @endforeach
                 </ul>
             </div>
         </div>
@@ -1300,7 +1281,7 @@
                 $('.categories_nav_option').css('border-bottom', '2px solid black');
                 $('.menu_nav_option').css('border-bottom', '0');
                 $('.menu__container').css('display', 'none');
-                $('.categories__container').css('display', 'block');
+                $('.categories__container').css('display', 'block'); 
             })
         })
     </script>

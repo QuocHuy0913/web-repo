@@ -19,7 +19,7 @@ class DashBoardController extends Controller
         return view('client.blog.index');
     }
     public function more(){
-        dd(Session('Cart'));
+        dd(Session('discount'));
         return view('client.more.index');
     }
 

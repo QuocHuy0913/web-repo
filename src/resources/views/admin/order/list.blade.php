@@ -6,19 +6,25 @@
 <div class="card shadow mb-4">
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary">List of Orders</h6>
+        @if (session('msg'))
+            <div class="alert alert-success">{{session('msg')}}</div>
+        @endif
+        </h6>
     </div>
     <div class="card-body">
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th width="20%">Name</th>
+                        <th width="15%">Name</th>
                         <th width="15%">Total</th>
                         <th width="10%">Phone</th>
                         <th width ="20%">Address</th>
-                        <th width ="20%">Discount</th>
-                        <th width ="20%">Status</th>
-                        <th width ="20%">Detail</th>
+                        <th width ="15%">Voucher</th>
+                        <th width ="10%">Value</th>
+                        <th class="" width ="35%">Status</th>
+                        <th width ="15%">Detail</th>
+                        <th width ="15%">Update</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -26,13 +32,15 @@
                         @if(count($list) > 0)
                             @foreach ($list as $item)
                                 <tr>
-                                    <td>{{$item -> name}}</td>
-                                    <td>{{$item -> total}}</td>
-                                    <td>{{$item -> phone}}</td>
-                                    <td>{{$item -> address}}</td>
-                                    <td>{{$item -> discount}}</td>
-                                    <td>{{$item -> status}}</td>
-                                    <td><a href="#" class="btn btn-warning">Detail</a></td>
+                                    <td>{{$item->name ?? getNameUser($item->user_id)}}</td>
+                                    <td>{{$item->total}}</td>
+                                    <td>{{$item->phone}}</td>
+                                    <td>{{$item->address}}</td>
+                                    <td>{{getDiscountName($item->discount_id)}}</td>
+                                    <td>{{getDiscountPrice($item->discount_id)}}</td>
+                                    <td class=""><a href="#" class="btn btn-{{displayClassStatusOrder($item->status)}}">{{displayStatus($item->status)}}</td>
+                                    <td><a href="{{route('admin.orders.detailOrder',['id'=>$item ->id])}}" class="btn btn-warning">Detail</a></td>
+                                    <td><a href="{{route('admin.orders.getUpdateStatusOrder',['id'=>$item->id])}}" class="btn btn-warning">Cập nhật</a></td>                                                                                                                  
                                 </tr>
                             @endforeach
                         @else
