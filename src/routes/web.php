@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\BrandController as AdminBrandController;
 use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 use App\Http\Controllers\Client\DashboardController as ClientDashboardController;
 use App\Http\Controllers\Client\ProductController as ClientProductController;
+use App\Http\Controllers\MyAuth\AuthController;
 use App\Http\Controllers\Admin\DiscountController;
 use App\Http\Controllers\Admin\RankController;
 use App\Http\Controllers\Client\UserController;
@@ -96,9 +97,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/userOrder' , [UserController::class, 'getUserOrder'])->name('getUserOrder');
     Route::get('/changePassword' , [UserController::class, 'getChangePassword'])->name('changePassword');
     Route::post('/changePassword' , [UserController::class, 'postChangePassword'])->name('postChangePassword');
-});
 
-Auth::routes();
+    Route::post('logout', [AuthController::class,'logout'])->name('logout');
+});
+Route::post('login', [AuthController::class,'login'])->name('login');
+Route::post('register', [AuthController::class,'register'])->name('register');
+// Auth::routes();
 Route::get('home', function(){
     return view('layouts.app');
 });

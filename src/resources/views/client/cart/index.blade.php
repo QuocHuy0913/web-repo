@@ -192,6 +192,7 @@
                         </div>
                         <a href="javascript:" onclick="checkOut()" class="btn-checkout">Checkout</a>
                         <form action="{{route('checkPayment')}}" method="POST" style="margin-top: 12px">
+                            <input id="price-payment" name="totalPrice" type="hidden" value="{{Session::get('Cart') ? Session::get('Cart')->totalPrice : 0}}">
                             <button type="submit" class="btn btn-primary" name="redirect" style="width:100%">Check Payment</button>
                             @csrf
                         </form>
@@ -214,6 +215,7 @@
             $("#price-total-value").text(response[3]);
             $("#pre-total-price").text(response[2]);
             $("#price-discount-rank").text(response[4]);
+            $("#price-payment").val(response[3]);
         }
         function decreaseItem(id) {
             var $n =  $("#item-cart-"+id)

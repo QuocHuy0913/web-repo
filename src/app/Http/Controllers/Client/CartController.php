@@ -26,7 +26,76 @@ class CartController extends Controller
         $this->user = new User();
         $this->discount = new Discount();
     }
-    public function showCart(){
+    public function showCart(Request $req){
+        if($req->input('vnp_SecureHash')) {
+            $name = Session('Cart')->nickName ?? Auth::user()->nickName;
+            $phone = Session('Cart')->phone ?? Auth::user()->phone;
+            $address = Session('Cart')->address ?? Auth::user()->address;
+            $order = new Order;
+            $order->user_id = Auth()->user()->id;
+            $order->name = $name;
+            $order->total = 0;
+            $order->status = 0;
+            $order->address = $address;
+            $order->phone = $phone;
+            $order->save();
+            $idOrder = $order->id;
+            if(!empty(Session("Cart")->products)){
+                foreach(Session("Cart")->products as $item){
+                    $data = [
+                        'order_id' => $idOrder,
+                        'product_id' => $item['productInfo']->id,
+                        'price' => $item['price'],
+                        'amount' => $item['quantity'],
+                    ];
+                    $this->orderdetail->addOrderDetail($data);
+                    $product = Product::find($item['productInfo']->id);
+                    $product->amount = $product->amount - $item['quantity'];
+                    $product->save();
+                }
+                $data = [
+                    Session('Cart')->totalPrice
+                ];
+
+                $idRank = Auth()->user()->rank_id;
+                $rank = Rank::find($idRank);
+                $discount_rank = $rank->discount;
+                if(!empty(Session::get('discount'))){
+                    foreach(Session::get('discount') as $key => $item){
+                        $total = Session('Cart')->totalPrice - $discount_rank*0.01*Session('Cart')->totalPrice;
+                        $total = $total - $item['price'];
+                        $data = [
+                            $total
+                        ];
+                        $discount = Discount::find($item['id']);
+                        $discount->amount = $discount->amount - 1;
+                        $discount->save();
+                        $discount = [
+                            $item['id']
+                        ];
+                    }
+                }
+
+                $this->order->updatePriceOrder($idOrder,$data);
+                if(!empty($discount))
+                {
+                    $this->order->updateDiscount($idOrder,$discount);
+                }
+
+                $user = User::find(Auth()->user()->id);
+                $user->rank_id = $this->rank->setupRank($user->id) ;
+                $user->save();
+                $oldCart = Session('Cart') ? Session('Cart'):null;
+                // $newCart = new Cart($oldCart);
+                $oldCart->deleteAllCart();
+                $req->session()->forget('Cart');
+                $req->session()->forget('discount');
+                return view('client.cart.index');
+            }else{
+                return view('client.cart.index');
+            }
+        };
+
         $idRank = Auth()->user()->rank_id;
         if(!empty($idRank)){
            $rank = Rank::find($idRank);
@@ -76,8 +145,8 @@ class CartController extends Controller
                 $discount_rank = $rank->discount;
                 if(!empty(Session::get('discount'))){
                     foreach(Session::get('discount') as $key => $item){
+                        Session('Cart')->totalPrice = Session('Cart')->totalPrice - $discount_rank*0.01*Session('Cart')->totalPrice;
                         Session('Cart')->totalPrice = Session('Cart')->totalPrice - $item['price'];
-                        Session('Cart')->totalPrice = Session('Cart')->totalPrice - $discount_rank;
                         $data = [
                             Session('Cart')->totalPrice
                         ];
@@ -244,70 +313,80 @@ class CartController extends Controller
             return redirect()->back();
        }
     }
-    public function checkPayment(){
-        $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-        $vnp_Returnurl = "https://localhost/vnpay_php/vnpay_return.php";
-        $vnp_TmnCode = "U2YDTOHX";//Mã website tại VNPAY
-        $vnp_HashSecret = "KZGNSWGMVOOUJLTTKOAPYVBUCVHUXLQT"; //Chuỗi bí mật
+    public function checkPayment(Request $req){
+        // $check = (Session('Cart')->nickName && Session('Cart')->phone && Session('Cart')->address) || (Auth::user()->phone && Auth::user()->address) ;
+        // if(!$check) {
+        //     return response()->json([
+        //         "status" => "error",
+        //         "des" => "You dont have fill out your information to checkout"
+        //     ]);
+        // } else {
+            $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
+            $vnp_Returnurl = "http://localhost/cart";
+            $vnp_TmnCode = "U2YDTOHX";//Mã website tại VNPAY
+            $vnp_HashSecret = "KZGNSWGMVOOUJLTTKOAPYVBUCVHUXLQT"; //Chuỗi bí mật
 
-        $vnp_TxnRef = "sonhoang2071"; //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
-        $vnp_OrderInfo = "Checkout Payment";
-        $vnp_OrderType = "Techstore";
-        $vnp_Amount = 10000 * 100;
-        $vnp_Locale = "VN";
-        $vnp_BankCode = "NCB";
-        $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
+            $vnp_TxnRef = rand(0, 9999); //Mã đơn hàng. Trong thực tế Merchant cần insert đơn hàng vào DB và gửi mã này sang VNPAY
+            $vnp_OrderInfo = "Checkout Payment";
+            $vnp_OrderType = "Techstore";
+            $vnp_Amount = $req->totalPrice * 100 * 22000;
+            $vnp_Locale = "VN";
+            $vnp_BankCode = "NCB";
+            $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
 
-        $inputData = array(
-            "vnp_Version" => "2.1.0",
-            "vnp_TmnCode" => $vnp_TmnCode,
-            "vnp_Amount" => $vnp_Amount,
-            "vnp_Command" => "pay",
-            "vnp_CreateDate" => date('YmdHis'),
-            "vnp_CurrCode" => "VND",
-            "vnp_IpAddr" => $vnp_IpAddr,
-            "vnp_Locale" => $vnp_Locale,
-            "vnp_OrderInfo" => $vnp_OrderInfo,
-            "vnp_OrderType" => $vnp_OrderType,
-            "vnp_ReturnUrl" => $vnp_Returnurl,
-            "vnp_TxnRef" => $vnp_TxnRef
-        );
+            $inputData = array(
+                "vnp_Version" => "2.1.0",
+                "vnp_TmnCode" => $vnp_TmnCode,
+                "vnp_Amount" => $vnp_Amount,
+                "vnp_Command" => "pay",
+                "vnp_CreateDate" => date('YmdHis'),
+                "vnp_CurrCode" => "VND",
+                "vnp_IpAddr" => $vnp_IpAddr,
+                "vnp_Locale" => $vnp_Locale,
+                "vnp_OrderInfo" => $vnp_OrderInfo,
+                "vnp_OrderType" => $vnp_OrderType,
+                "vnp_ReturnUrl" => $vnp_Returnurl,
+                "vnp_TxnRef" => $vnp_TxnRef
+            );
 
-        if (isset($vnp_BankCode) && $vnp_BankCode != "") {
-            $inputData['vnp_BankCode'] = $vnp_BankCode;
-        }
-        if (isset($vnp_Bill_State) && $vnp_Bill_State != "") {
-            $inputData['vnp_Bill_State'] = $vnp_Bill_State;
-        }
-
-        //var_dump($inputData);
-        ksort($inputData);
-        $query = "";
-        $i = 0;
-        $hashdata = "";
-        foreach ($inputData as $key => $value) {
-            if ($i == 1) {
-                $hashdata .= '&' . urlencode($key) . "=" . urlencode($value);
-            } else {
-                $hashdata .= urlencode($key) . "=" . urlencode($value);
-                $i = 1;
+            if (isset($vnp_BankCode) && $vnp_BankCode != "") {
+                $inputData['vnp_BankCode'] = $vnp_BankCode;
             }
-            $query .= urlencode($key) . "=" . urlencode($value) . '&';
-        }
-
-        $vnp_Url = $vnp_Url . "?" . $query;
-        if (isset($vnp_HashSecret)) {
-            $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnp_HashSecret);//
-            $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
-        }
-        $returnData = array('code' => '00'
-            , 'message' => 'success'
-            , 'data' => $vnp_Url);
-            if (isset($_POST['redirect'])) {
-                header('Location: ' . $vnp_Url);
-                die();
-            } else {
-                echo json_encode($returnData);
+            if (isset($vnp_Bill_State) && $vnp_Bill_State != "") {
+                $inputData['vnp_Bill_State'] = $vnp_Bill_State;
             }
+
+            //var_dump($inputData);
+            ksort($inputData);
+            $query = "";
+            $i = 0;
+            $hashdata = "";
+            foreach ($inputData as $key => $value) {
+                if ($i == 1) {
+                    $hashdata .= '&' . urlencode($key) . "=" . urlencode($value);
+                } else {
+                    $hashdata .= urlencode($key) . "=" . urlencode($value);
+                    $i = 1;
+                }
+                $query .= urlencode($key) . "=" . urlencode($value) . '&';
+            }
+
+            $vnp_Url = $vnp_Url . "?" . $query;
+            if (isset($vnp_HashSecret)) {
+                $vnpSecureHash =   hash_hmac('sha512', $hashdata, $vnp_HashSecret);//
+                $vnp_Url .= 'vnp_SecureHash=' . $vnpSecureHash;
+            }
+            $returnData = array('code' => '00'
+                , 'message' => 'success'
+                , 'data' => $vnp_Url);
+                if (isset($_POST['redirect'])) {
+                    header('Location: ' . $vnp_Url);
+                    die();
+                } else {
+                    echo json_encode($returnData);
+                }
+        // }
+
+
     }
 }
