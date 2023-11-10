@@ -9,7 +9,7 @@
                 @if (!empty(Session::has("Cart")))
                     <div id="content-left">
                         <div class="content-left-head ">
-                            <label for="" style="font-weight: inherit;margin-bottom: 0;">Tất cả sản phẩm</label>
+                            <label for="" style="margin-bottom: 0;">Tất cả sản phẩm</label>
                             <span class="ta-c">Đơn giá</span>
                             <span class="ta-c">Số lượng</span>
                             <span class="ta-c">Thành tiền</span>
@@ -26,7 +26,7 @@
                                                 </div>
                                             </a>
                                             <div class="product-name">
-                                                <h5>{{$item['productInfo']->name}}</h5>
+                                                <h5 style="margin-bottom: 0">{{$item['productInfo']->name}}</h5>
                                             </div>
                                         </div>
                                     </div>
@@ -196,6 +196,204 @@
                             @csrf
                         </form>
                     </div>
+                    <div class="info_checkout">
+                        <div style="position:fixed; width:97%; background-color:white; box-shadow: 5px 5px 10px 8px lightgrey; bottom:0">
+                            <div style="display:flex; width:100%; border-bottom: 1px solid lightgrey;">
+                                <div class="address_info" style="padding:16px 16px 0 16px;">
+                                    <div class="head-content">
+                                        <h3 class="hcb-title">Giao tới</h3>
+                                        <a href="{{route('getChangeInfoOrder')}}" class="change-address">Change</a>
+                                    </div>
+                                    @if ((Session('Cart')->nickName && Session('Cart')->phone && Session('Cart')->address) || (Auth::user()->phone && Auth::user()->address))
+                                        <div class="customer-info">
+                                            <p class="customer-info-name">{{Session('Cart')->nickName ?? Auth::user()->name }}</p>
+                                            <i style="width: 2px; height: 20px;background-color: rgb(235, 235, 240); margin: 0 8px;"></i>
+                                            <p class="customer-info-phone">{{Session('Cart')->phone ?? Auth::user()->phone }}</p>
+                                        </div>
+                                        <div class="address">
+                                            <span style="color: rgb(0, 171, 86);
+                                                background-color: rgb(239, 255, 244);
+                                                font-weight: 500;
+                                                font-size: 10px;
+                                                line-height: 16px;
+                                                padding: 0px 5px;
+                                                border-radius: 100px;
+                                                height: 18px;
+                                                display: inline-flex;
+                                                -webkit-box-align: center;
+                                                align-items: center;">
+                                                Home
+                                            </span>
+                                            <span style="font-size: 14px">{{Session('Cart')->address ?? Auth::user()->address }}</span>
+                                        </div>
+                                    @else
+                                        <div class="customer-info" style="margin-bottom: 8px">
+                                            <p style="font-size:13px" class="customer-info-name">{{Auth::user()->name }}</p>
+                                        </div>
+                                        <div class="address" style="margin-bottom: 8px">
+                                            <span style="color: #d70018; font-size:13px;">Please change the shipping information because of its NULL</span>
+                                        </div>
+                                    @endif
+                                </div>
+
+                                <div class="block-voucher-info" style="width:40%;">
+                                    <div class="block-voucher">
+                                        <div class="content-bv" style="margin:0; padding-bottom:0">
+                                            <div class="head-content">
+                                                <h3 class="hcb-title" style="color: rgb(36, 36, 36);">Shop khuyến mãi</h3>
+                                                <h4 class="hcb-title" style="font-size: 14px">Tối đa chọn 1</h4>
+                                            </div>
+                                                @if(Session::get('discount'))
+                                                    @foreach(Session::get('discount') as $key=>$item)
+                                                        @if(!empty($item['price']))
+                                                            <form method="POST" action="{{route('checkDiscount')}}">
+                                                                <div class="head-content">
+                                                                <input type="text" name="voucher" placeholder="Nhập mã khuyến mãi..." class="customer-voucher form-control" value="{{$item['code']}}" style="width: 240px;" >
+                                                                <button type="submit" class="btn btn-primary">Add</button>
+                                                                </div>
+                                                                @csrf
+                                                            </form>
+                                                        @endif
+                                                    @endforeach
+                                                @else
+                                                    <form method="POST" action="{{route('checkDiscount')}}">
+                                                        <div class="head-content">
+                                                        <input type="text" name="voucher" placeholder="Nhập mã khuyến mãi..." class="customer-voucher form-control" style="width: 90%;" >
+                                                        <button style="margin-left:5px" type="submit" class="btn btn-primary">Add</button>
+                                                        </div>
+                                                        @csrf
+                                                    </form>
+                                                @endif
+                                            <div class="head-content">
+                                                <span id="voucher-link-1" style="color: blue">Select Your Voucher</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="block-checkout-info">
+                                    <ul class="price-items">
+                                        <li class="price-item">
+                                            <span class="price-text">Tạm tính</span>
+                                            <span class="price-value" id ="pre-total-price-1">{{Session::get('Cart') ? Session::get('Cart')->totalPrice : 0}}</span>
+                                        </li>
+                                        <li class="price-item">
+                                            @if(!empty($nameRank))
+                                                @if(!empty($discount))
+                                                    <span class="price-text">Hạng {{$nameRank}}</span>
+                                                    <span class="price-value" id ="price-discount-rank-1">-{{Session::get('Cart') ? ((Session::get('Cart')->totalPrice)*$discount)/100 : 0}}</span>
+                                                @endif
+                                            @else
+                                                <span class="price-text">Not Rank</span>
+                                            @endif
+                                        </li>
+                                        @if(Session::get('discount'))
+                                            @foreach(Session::get('discount') as $key=>$item)
+                                                @if(!empty($item['price']))
+                                                    <li class="price-item">
+                                                        <span class="price-text">Giảm giá</span>
+                                                        <div class="price-value">-{{$item['price'] ?? 0}}</div>
+                                                    </li>
+                                                @endif
+                                                @if(!empty($item['name']))
+                                                    <li class="price-item">
+                                                        <span class="price-text">Voucher</span>
+                                                        <div class="price-value">{{$item['name'] ?? 0}}</div>
+                                                    </li>
+                                                @endif
+                                            @endforeach
+                                        @else
+                                            <li class="price-item">
+                                                <span class="price-text">Giảm giá</span>
+                                                <div class="price-value">0</div>
+                                            </li>
+                                        @endif
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="block-voucher-info-1" style="width:100%;">
+                                <div class="block-voucher">
+                                    <div class="content-bv" style="margin:0; padding: 10px 16px 0 16px; border-bottom: 1px solid lightgrey;">
+                                        <div class="head-content" style="margin-bottom:4px">
+                                            <h3 class="hcb-title" style="color: rgb(36, 36, 36);">Shop khuyến mãi</h3>
+                                            <h4 class="hcb-title">Tối đa chọn 1</h4>
+                                        </div>
+                                            @if(Session::get('discount'))
+                                                @foreach(Session::get('discount') as $key=>$item)
+                                                    @if(!empty($item['price']))
+                                                        <form method="POST" action="{{route('checkDiscount')}}">
+                                                            <div class="head-content">
+                                                            <input type="text" name="voucher" placeholder="Nhập mã khuyến mãi..." class="customer-voucher form-control" value="{{$item['code']}}" style="width: 240px;" >
+                                                            <button type="submit" class="btn btn-primary">Add</button>
+                                                            </div>
+                                                            @csrf
+                                                        </form>
+                                                    @endif
+                                                @endforeach
+                                            @else
+                                                <form method="POST" action="{{route('checkDiscount')}}">
+                                                    <div class="head-content" style="margin-bottom:0">
+                                                    <input type="text" name="voucher" placeholder="Nhập mã khuyến mãi..." class="customer-voucher form-control" style="width: 90%;" >
+                                                    <button style="margin-left:5px" type="submit" class="btn btn-primary">Add</button>
+                                                    </div>
+                                                    @csrf
+                                                </form>
+                                            @endif
+                                        <div class="head-content" style="margin: 4px 0 4px 0;">
+                                            <span id="voucher-link-2" style="color: blue">Select Your Voucher</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                                <div class="block-checkout-payment" style="align-items:center; width:100%;">
+                                    <div style="text-align:right; width:145px">
+                                        <div class="price-text" style="height:40%; display:flex; align-items:center; justify-content:right">
+                                            <span style="margin-right:10%">Tổng tiền</span>
+                                            <div>
+                                                @if(!empty($discount))
+                                                    @if(Session::get('discount'))
+                                                        @foreach(Session::get('discount') as $key=>$item)
+                                                                @if(!empty($item['price']))
+                                                                    <span id="price-total-value-1">{{(Session::get('Cart')->totalPrice - ((Session::get('Cart')->totalPrice *$discount)/100)) - $item['price'] ?? 0}}</span>
+                                                                @else
+                                                                    <span id="price-total-value-1">{{(Session::get('Cart')->totalPrice - ((Session::get('Cart')->totalPrice *$discount)/100)) ?? 0}}</span>
+                                                                @endif
+                                                        @endforeach
+                                                    @else
+                                                        <span id="price-total-value-1">{{Session::get('Cart') ? Session::get('Cart')->totalPrice - (((Session::get('Cart')->totalPrice)*$discount)/100) : 0}}</span>
+                                                    @endif
+                                                @else
+                                                        @if(Session::get('discount'))
+                                                            @foreach(Session::get('discount') as $key=>$item)
+                                                                    @if(!empty($item['price']))
+                                                                        <span id="price-total-value-1">{{(Session::get('Cart')->totalPrice) - $item['price'] ?? 0}}</span>
+                                                                    @endif
+                                                            @endforeach
+                                                        @else
+                                                            <span id="price-total-value-1">{{Session::get('Cart') ? Session::get('Cart')->totalPrice : 0}}</span>
+                                                        @endif
+                                                @endif
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <span class="notice-vat">(Đã bao gồm VAT nếu có)</span>
+                                        </div>
+                                    </div>
+                                    <div class="checkout">
+                                        <a href="javascript:" onclick="checkOut()" class="btn btn-danger" style="background-color: rgb(255, 66, 78);">Checkout</a>
+                                    </div>
+                                    <div class="payment">
+                                        <form action="{{route('checkPayment')}}" method="POST">
+                                            <button type="submit" class="btn btn-primary" name="redirect">Check Payment</button>
+                                            @csrf
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 @else
                 <h4 style="width:fit-content; color:#d70018;">Cart is null</h4>
                 @endif
@@ -212,9 +410,13 @@
             $("#item-price-"+id).text(response[0].price);
             $("#icon-amount-orders").text(response[1]);
             $("#price-total-value").text(response[3]);
+            $("#price-total-value-1").text(response[3]);
             $("#pre-total-price").text(response[2]);
+            $("#pre-total-price-1").text(response[2]);
             $("#price-discount-rank").text(response[4]);
+            $("#price-discount-rank-1").text(response[4]);
         }
+
         function decreaseItem(id) {
             var $n =  $("#item-cart-"+id)
             var amount = Number($n.val());
@@ -253,11 +455,17 @@
                     $("#icon-amount-orders").text("0");
                     $("#price-total-value").text("0");
                     $("#pre-total-price").text("0");
+                    $("#price-total-value-1").text("0");
+                    $("#pre-total-price-1").text("0");
+                    $("#price-discount-rank").text("0");
+                    $("#price-discount-rank-1").text("0");
                 } else {
                     $("#wrap-item-"+id).remove();
                     $("#icon-amount-orders").text(response[0]);
                     $("#price-total-value").text(response[1]);
                     $("#pre-total-price").text(response[1]);
+                    $("#price-total-value-1").text(response[1]);
+                    $("#pre-total-price-1").text(response[1]);
                 }
                 Swal.fire(
                     'Item of cart was deleted successful',
@@ -286,6 +494,8 @@
                     $("#icon-amount-orders").text("0");
                     $("#price-total-value").text("0");
                     $("#pre-total-price").text("0");
+                    $("#price-total-value-1").text("0");
+                    $("#pre-total-price-1").text("0");
                     Swal.fire(
                         'The order was checked out successful',
                         'You clicked the button!',
@@ -296,6 +506,34 @@
         }
             let voucherLink = document.getElementById('voucher-link');
             voucherLink.addEventListener('click', () => {
+                let voucherWrap = document.getElementById('vouchers-wrap');
+                let sontran = document.getElementById("sontran");
+                voucherWrap.style.display = "block";
+                voucherWrap.style.transform = "translate(-50%, -13%)";
+                let closeVoucher = document.getElementById('close-vouchers-wrap');
+                sontran.style.display = "block";
+                closeVoucher.addEventListener('click', () => {
+                    voucherWrap.style.display = "none";
+                    sontran.style.display = "none";
+                })
+            })
+
+            let voucherLink1 = document.getElementById('voucher-link-1');
+            voucherLink1.addEventListener('click', () => {
+                let voucherWrap = document.getElementById('vouchers-wrap');
+                let sontran = document.getElementById("sontran");
+                voucherWrap.style.display = "block";
+                voucherWrap.style.transform = "translate(-50%, -13%)";
+                let closeVoucher = document.getElementById('close-vouchers-wrap');
+                sontran.style.display = "block";
+                closeVoucher.addEventListener('click', () => {
+                    voucherWrap.style.display = "none";
+                    sontran.style.display = "none";
+                })
+            })
+
+            let voucherLink2 = document.getElementById('voucher-link-2');
+            voucherLink2.addEventListener('click', () => {
                 let voucherWrap = document.getElementById('vouchers-wrap');
                 let sontran = document.getElementById("sontran");
                 voucherWrap.style.display = "block";
@@ -514,7 +752,7 @@
         justify-content: space-between;
         margin: 0px;
     }
-    #price-total-value {
+    #price-total-value, #price-total-value-1, #price-total-value-2 {
         color: rgb(254, 56, 52);
         font-size: 24px;
         font-weight: 400;
@@ -594,4 +832,160 @@
         margin-right: -1px;
     }
 
+    .info_checkout {
+        display: none;
+    }
+
+    @media (max-width: 1215px){
+        #content-left {
+            width: 70%;
+        }
+
+        #content-right {
+            display: none;
+        }
+
+        .content-left-head {
+            grid-template-columns: 35% 17% 24% 20% auto;
+        }
+
+        .test {
+            grid-template-columns: 35% 17% 24% 20% auto;
+        }
+
+        .info_checkout {
+            display: block;
+            position: absolute;
+            top:0
+        }
+
+        .block-voucher-info-1 {
+            display: none;
+        }
+
+        .address_info {
+            width: 30%;
+        }
+
+        .block-checkout-info {
+            width: 30%;
+        }
+
+        .block-checkout-payment {
+            display: flex;
+            justify-content: flex-end;
+            margin: 8px 0;
+        }
+
+        .price-items {
+            border-bottom: none;
+        }
+
+        .block-checkout-payment .checkout{
+            margin: 0 5px 0 8px;
+        }
+
+        .block-checkout-payment .payment{
+            margin: 0 16px 0 5px;
+        }
+    }
+
+    @media (max-width: 736px){
+
+        .customer-info {
+            display: block;
+        }
+        .customer-info i{
+            display: none;
+        }
+        .customer-info p{
+            margin-bottom: 5px;
+        }
+    }
+
+    @media (max-width: 500px){
+        .block-voucher-info {
+            display: none;
+        }
+        .block-voucher-info-1 {
+            display: block;
+        }
+
+        .address_info {
+            width: 58%;
+        }
+
+        .block-checkout-info {
+            width: 42%;
+        }
+
+        .customer-info p{
+            display: inline;
+        }
+
+        .customer-info i{
+            display: inline;
+        }
+
+        .price-items {
+            padding: 16px 16px 0 16px;
+        }
+    }
+
+    @media (max-width:431px){
+        .hcb-title {
+            font-size: 12px;
+        }
+
+        #voucher-link-2{
+            font-size: 12px;
+        }
+
+        .head-content {
+            margin-bottom: 2px;
+        }
+
+        .price-items li {
+            margin-bottom: 5px;
+        }
+
+        .price-text {
+            font-size: 14px;
+        }
+
+        .head-content input, .head-content button{
+            font-size: 12px;
+        }
+
+        .customer-info p{
+            font-size: 13px;
+        }
+
+        .address {
+            margin-top:4px;
+        }
+
+        .change-address {
+            font-size: 14px;
+        }
+    }
+
+    @media (max-width:408px){
+        .block-checkout-payment .btn-danger{
+            font-size: 13px;
+        }
+
+        .block-checkout-payment .btn-primary {
+            font-size: 14px;
+            width:100%;
+        }
+
+        .price-text span {
+            font-size: 12px;
+        }
+
+        #price-total-value-2 {
+            font-size: 20px;
+        }
+    }
 </style>

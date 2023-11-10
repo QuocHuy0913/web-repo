@@ -12,7 +12,7 @@
                             <label for="">Name</label>
                         </div>
                         <div class="mb-3">
-                            <input type="text" name="nickName" class="form-control w-50" placeholder="name..." autocomplete="off"  value="{{old('nickName') ?? Auth()->user()->name}}">
+                            <input type="text" name="nickName" class="form-control" placeholder="name..." autocomplete="off"  value="{{old('nickName') ?? Auth()->user()->name}}">
                             @error('nickName')
                                 <span style="color: red">{{$message}}</span>
                             @enderror
@@ -22,7 +22,7 @@
                             <label for="">Phone</label>
                         </div>
                         <div class="mb-3">
-                            <input type="text" name="phone" class="form-control w-50" placeholder="Your Phone..." autocomplete="off"  value="{{old('phone')}}">
+                            <input type="text" name="phone" class="form-control" placeholder="Your Phone..." autocomplete="off"  value="{{old('phone')}}">
                             @error('phone')
                                 <span style="color: red">{{$message}}</span>
                             @enderror
@@ -32,7 +32,7 @@
                             <label for="">Address</label>
                         </div>
                         <div class="mb-3">
-                            <input type="text" name="address" class="form-control w-50" placeholder="Your Addresss..." autocomplete="off" value="{{old('address')}}">
+                            <input type="text" name="address" class="form-control" placeholder="Your Addresss..." autocomplete="off" value="{{old('address')}}">
                             @error('address')
                                 <span style="color: red">{{$message}}</span>
                             @enderror
