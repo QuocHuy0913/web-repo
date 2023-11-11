@@ -238,7 +238,7 @@
                         @if (!empty($list))
 
                             @foreach ($list as $item)
-                                <div class="product_item">
+                                <div class="product_item">                           
                                     <div class="card">
                                         {{-- <span class="like"><i class='bx bx-heart'></i></span>
                                         <span class="cart"><i class='bx bx-cart-alt' ></i></span> --}}
@@ -262,6 +262,7 @@
                                             <a onclick="addToCart({{$item ->id}})" href="javascript:" class="add-cart btn" style="color:#fff">Add cart</a>
                                         </div>
                                     </div>
+                                </a>
                                 </div>
                             @endforeach
 

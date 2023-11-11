@@ -1288,7 +1288,7 @@
                                         <div class="row" style="align-items: center; margin-right:0; margin-left:0;">
                                             <p class="voucher-item-name">{{$item->name}}</p>
                                             <p class="voucher-item-name">{{$item->price}}</p>
-                                            <input name="voucher" value="{{$item->code}}" class="voucher-item-name" readonly/>
+                                            <input type="hidden" name="voucher" value="{{$item->code}}" class="voucher-item-name" readonly/>
                                             <div>
                                                 <input type="hidden">
                                                 <button class="btn btn-primary" type="submit">Add</button>     

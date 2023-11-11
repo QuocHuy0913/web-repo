@@ -71,11 +71,11 @@
                             <h5 class="d-flex align-items-center justify-content-end mb-0" style="font-weight: bold; color:red">Total paid: {{$key->total}}
                             </h5>
                           </div>
-                          <p class="lead fw-bold mb-3 pb-2" style="color: #f37a27;">Tracking Order</p>
+                          {{-- <p class="lead fw-bold mb-3 pb-2" style="color: #f37a27;">Tracking Order</p> --}}
                           <div class="row border-0">
                             <div class="col-lg-8">             
                               <div class="horizontal-timeline">
-                                <ul class="d-flex list-inline items d-flex justify-content-between">     
+                                <ul class="justify-items-center">     
                                   @if($key->status == 1)
                                     <li class="list-inline-item items-list">
                                       <a onclick="return confirm('don hang chac chan muon huy ?')" href="{{route( 'cancalCart',['id'=>$key->id])}}" class="py-1 px-2 rounded text-white" style="background-color: red;">Ordered</a>
