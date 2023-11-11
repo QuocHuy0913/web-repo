@@ -1,30 +1,32 @@
 @extends('client.profile.master-profile')
 @section('profile-content')
-<div class="row" style="width: 100%">
-    <div style="width:95%">
-        <h2 style="float: left; margin: 5% 0 0 10px">Order</h2>
+  <div class="row" style="display:flex; justify-content:center;">
+    <div class="navbar navbar-light bg-primary rounded">
+      <form class="form-inline">
+        <a href="{{ route('getOrderConfirm', ['id' => Auth()->user()->id]) }}" class="btn btn-outline-success mr-3 ml-0" type="button">
+          Confirm
+          {{-- <div class="icon">
+            <span class="material-symbols-outlined">
+                order
+            </span>
+            @if (!empty(Session::has('Cart')))
+                <span id="icon-amount-orders">{{Session::get('Cart')->totalQuantity}}</span>
+            @else
+                <span id="icon-amount-orders">0</span>
+            @endif
+            <span class="tooltiptext">Cart</span>
+        </div> --}}
+        </a>
+        <a href="{{ route('getOrderShipped', ['id' => Auth()->user()->id]) }}" class="btn btn-outline-success mr-3 ml-3" type="button">Shipped</a>
+        <a href="{{ route('getOrderOntheway', ['id' => Auth()->user()->id]) }}" class="btn btn-outline-success mr-3 ml-3" type="button">On the way</a>
+        <a href="{{ route('getOrderDelivered', ['id' => Auth()->user()->id]) }}" class="btn btn-outline-success mr-3 ml-3" type="button">Delivered</a>
+        <a href="{{ route('getOrdered', ['id' => Auth()->user()->id]) }}" class="btn btn-outline-success mr-0 ml-3" type="button">Ordered</a>
+        {{-- <button class="btn btn-sm btn-outline-secondary" type="button">Smaller button</button> --}}
+      </form>
     </div>
-    <div class="table-order">
-        <table class="table table-bordered" style="margin: 20px 10px 10px 0;">
-            <thead>
-                <tr>
-                    <th class="detail">Detail</th>
-                    <th class="total" style="width: 15%">Total</th>
-                    <th class="discount" style="width: 20%">Discount</th>
-                    <th class="status">Status</th>
-                    <th class="created" style="width: 20%">Created at</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td colspan="5" style="text-align: center; vertical-align: middle; align-items:center">
-                        <h5 style="display: inline-block">No order has been made yet</h5>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
+    <div class="container mt-2">
+      @yield('order-content')
+  </div>
 @endsection
 <style>
     .table-order {
@@ -55,3 +57,7 @@
         }
     }
 </style>
+<script>
+  //  const btnLoginForm1 = document.querySelector("#init-login-form-1");
+  //       btnLoginForm1.addEventListener("click", changeStatus() );
+</script>

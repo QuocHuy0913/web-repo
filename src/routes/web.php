@@ -11,6 +11,7 @@ use App\Http\Controllers\MyAuth\AuthController;
 use App\Http\Controllers\Admin\DiscountController;
 use App\Http\Controllers\Admin\RankController;
 use App\Http\Controllers\Client\UserController;
+use App\Http\Controllers\Client\UserOrderController;
 use App\Http\Controllers\Client\CartController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -72,7 +73,10 @@ Route::prefix('admin')->name('admin.')->group(function (){
     });
     Route::prefix('orders')->name('orders.')->group(function () {
         Route::get('/', [AdminOrderController::class, 'getList'])->name('getList');
-        Route::get('/detail/{id}', [AdminOrderController::class, 'getOrderDetail'])->name('getDetail');
+        // Route::get('/detail/{id}', [AdminOrderController::class, 'getOrderDetail'])->name('getDetail');
+        Route::get('/getUpdateStatusOrder/{id}', [AdminOrderController::class, 'getUpdateStatusOrder'])->name('getUpdateStatusOrder');
+        Route::post('/getUpdateStatusOrder/{id}', [AdminOrderController::class, 'postUpdateStatusOrder'])->name('postUpdateStatusOrder');
+        Route::get('/detailorder/{id}', [AdminOrderController::class, 'getOrderDetail'])->name('detailOrder');
     });
 
 });
@@ -84,22 +88,32 @@ Route::get('/blog', [ClientDashboardController::class, 'blog'])->name('blog');
 Route::get('/more', [ClientDashboardController::class, 'more'])->name('more');
 Route::get('addToCart/{id}',[CartController::class,'addToCart'])->name('addToCart');
 Route::middleware('auth')->group(function () {
+    Route::get('/cancalCart/{id}', [UserOrderController::class, 'cancalCart'])->name('cancalCart');
     Route::get('cart', [CartController::class,'showCart'])->name('cart');
     Route::get('cart/checkout',[CartController::class,'checkout'])->name('checkOut');
     Route::post('cart/payment',[CartController::class,'checkPayment'])->name('checkPayment');
     Route::post('checkDiscount',[CartController::class,'checkDiscount'])->name('checkDiscount');
     Route::get('/cart/change-info', [CartController::class,'getChangeInfoOrder'])->name('getChangeInfoOrder');
     Route::post('/cart/change-info', [CartController::class,'postChangeInfoOrder'])->name('postChangeInfoOrder');
+    Route::get('/getUserOrder/{id}', [UserOrderController::class, 'getOrderDetail'])->name('getAllUserOrder');
+    Route::get('/getOrderConfirm/{id}', [UserOrderController::class, 'getOrderConfirm'])->name('getOrderConfirm');
+    Route::get('/getOrderShipped/{id}', [UserOrderController::class, 'getOrderShipped'])->name('getOrderShipped');
+    Route::get('/getOrderOntheway/{id}', [UserOrderController::class, 'getOrderOntheway'])->name('getOrderOntheway');
+    Route::get('/getOrderDelivered/{id}', [UserOrderController::class, 'getOrderDelivered'])->name('getOrderDelivered');
+    Route::get('/getOrdered/{id}', [UserOrderController::class, 'getOrdered'])->name('getOrdered');
     Route::get('updateItemListCart/{id}/{quantity}',[CartController::class,'updateItemListCart'])->name('updateItemListCart');
     Route::get('deleteItemListCart/{id}',[CartController::class,'deleteItemListCart'])->name('deleteItemListCart');
+    Route::get('deleteOrder/{id}',[UserOrderController::class,'deleteOrder'])->name('deleteOrder');
     Route::get('/userProfile', [UserController::class, 'getUserProfile'])->name('getUserProfile');
     Route::post('/userProfile' , [UserController::class, 'postUserProfile'])->name('postUserProfile');
     Route::get('/userOrder' , [UserController::class, 'getUserOrder'])->name('getUserOrder');
     Route::get('/changePassword' , [UserController::class, 'getChangePassword'])->name('changePassword');
     Route::post('/changePassword' , [UserController::class, 'postChangePassword'])->name('postChangePassword');
+    Route::post('checkDiscountSelect',[CartController::class,'checkDiscountSelect'])->name('checkDiscountSelect');
 
     Route::post('logout', [AuthController::class,'logout'])->name('logout');
 });
+
 Route::post('login', [AuthController::class,'login'])->name('login');
 Route::post('register', [AuthController::class,'register'])->name('register');
 // Auth::routes();

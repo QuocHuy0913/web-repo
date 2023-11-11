@@ -119,7 +119,7 @@ class CartController extends Controller
             $order->user_id = Auth()->user()->id;
             $order->name = $name;
             $order->total = 0;
-            $order->status = 0;
+            $order->status = 1;
             $order->address = $address;
             $order->phone = $phone;
             $order->save();
@@ -145,7 +145,7 @@ class CartController extends Controller
                 $discount_rank = $rank->discount;
                 if(!empty(Session::get('discount'))){
                     foreach(Session::get('discount') as $key => $item){
-                        Session('Cart')->totalPrice = Session('Cart')->totalPrice - $discount_rank*0.01*Session('Cart')->totalPrice;
+                        Session('Cart')->totalPrice = Session('Cart')->totalPrice - (Session('Cart')->totalPrice * $discount_rank)/100;
                         Session('Cart')->totalPrice = Session('Cart')->totalPrice - $item['price'];
                         $data = [
                             Session('Cart')->totalPrice
@@ -157,6 +157,12 @@ class CartController extends Controller
                             $item['id']
                         ];
                     }
+                }
+                else{
+                    // Session('Cart')->totalPrice = Session('Cart')->totalPrice - $discount_rank;
+                    $data = [
+                        Session('Cart')->totalPrice = Session('Cart')->totalPrice - (Session('Cart')->totalPrice * $discount_rank)/100
+                    ];
                 }
                 $this->order->updatePriceOrder($idOrder,$data);
                 if(!empty($discount))
@@ -181,8 +187,6 @@ class CartController extends Controller
                 ]);
             }
         }
-
-
     }
     public function addToCart(Request $req, $id){
         $product = Product::find($id);
@@ -313,6 +317,55 @@ class CartController extends Controller
             return redirect()->back();
        }
     }
+
+    public function checkDiscountSelect(Request $request){
+        $code = $request->voucher;
+        $discount = Discount::where('code',$code)->first();
+        if($discount){
+            $rankDiscount = $discount->rank_id;
+            $rankCus = Auth()->user()->rank_id;
+            if($rankDiscount == $rankCus){
+                $count_discount = $discount->count();
+                if($count_discount>0){
+                    $discount_session = Session::get('discount');
+                    if($discount_session==true){
+                        $is_avaiable = 0;
+                        if($is_avaiable==0){
+                            $data[] = [
+                                'id' => $discount->id,
+                                'rank_id' => $discount->rank_id,
+                                'code' => $discount->code,
+                                'price' => $discount->price,
+                                'name' => $discount->name
+                            ];
+                            Session::put('discount', $data);
+                        }
+                    }else{
+                        $data[] = [
+                            'id' => $discount->id,
+                            'rank_id' => $discount->rank_id,
+                            'code' => $discount->code,
+                            'price' => $discount->price,
+                            'name' => $discount->name
+                        ];
+                        Session::put('discount', $data);
+                    }
+                    Session::save();
+                    //return view('client.cart.index');
+                    return redirect()->route('cart');
+                }
+            }else{
+                //return view('client.cart.index');
+                return redirect()->route('cart');
+            }
+
+        }else{
+            //return view('client.cart.index');
+            return redirect()->route('cart');
+       }
+    }
+
+
     public function checkPayment(Request $req){
         // $check = (Session('Cart')->nickName && Session('Cart')->phone && Session('Cart')->address) || (Auth::user()->phone && Auth::user()->address) ;
         // if(!$check) {

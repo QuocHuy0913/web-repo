@@ -6,10 +6,7 @@
             <i class="fas fa-angle-right"></i>
             <a href="{{route('getUserProfile')}}" style="color: grey">User Profile</a>
             <i class="fas fa-angle-right"></i>
-            <a style="color: darkgrey">{{$path}}</a>
-        </div>
-        <div class="menu__profile__toggle" style="background-color:#E6E6FA; box-shadow:lightgrey; border-radius: 0 5px 5px 0;">
-            <span class="material-symbols-outlined">list</span>
+            <a style="margin-left: 20px; color: darkgrey"></a>
         </div>
         <div class="row">
             <div class="menu-profile" style="position: fixed; top:20%; height:435px; width: 260px; background-color:white; border-radius: 0 25px 25px 0;">
@@ -34,7 +31,7 @@
                         <span id="icon" class="material-symbols-outlined">
                             shopping_cart
                         </span>
-                        <a href="{{route('getUserOrder')}}">Order</a>
+                        <a href="{{route('getAllUserOrder',['id'=>Auth()->user()->id ])}}">Order</a>
                     </div>
 
                     <div class="profile_option">
@@ -75,9 +72,8 @@
                             <span id="icon" class="material-symbols-outlined">
                                 shopping_cart
                             </span>
-                            <a href="{{route('getUserOrder')}}">Order</a>
+                            <a href="{{ route('getOrderConfirm', ['id' => Auth()->user()->id]) }}">Order</a>
                         </div>
-
                         <div class="option">
                             <span id="icon" class="material-symbols-outlined">
                                 manage_accounts
@@ -166,7 +162,7 @@
         border-bottom-left-radius: 15px;
     }
     .user {
-        height: 32%;;
+        /* height: 428px; */
     }
     .user-icon .menu {
         float: left;

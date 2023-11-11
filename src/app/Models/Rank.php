@@ -37,6 +37,9 @@ class Rank extends Model
     public function getValue($id){
         return Rank::where('id',$id)->select('value')->get();
     }
+    public function getDiscount($id){
+        return Rank::where('id',$id)->select('discount')->get();
+    }
     public function setupRank($id){
         if(!empty($id)){
             $allPrice = Order::where('user_id',$id)->select('total')->get();
@@ -44,18 +47,23 @@ class Rank extends Model
 
             if(!empty($allPrice)){
                 $price = 0;
-                //var_dump($price);
                 foreach($allPrice as $key){
                     $price = (int)$price + (int)$key->total;
                 }
-                if($price > 0 && $price <50000000){
+                if($price > 0 && $price <100000000){
+                    $idRank = 1;
+                }
+                if($price > 100000000 && $price < 300000000){
                     $idRank = 2;
                 }
-                if($price > 50000000 && $price < 200000000){
+                if($price > 300000000 && $price < 500000000){
                     $idRank = 3;
                 }
-                if($price > 200000000 && $price < 500000000){
+                if($price > 500000000 && $price < 700000000){
                     $idRank = 4;
+                }
+                if($price > 700000000 && $price < 900000000){
+                    $idRank = 5;
                 }
             }
         }

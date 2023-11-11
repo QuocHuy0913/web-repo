@@ -21,11 +21,6 @@ class DashBoardController extends Controller
     }
     public function more(){
         dd(Session('discount'));
-        $idRank = Auth()->user()->rank_id;
-        $rank = Rank::find($idRank);
-        $discount_rank = $rank->discount;
-        $total = Session('Cart')->totalPrice - ($discount_rank*Session('Cart')->totalPrice)/100;
-        dd($total);
         return view('client.more.index');
     }
 
