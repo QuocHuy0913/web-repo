@@ -824,6 +824,69 @@
         margin: 12px;
     }
 
+    #sontran,#sontran-responsive{
+        display: none;
+    }
+
+    #login-responsive {
+        display: none;
+    }
+
+    #init-login-form-responsive {
+        display: none;
+    }
+
+    .signIn-form-responsive, .signUp-form-responsive {
+        display: none;
+    }
+
+    @media(max-width: 840px){
+        #init-login-form-1 {
+            display: none;
+        }
+        #init-login-form-responsive {
+            display: block;
+        }
+
+        .login-form {
+            display: none !important;
+        }
+
+        .signIn-form-responsive, .signUp-form-responsive {
+            display: block;
+            width: 350px;
+            top: 50%;
+            position: fixed;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .form-sign-in-responsive, .form-sign-up-responsive{
+            background-color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 30px 20px;
+            height: 100%;
+            text-align: center;
+            border-radius: 15px;
+        }
+
+        .btn-signUp-form, .btn-signIn-form{
+            border-radius: 20px;
+            border: 1px solid #FF4B2B;
+            background-color: #C00000;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 12px 45px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: transform 80ms ease-in;
+            margin-left: 15px
+        }
+    }
     </style>
     <div style="position: sticky">
         <div id="page-top-bar">
@@ -881,7 +944,15 @@
                             <div class="header-content-inner" style=" justify-content:flex-end">
                                 <span id="search-icon" class="material-symbols-outlined" style="margin:10px;">search</span>
                                 @if (!Auth::user())
-                                    <a href="javascript:" class="icon-wrap " id="init-login-form-1">
+                                    <a href="javascript:" class="icon-wrap" id="init-login-form-1">
+                                        <div class="icon">
+                                            <span class="material-symbols-outlined">
+                                            person
+                                            </span>
+                                            <span class="tooltiptext">Login</span>
+                                        </div>
+                                    </a>
+                                    <a href="javascript:" class="icon-wrap" id="init-login-form-responsive">
                                         <div class="icon">
                                             <span class="material-symbols-outlined">
                                             person
@@ -1098,7 +1169,9 @@
         </div>
     </div>
 
-    <div id="sontran" style=" display:none ;position: absolute;top: 0;left: 0;bottom: 0;right: 0;background: #000; opacity: 0.5;">
+    <div id="sontran" style="position: absolute;top: 0;left: 0;bottom: 0;right: 0;background: #000; opacity: 0.5;">
+    </div>
+    <div id="sontran-responsive" style="position: absolute;top: 0;left: 0;bottom: 0;right: 0;background: #000; opacity: 0.5;">
     </div>
     @if (!Auth::user())
         <div id="login" class="login-form" role="dialog">
@@ -1156,6 +1229,49 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <div id="login-responsive" style="position: absolute;">
+            <div id="signIn-form" class="signIn-form-responsive">
+                <form action="{{route('login')}}" class="form-sign-in-responsive" method="POST">
+                    <h1 class="title-login-form">Sign in</h1>
+                    <div class="social-container">
+                        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+                        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                    <span class="subtitle-login-forn">or use your account</span>
+                    <input type="email" placeholder="Email" class="inp-login-form" name="email"/>
+                    <input type="password" placeholder="Password" class="inp-login-form" name="password"/>
+                    <a class="forgot-pass-link" href="#">Forgot your password?</a>
+                    <div style="display: flex">
+                        <button class="btn-login-form" type="submit">Sign In</button>
+                        <a href="javascript:" class="btn-signUp-form">Sign Up</a>
+                    </div>
+                    @csrf
+                </form>
+            </div>
+
+            <div id="signUp-form" class="signUp-form-responsive">
+                <form action="{{route('register')}}" class="form-sign-up-responsive" method="POST">
+                    <h1 class="title-login-form">Create Account</h1>
+                    <div class="social-container">
+                        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
+                        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                    <span class="subtitle-login-forn">or use your email for registration</span>
+                    <input type="text" placeholder="Name"  class="inp-login-form" name="name"/>
+                    <input type="email" placeholder="Email" class="inp-login-form" name="email"/>
+                    <input type="password" placeholder="Password" class="inp-login-form" name="password"/>
+                    <input type="password" placeholder="Confirm Password" class="inp-login-form" name="password_confirmation"/>
+                    <div style="display: flex; margin-top: 10px;">
+                        <a href="javascript:" class="btn-signIn-form" style="margin:0 10px 0 0;">Sign In</a>
+                        <button class="btn-login-form" type="submit">Sign Up</button>
+                    </div>
+                    @csrf
+                </form>
             </div>
         </div>
     @else
@@ -1242,6 +1358,44 @@
         // })
 
 
+    </script>
+
+    <script>
+        const btnLoginForm2 = document.querySelector("#init-login-form-responsive");
+        btnLoginForm2.addEventListener("click", () => {
+            console.log(1);
+            let loginForm1 = document.getElementById("login-responsive");
+            let sontran = document.getElementById("sontran-responsive");
+                loginForm1.style.display = "block";
+                loginForm1.style.top = window.scrollY + window.innerHeight / 2 + "px";
+                document.body.style.overflow = "hidden";
+                sontran.style.display = "block";
+                document.body.style.paddingRight = "17px";
+                document.addEventListener("click", (e) => {
+                    if (!loginForm1.contains(e.target) && !btnLoginForm2.contains(e.target)) {
+                        loginForm1.style.display = "none";
+                        loginForm1.style.top = "36%";
+                        document.body.style.overflow = "visible";
+                        document.body.style.paddingRight = "17px";
+                        sontran.style.display = "none";
+                    }
+                });
+        });
+    </script>
+
+    <script>
+        const btnSignUp = document.querySelector(".btn-signUp-form");
+        const btnSignIn = document.querySelector(".btn-signIn-form");
+        let signInForm = document.getElementById("signIn-form");
+        let signUpForm = document.getElementById("signUp-form");
+        btnSignUp.addEventListener("click", () => {
+            signInForm.style.display = "none";
+            signUpForm.style.display = "block";
+        });
+        btnSignIn.addEventListener("click", () => {
+            signInForm.style.display = "block";
+            signUpForm.style.display = "none";
+        });
     </script>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
