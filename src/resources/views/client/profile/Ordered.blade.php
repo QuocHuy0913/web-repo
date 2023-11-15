@@ -69,19 +69,18 @@
                             </h5>
                           </div>           
                       </div>
+          @elseif(empty(getOrderConfirm($key->id,$key->status)))
+            <table>
+                <tbody >
+                    <tr>
+                    <td colspan="5" style="text-align: center; vertical-align: middle; align-items:center; ">
+                        <h5 style="display:block text-align:center ">No order has been made yet</h5>
+                    </td>
+                    </tr>
+                </tbody>
+            </table> 
           @endif
-        @endforeach
-        @if(empty(getOrderConfirm($key->id,$key->status)))
-          <table>
-              <tbody >
-                  <tr>
-                  <td colspan="5" style="text-align: center; vertical-align: middle; align-items:center; ">
-                      <h5 style="display:block text-align:center ">No order has been made yet</h5>
-                  </td>
-                  </tr>
-              </tbody>
-          </table> 
-        @endif         
+        @endforeach         
       @endif
     </div>  
     @endsection

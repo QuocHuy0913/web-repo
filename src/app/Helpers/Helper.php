@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
 use App\Models\Status;
+use App\Models\Favorite;
 function getAllCategory(){
     $categories = Category::all();
     return $categories;
@@ -247,4 +248,42 @@ function changeColorOrder($id){
         ];
         return $data;
     }
+}
+function nameUser($id){
+    if(empty($id)){
+        return 0;
+    }
+    $user = User::find($id);
+    $name = $user->name;
+    return $name;
+}
+function getProduct($data){
+    if(empty($data)){
+        return 0;
+    }
+    $product = Product::where('category_id',$data)->get();
+    return $product;
+}
+function product($id){
+    if(empty($id)){
+    return 0;
+    }
+    $product = Product::find($id);
+    return $product;
+}
+function countFavorites(){
+    if(!empty(Auth()->user()->id)){
+        $data = Favorite::where('user_id',Auth()->user()->id)->get();
+        $data = $data->count();
+        return $data;
+    }
+   return 0;
+}
+function categories(){
+    $data = Category::all();
+    return $data;
+}
+function homeCateProduct($data){
+    $data = Product::where('category_id',$data)->orderBy( 'created_at','DESC' )->take(5)->get();
+    return $data;
 }

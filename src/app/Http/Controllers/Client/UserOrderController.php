@@ -27,7 +27,7 @@ class UserOrderController extends Controller
         }
         return view('client.profile.order');
     }
-    public function cancalCart($id){
+    public function cancelCart($id){
         $order = Order::where('id',$id)
                       ->update(['status' => 2]);
                    

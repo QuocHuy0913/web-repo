@@ -11,7 +11,9 @@ use App\Http\Controllers\MyAuth\AuthController;
 use App\Http\Controllers\Admin\DiscountController;
 use App\Http\Controllers\Admin\RankController;
 use App\Http\Controllers\Client\UserController;
+use App\Http\Controllers\Client\FavoriteController;
 use App\Http\Controllers\Client\UserOrderController;
+use App\Http\Controllers\Client\CommentController;
 use App\Http\Controllers\Client\CartController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -84,13 +86,17 @@ Route::prefix('admin')->name('admin.')->group(function (){
 // Routes Client
 Route::get('/', [ClientDashboardController::class, 'home'])->name('home');
 Route::get('/shop', [ClientProductController::class, 'getList'])->name('shop');
+Route::get('/getCategory/{data}', [ClientProductController::class, 'searchCategory'])->name('getCategory');
+Route::post('/search', [ClientProductController::class, 'search'])->name('search');
+Route::get('/shop/detailProduct/{id}', [ClientProductController::class, 'getDetailProduct'])->name('getDetailProduct');
 Route::get('/blog', [ClientDashboardController::class, 'blog'])->name('blog');
 Route::get('/more', [ClientDashboardController::class, 'more'])->name('more');
 Route::get('addToCart/{id}',[CartController::class,'addToCart'])->name('addToCart');
+Route::get('/shop/detailProduct/addCart/{id}', [CartController::class, 'addToCart'])->name('getDetailProductAddtoCart');
 Route::middleware('auth')->group(function () {
-    Route::get('/cancalCart/{id}', [UserOrderController::class, 'cancalCart'])->name('cancalCart');
     Route::get('cart', [CartController::class,'showCart'])->name('cart');
     Route::get('cart/checkout',[CartController::class,'checkout'])->name('checkOut');
+    Route::get('/cancelCart/{id}', [UserOrderController::class, 'cancelCart'])->name('cancelCart');
     Route::post('cart/payment',[CartController::class,'checkPayment'])->name('checkPayment');
     Route::post('checkDiscount',[CartController::class,'checkDiscount'])->name('checkDiscount');
     Route::get('/cart/change-info', [CartController::class,'getChangeInfoOrder'])->name('getChangeInfoOrder');
@@ -110,7 +116,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/changePassword' , [UserController::class, 'getChangePassword'])->name('changePassword');
     Route::post('/changePassword' , [UserController::class, 'postChangePassword'])->name('postChangePassword');
     Route::post('checkDiscountSelect',[CartController::class,'checkDiscountSelect'])->name('checkDiscountSelect');
-
+    Route::post('/product/comment/{id}', [CommentController::class, 'getComment'])->name('getComment');
+    Route::get('/shop/favorite', [FavoriteController::class, 'getList'])->name('getFavorite');
+    Route::get('shop/detailProduct/postFavorite/{id}', [FavoriteController::class, 'postAdd'])->name('postFavorite');
+    Route::get('shop/deleteFavorite/{id}', [FavoriteController::class, 'deleteItem'])->name('deleteFavorite');
     Route::post('logout', [AuthController::class,'logout'])->name('logout');
 });
 

@@ -9,6 +9,10 @@ use DB;
 class Brand extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'name',
+        'description',
+    ];
     protected $table = 'brands';
     public function getList(){
         $brands = brands::all();
@@ -28,4 +32,8 @@ class Brand extends Model
     public function deleteItem($id){
         return brands::where('id',$id)->delete();
     }
+    public function product(){
+        return $this->hasMany(Product::class);
+    }
 }
+

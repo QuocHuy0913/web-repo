@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Hash;
 use App\Models\Rank;
+use App\Models\Favorite;
 class DashBoardController extends Controller
 {
     //
@@ -20,7 +21,7 @@ class DashBoardController extends Controller
         return view('client.blog.index');
     }
     public function more(){
-        dd(Session('discount'));
+        
         return view('client.more.index');
     }
 

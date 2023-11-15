@@ -76,25 +76,9 @@
                             <div class="col-lg-8">             
                               <div class="horizontal-timeline">
                                 <ul class="justify-items-center">     
-                                  @if($key->status == 1)
                                     <li class="list-inline-item items-list">
-                                      <a onclick="return confirm('don hang chac chan muon huy ?')" href="{{route( 'cancalCart',['id'=>$key->id])}}" class="py-1 px-2 rounded text-white" style="background-color: red;">Ordered</a>
+                                      <a onclick="return confirm('don hang chac chan muon huy ?')" href="{{route( 'cancelCart',['id'=>$key->id])}}" class="py-1 px-2 rounded text-white" style="background-color: red;">Ordered</a>
                                     </li>                                    
-                                  @elseif($key->status == 2)
-                                  <li class="list-inline-item items-list">
-                                    <a onclick="return confirm('don hang da bi huy ?')" href="#" class="py-1 px-2 rounded text-white" style="background-color: rgb(52, 51, 51);">Ordered</a>
-                                  </li>
-                                  @else
-                                  <li class="list-inline-item items-list">
-                                    <a onclick="return confirm('don hang da bi huy ?')" href="#" class="py-1 px-2 rounded text-white" style="background-color: darkgray;">Ordered</a>
-                                  </li>
-                                  @endif
-                                  @foreach(changeColorOrder($key->status) as $data=>$tempt)
-                                    <li class="list-inline-item items-list">
-                                      <a class="py-1 px-2 rounded text-white" style="background-color: {{$tempt}}">{{$data}}</a
-                                        class="py-1 px-2 rounded text-white" style="background-color: #f37a27;">
-                                    </li>
-                                  @endforeach
                                 </ul>
               
                               </div>

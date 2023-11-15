@@ -69,9 +69,7 @@
                             </h5>
                           </div>
                       </div>
-          @endif
-        @endforeach
-          @if(empty(getOrderOntheway($key->id,$key->status)))
+        @elseif(empty(getOrderOntheway($key->id,$key->status)))
             <table>
                 <tbody >
                     <tr>
@@ -81,7 +79,8 @@
                     </tr>
                 </tbody>
             </table> 
-          @endif          
+          @endif
+        @endforeach        
       @endif
     </div>  
     @endsection

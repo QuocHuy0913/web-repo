@@ -5,10 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use DB;
+use App\Models\Product;
 
 class Category extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'name',
+        'description',
+    ];
     protected $table = 'categories';
     public function getList(){
         $categories = categories::all();
@@ -27,5 +32,8 @@ class Category extends Model
     }
     public function deleteItem($id){
         return categories::where('id',$id)->delete();
+    }
+    public function product(){
+        return $this->hasMany(Product::class);
     }
 }

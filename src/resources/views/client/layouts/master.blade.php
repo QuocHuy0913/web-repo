@@ -12,7 +12,9 @@
     <link href="{{asset('admins')}}/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
+    {{-- <link rel="stylesheet" href="./Font-Awesomecss/css/font-awesome.min.css"> --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
     <title>Techstore</title>
 </head>
 <body>
@@ -314,7 +316,7 @@
         .icon:hover .material-symbols-outlined{
             opacity: 0.5;
         }
-        .icon-amount-favorite {
+        #icon-amount-favorite {
             font-weight: 700;
             top: -8px;
             right: -1px;
@@ -930,12 +932,15 @@
                             <div class="header-content-inner">
                                 <div class="header-search-form">
                                     <div class="search_wrap search_wrap_1">
-                                        <div class="search_box">
-                                            <input type="text" class="input" placeholder="Search something...">
-                                            <button class="btn btn_common">
-                                                <i class="fas fa-search"></i>
-                                            </button>
-                                        </div>
+                                        <form action="{{route('search')}}" method="POST">
+                                            <div class="search_box">
+                                                <input name="search" type="text" class="input" placeholder="Search something..." value="{{old('search') }}">
+                                                <button class="btn btn_common">
+                                                    <i class="fas fa-search"></i>
+                                                </button>
+                                            </div>
+                                            @csrf
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -970,12 +975,12 @@
                                         </div>
                                     </a>
                                 @endif
-                                <a href="" class="icon-wrap">
+                                <a href="{{route('getFavorite')}}" class="icon-wrap">
                                     <div class="icon">
                                         <span class="material-symbols-outlined">
                                             favorite
                                         </span>
-                                        <span class="icon-amount-favorite">0</span>
+                                        <span id="icon-amount-favorite">{{countFavorites()}}</span>
                                         <span class="tooltiptext">Wishlist</span>
                                     </div>
                                  </a>
@@ -1025,33 +1030,19 @@
                                             </span>
                                             <nav class="category-menu">
                                                 <ul class="category-menu-list">
-                                                    <li class="category-menu-item">
-                                                        <a href="" class="cmi-link">
-                                                            <div class="cmi-wrap">
-                                                                <span class="cmi-content">
-                                                                    Phone
-                                                                </span>
-                                                            </div>
-                                                        </a>
-                                                    </li>
-                                                    <li class="category-menu-item">
-                                                        <a href="" class="cmi-link">
-                                                            <div class="cmi-wrap">
-                                                                <span class="cmi-content">
-                                                                    Laptop
-                                                                </span>
-                                                            </div>
-                                                        </a>
-                                                    </li>
-                                                    <li class="category-menu-item">
-                                                        <a href="" class="cmi-link">
-                                                            <div class="cmi-wrap">
-                                                                <span class="cmi-content">
-                                                                    Watch
-                                                                </span>
-                                                            </div>
-                                                        </a>
-                                                    </li>
+                                                    @if(!empty(getAllCategory()))
+                                                    @foreach(getAllCategory() as $item=>$key)
+                                                        <li class="category-menu-item">
+                                                            <a href="{{route('getCategory',['data'=>"$key->name"])}}" class="cmi-link">
+                                                                <div class="cmi-wrap">                                            
+                                                                        <span class="cmi-content">
+                                                                            {{$key->name}}
+                                                                        </span>
+                                                                </div>
+                                                            </a>
+                                                        </li>
+                                                    @endforeach
+                                                    @endif
                                                 </ul>
                                             </nav>
                                         </div>
@@ -1438,6 +1429,7 @@
                 $('.categories__container').css('display', 'block'); 
             })
         })
+    
     </script>
 
     <script src="{{asset('admins')}}/vendor/jquery/jquery.min.js"></script>
@@ -1457,6 +1449,10 @@
     <script src="{{asset('admins')}}/js/demo/chart-pie-demo.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="sweetalert2.all.min.js"></script>
+
+    {{-- sliderJs --}}
+    {{-- <script src="path-to-the-file/splide.min.js"></script> --}}
+    <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
 </body>
 
 </html>
