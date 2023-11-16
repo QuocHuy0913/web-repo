@@ -1,10 +1,9 @@
 @extends('client.profile.order')
 @section('order-content')
-@if (!empty($order))
+@if (!empty($order) && count($order) > 0)
         @foreach ($order as $key)
              @if(!empty(getOrderConfirm($key->id,$key->status)))
                         <div>
-                          <span>confirm</span>
                         </div>
                         <div class="row d-flex justify-content-center align-items-center">
                           <div class="card" style="border-radius: 10px;margin-bottom:20px;border-color: #cacaca;box-shadow: 2px 2px 3px 3px #cacaca;">
@@ -36,9 +35,9 @@
                                             </tr>
                                           </thead>
                                           <tbody>
-                                           
+
                                                 @foreach (getOrderConfirm($key->id,$key->status) as $item)
-                                                  <tr>                                              
+                                                  <tr>
                                                     <td><img src="{{asset(getImageProduct($item->product_id))}}" alt="" style="width: 100px; height:auto"></td>
                                                     <td>{{getNameProduct($item->product_id)}}</td>
                                                     <td>{{getStorage($item->product_id)}}</td>
@@ -47,7 +46,7 @@
                                                     <td>{{$item->price}}</td>
                                                   </tr>
                                                   @endforeach
-                                  
+
                                           </tbody>
                                         </table>
                                       </div>
@@ -57,7 +56,7 @@
                                   <div class="d-flex justify-content-between pt-1">
                                     <p class="fw-bold mb-0">Total</p>
                                     <p class="text-muted mb-0"><span class="fw-bold me-4"></span>{{laygiatienbandauDetail($key->id)}}</p>
-                                  </div>                
+                                  </div>
                             <div class="d-flex justify-content-between pt-1">
                               <p class="text-muted mb-0">Voucher</p>
                               <p class="text-muted mb-0"><span class="fw-bold me-4"></span> {{getDiscountPrice($key->discount_id)}}</p>
@@ -73,59 +72,58 @@
                           </div>
                           {{-- <p class="lead fw-bold mb-3 pb-2" style="color: #f37a27;">Tracking Order</p> --}}
                           <div class="row border-0">
-                            <div class="col-lg-8">             
+                            <div class="col-lg-8">
                               <div class="horizontal-timeline">
-                                <ul class="justify-items-center">     
+                                <ul class="justify-items-center">
                                     <li class="list-inline-item items-list">
-                                      <a onclick="return confirm('don hang chac chan muon huy ?')" href="{{route( 'cancelCart',['id'=>$key->id])}}" class="py-1 px-2 rounded text-white" style="background-color: red;">Ordered</a>
-                                    </li>                                    
+                                      <a onclick="return confirm('don hang chac chan muon huy ?')" href="{{route( 'cancelCart',['id'=>$key->id])}}" class="py-1 px-2 rounded text-white" style="background-color: red;">Cancelled</a>
+                                    </li>
                                 </ul>
-              
+
                               </div>
-              
+
                             </div>
-                          </div>             
+                          </div>
                       </div>
-            @endif        
-        @endforeach 
-            @if(empty(getOrderConfirm($key->id,$key->status)))
-                <table>
-                    <tbody >
-                        <tr>
-                        <td colspan="5" style="text-align: center; vertical-align: middle; align-items:center; ">
-                            <h5 style="display:block text-align:center ">No order has been made yet</h5>
-                        </td>
-                        </tr>
-                    </tbody>
-                </table> 
-             @endif     
-      @endif
-    </div>  
+            @endif
+        @endforeach
+@else
+    <table>
+        <tbody >
+            <tr>
+            <td colspan="5" style="text-align: center; vertical-align: middle; align-items:center; ">
+                <h5 style="display:block text-align:center ">No order has been made yet</h5>
+            </td>
+            </tr>
+        </tbody>
+    </table>
+@endif
+    </div>
     @endsection
     <style>
         .table-order {
             width: 95%;
         }
-    
-        th { 
+
+        th {
             text-align: center;
             vertical-align: middle;
             align-items:center;
             padding: auto;
         }
-    
+
         @media (max-width: 567px) {
             th {
                 font-size: 12px;
             }
         }
-    
+
         @media (max-width: 391px) {
             .table-order {
                 width: 90%;
                 margin-left: 0;
             }
-    
+
             .table {
                 width: 95%;
             }

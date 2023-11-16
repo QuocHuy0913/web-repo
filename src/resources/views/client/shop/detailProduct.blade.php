@@ -4,10 +4,10 @@
     body {
       font-family: Nunito;
       overflow-x: hidden; }
-    
+
     img {
       max-width: 100%; }
-    
+
     .preview {
       display: -webkit-box;
       display: -webkit-flex;
@@ -21,13 +21,13 @@
       @media screen and (max-width: 996px) {
         .preview {
           margin-bottom: 20px; } }
-    
+
     .preview-pic {
       -webkit-box-flex: 1;
       -webkit-flex-grow: 1;
           -ms-flex-positive: 1;
               flex-grow: 1; }
-    
+
     .preview-thumbnail.nav-tabs {
       border: none;
       margin-top: 15px; }
@@ -42,7 +42,7 @@
           margin: 0; }
         .preview-thumbnail.nav-tabs li:last-of-type {
           margin-right: 0; }
-    
+
     .tab-content {
       overflow: hidden; }
       .tab-content img {
@@ -51,20 +51,20 @@
                 animation-name: opacity;
         -webkit-animation-duration: .3s;
                 animation-duration: .3s; }
-    
+
     .card {
       margin-top: 50px;
       background: #eee;
       padding: 3em;
       line-height: 1.5em; }
-    
+
     @media screen and (min-width: 997px) {
       .wrapper {
         display: -webkit-box;
         display: -webkit-flex;
         display: -ms-flexbox;
         display: flex; } }
-    
+
     .details {
       display: -webkit-box;
       display: -webkit-flex;
@@ -75,31 +75,31 @@
       -webkit-flex-direction: column;
           -ms-flex-direction: column;
               flex-direction: column; }
-    
+
     .colors {
       -webkit-box-flex: 1;
       -webkit-flex-grow: 1;
           -ms-flex-positive: 1;
               flex-grow: 1; }
-    
+
     .product-title, .price, .sizes, .colors {
       /* text-transform: UPPERCASE; */
       font-weight: bold; }
-    
+
     .checked, .price span {
-      color: #ff9f1a; }
-    
+      color: #B82121; }
+
     .product-title, .rating, .product-description, .price, .vote, .sizes {
       margin-bottom: 15px; }
-    
+
     .product-title {
       margin-top: 0; }
-    
+
     .size {
       margin-right: 10px; }
       .size:first-of-type {
         margin-left: 40px; }
-    
+
     .color {
       display: inline-block;
       vertical-align: middle;
@@ -109,20 +109,22 @@
       border-radius: 2px; }
       .color:first-of-type {
         margin-left: 20px; }
-    
+
     .add-to-cart, .like {
-      background: #ff9f1a;
+      background: #eee;
+      color: black;
       padding: 1.2em 1.5em;
-      border: none;
+      border: 1px solid black;
       text-transform: UPPERCASE;
       font-weight: bold;
-      color: #fff;
       -webkit-transition: background .3s ease;
               transition: background .3s ease; }
       .add-to-cart:hover, .like:hover {
-        background: #b36800;
-        color: #fff; }
-    
+        background: #B82121;
+        color: #fff;
+        border: none;
+    }
+
     .not-available {
       text-align: center;
       line-height: 2em; }
@@ -130,19 +132,19 @@
         font-family: Nunito;
         content: "\f00d";
         color: #fff; }
-    
+
     .orange {
       background: #ff9f1a; }
-    
+
     .green {
       background: #85ad00; }
-    
+
     .blue {
       background: #0076ad; }
-    
+
     .tooltip-inner {
       padding: 1.3em; }
-    
+
     @-webkit-keyframes opacity {
       0% {
         opacity: 0;
@@ -152,7 +154,7 @@
         opacity: 1;
         -webkit-transform: scale(1);
                 transform: scale(1); } }
-    
+
     @keyframes opacity {
       0% {
         opacity: 0;
@@ -162,11 +164,11 @@
         opacity: 1;
         -webkit-transform: scale(1);
                 transform: scale(1); } }
-    
+
     /*# sourceMappingURL=style.css.map */
     /* css comment */
     body{
-  
+
     background:#ebeef0;
 }
 
@@ -266,10 +268,10 @@
 .mar-top {
     margin-top: 15px;
 }
-/* .fa:hover { 
+/* .fa:hover {
   color: darkblue;
 }
-.active { 
+.active {
   color: darkblue;
 } */
 .likeButton {
@@ -281,7 +283,7 @@
         <div class="card">
             <div class="container-fliud">
                 <div class="wrapper row">
-                    <div class="preview col-md-6">                        
+                    <div class="preview col-md-6">
                         <div class="preview-pic tab-content">
                         <div class="tab-pane active" id="pic-1">
                             <img src="{{asset($product['images'])}}"/>
@@ -307,9 +309,7 @@
                             <span class="size" data-toggle="tooltip" title="small">{{$product['storage']}}</span>
                         </h5>
                         <h5 class="colors">colors:
-                            <span class="color orange not-available" data-toggle="tooltip" title="Not In store"></span>
-                            <span class="color green"></span>
-                            <span class="color blue"></span>
+                            <span class="color" style="background-color: {{$product['color']}}"></span>
                         </h5>
                         <div class="action card__action">
                             <a onclick="addToCart({{$product['id']}})" href="javascript:" class="add-to-cart btn btn-default add-cart btn ">add to cart</a>
@@ -320,10 +320,7 @@
             </div>
         </div>
 </div>
-{{-- comment --}}
-        @if (session('msg'))
-            <div class="alert alert-success">{{session('msg')}}</div>
-        @endif
+
 <div class="container bootdey">
   <div class="col-md-12 bootstrap snippets">
     <div class="panel">
@@ -354,14 +351,14 @@
                       <i class="btn btn-sm btn-default fa fa-thumbs-down" style="color:#858796"></i>
                     </div>
                 </div>
-              <hr>       
+              <hr>
               </div>
             </div>
         </div>
       @endforeach
     </div>
 </div>
-  <script>  
+  <script>
     function addToCart(id){
         $.ajax({
             url:'addCart/'+id,
@@ -369,7 +366,7 @@
         }).done(function(respone){
             $("#icon-amount-orders").text(`${respone}`);
             Swal.fire(
-                'Add to cart successfully', 
+                'Add to cart successfully',
                 'You clicked the button!',
                 'success'
             )
@@ -384,20 +381,20 @@
           if(response.status == 'error')
           {
             Swal.fire(
-                'Product is existed in your favorites', 
+                'Product is existed in your favorites',
                 'You clicked the button!',
                 'success'
             )
           }
           else {
-            $n.text(`${response.data}`);  
+            $n.text(`${response.data}`);
             Swal.fire(
-                'Add to favorite successfully', 
+                'Add to favorite successfully',
                 'You clicked the button!',
                 'success'
             )
           }
-            
+
         });
     }
     function toggleLike(){

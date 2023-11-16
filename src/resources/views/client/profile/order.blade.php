@@ -1,10 +1,10 @@
 @extends('client.profile.master-profile')
 @section('profile-content')
   <div class="row" style="display:flex; justify-content:center;">
-    <div class="navbar navbar-light bg-primary rounded">
+    <div class="navbar navbar-light  rounded">
       <form class="form-inline">
         <a href="{{ route('getOrderConfirm', ['id' => Auth()->user()->id]) }}" class="btn btn-outline-success mr-3 ml-0" type="button">
-          Confirm
+          Pending
           {{-- <div class="icon">
             <span class="material-symbols-outlined">
                 order
@@ -17,10 +17,10 @@
             <span class="tooltiptext">Cart</span>
         </div> --}}
         </a>
-        <a href="{{ route('getOrderShipped', ['id' => Auth()->user()->id]) }}" class="btn btn-outline-success mr-3 ml-3" type="button">Shipped</a>
+        <a href="{{ route('getOrderShipped', ['id' => Auth()->user()->id]) }}" class="btn btn-outline-success mr-3 ml-3" type="button">Processing</a>
         <a href="{{ route('getOrderOntheway', ['id' => Auth()->user()->id]) }}" class="btn btn-outline-success mr-3 ml-3" type="button">On the way</a>
-        <a href="{{ route('getOrderDelivered', ['id' => Auth()->user()->id]) }}" class="btn btn-outline-success mr-3 ml-3" type="button">Delivered</a>
-        <a href="{{ route('getOrdered', ['id' => Auth()->user()->id]) }}" class="btn btn-outline-success mr-0 ml-3" type="button">Ordered</a>
+        <a href="{{ route('getOrderDelivered', ['id' => Auth()->user()->id]) }}" class="btn btn-outline-success mr-3 ml-3" type="button">In Transit</a>
+        <a href="{{ route('getOrdered', ['id' => Auth()->user()->id]) }}" class="btn btn-outline-success mr-0 ml-3" type="button">Cancelled</a>
         {{-- <button class="btn btn-sm btn-outline-secondary" type="button">Smaller button</button> --}}
       </form>
     </div>

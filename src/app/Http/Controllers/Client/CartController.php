@@ -35,7 +35,7 @@ class CartController extends Controller
             $order->user_id = Auth()->user()->id;
             $order->name = $name;
             $order->total = 0;
-            $order->status = 0;
+            $order->status = 1;
             $order->address = $address;
             $order->phone = $phone;
             $order->save();
@@ -131,6 +131,7 @@ class CartController extends Controller
                         'product_id' => $item['productInfo']->id,
                         'price' => $item['price'],
                         'amount' => $item['quantity'],
+                        'created_at' =>date('Y-m-d H:i:s')
                     ];
                     $this->orderdetail->addOrderDetail($data);
                     $product = Product::find($item['productInfo']->id);

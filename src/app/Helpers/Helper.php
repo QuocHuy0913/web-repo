@@ -9,6 +9,7 @@ use App\Models\OrderDetail;
 use App\Models\Product;
 use App\Models\Status;
 use App\Models\Favorite;
+use Carbon\Carbon;
 function getAllCategory(){
     $categories = Category::all();
     return $categories;
@@ -16,6 +17,16 @@ function getAllCategory(){
 function getAllBrand(){
     $brands = Brand::all();
     return $brands;
+}
+function getCategoryByProductId($id) {
+    $pro = Product::where('id', $id)->first();
+    $cate = Category::where('id', $pro->category_id)->first();
+    return $cate->name;
+}
+function getBrandByProductId($id) {
+    $pro = Product::where('id', $id)->first();
+    $brand = Brand::where('id', $pro->brand_id)->first();
+    return $brand->name;
 }
 function getDiscountPrice($id){
     if($id == null){
@@ -34,7 +45,7 @@ function getDiscountPrice($id){
 function getDiscount(){
     $title = "Empty discount";
     $list = Discount::all();
-    return $list;  
+    return $list;
 }
 function getDiscountUser($id){
     $list = Discount::where('rank_id', $id)->get();
@@ -63,16 +74,16 @@ function getNameUser($id){
 }
 function displayStatus($status){
     if($status==1){
-        return 'Chờ xác nhận';
+        return 'Pending';
     }
     else if($status == 2) {
-        return 'Hủy';
+        return 'Cancelled';
     } else if($status == 3) {
-        return 'Đang chuẩn bị hàng';
+        return 'Processing';
     } else if($status == 4) {
-        return 'Đang giao hàng';
+        return 'In Transit';
     } else {
-        return 'Đã giao hàng';
+        return 'Delivered';
     }
 }
 function displayClassStatusOrder($status) {
@@ -101,40 +112,32 @@ function getStatus($id){
 }
 function getImageProduct($id){
     if(!empty($id)){
-        $product[] = Product::find($id)->first();
-        foreach($product as $key){
-            $item = $key['images'];
-        }
+        $product = Product::where('id',$id)->first();
+        $item = $product->images;
         return $item;
     }
     return 0;
 }
 function getNameProduct($id){
     if(!empty($id)){
-        $product[] = Product::find($id)->first();
-        foreach($product as $key){
-            $item = $key['name'];
-        }
+        $product = Product::where('id',$id)->first();
+        $item = $product->name;
         return $item;
     }
     return 0;
 }
 function getColor($id){
     if(!empty($id)){
-        $product[] = Product::find($id)->first();
-        foreach($product as $key){
-            $item = $key['color'];
-        }
+        $product = Product::where('id',$id)->first();
+        $item = $product->color;
         return $item;
     }
     return 0;
 }
 function getStorage($id){
     if(!empty($id)){
-        $product[] = Product::find($id)->first();
-        foreach($product as $key){
-            $item = $key['storage'];
-        }
+        $product = Product::where('id',$id)->first();
+        $item = $product->storage;
         return $item;
     }
     return 0;
@@ -160,7 +163,7 @@ function laygiatienbandauDetail($id){
     $orderDetail = new OrderDetail();
     $data = $orderDetail->getTotal($id);
     $tong = 0 ;
-    foreach($data as $key){ 
+    foreach($data as $key){
                 $item = $key->price;
                 $tong += $item;
             }
@@ -286,4 +289,36 @@ function categories(){
 function homeCateProduct($data){
     $data = Product::where('category_id',$data)->orderBy( 'created_at','DESC' )->take(5)->get();
     return $data;
+}
+function getOrderPending(){
+    $list = Order::where('status',1)->get();
+    return count($list);
+}
+function getEarningMonth($month){
+    if($month == 0) {
+        $currentMonth = Carbon::now()->month;
+        $list = Order::whereMonth('created_at', $currentMonth)->where('status','!=',1)->get();
+        $res = 0;
+        foreach ($list as $item) {
+            $res += $item->total;
+        }
+        return $res;
+    }
+}
+function getEarningYear($year){
+    if($year == 0) {
+        $currentYear = Carbon::now()->year;
+        $list = Order::whereYear('created_at', $currentYear)->where('status','!=',1)->get();
+        $res = 0;
+        foreach ($list as $item) {
+            $res += $item->total;
+        }
+        return $res;
+    }
+}
+function getNameMonth($month) {
+    $carbon = Carbon::create();
+    $monthName = $carbon->month($month)->format('F');
+    $monthName = substr($monthName, 0, 3);
+    return $monthName ;
 }

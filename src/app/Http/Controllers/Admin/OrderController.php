@@ -24,7 +24,7 @@ class OrderController extends Controller
         return view('admin.order.list',compact('title'));
     }
     public function getOrderDetail($id) {
-        $orderDetailList = OrderDetail::find($id)->first();
+        $orderDetailList = OrderDetail::where('order_id', $id)->get();
         return view('admin.order.list_detail_order',compact('orderDetailList'));
     }
     public function getOrderHistory() {

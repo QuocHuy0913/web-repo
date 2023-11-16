@@ -40,7 +40,7 @@
                                     <td>{{getDiscountPrice($item->discount_id)}}</td>
                                     <td class=""><a href="#" class="btn btn-{{displayClassStatusOrder($item->status)}}">{{displayStatus($item->status)}}</td>
                                     <td><a href="{{route('admin.orders.detailOrder',['id'=>$item ->id])}}" class="btn btn-warning">Detail</a></td>
-                                    <td><a href="{{route('admin.orders.getUpdateStatusOrder',['id'=>$item->id])}}" class="btn btn-warning">Cập nhật</a></td>                                                                                                                  
+                                    <td><a href="{{route('admin.orders.getUpdateStatusOrder',['id'=>$item->id])}}" class="btn btn-primary">Update</a></td>
                                 </tr>
                             @endforeach
                         @else

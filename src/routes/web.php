@@ -30,8 +30,14 @@ use App\Models\User;
 */
 
 // Routes Admin
-Route::prefix('admin')->name('admin.')->group(function (){
+Route::prefix('admin')->name('admin.')->middleware('admin')->group(function (){
+    Route::post('logout', [AuthController::class,'logout'])->name('logout');
     Route::get('/',[AdminDashboardController::class, 'index'])->name('index');
+    Route::get('/revenueSourcesCategory',[AdminDashboardController::class, 'revenueSourcesCategory'])->name('revenueSourcesCategory');
+    Route::get('/revenueSourcesBrand',[AdminDashboardController::class, 'revenueSourcesBrand'])->name('revenueSourcesBrand');
+    Route::get('/earningsOverview',[AdminDashboardController::class, 'earningsOverview'])->name('earningsOverview');
+    Route::get('/numberOfProducts',[AdminDashboardController::class, 'numberOfProducts'])->name('numberOfProducts');
+
     Route::prefix('products')->name('products.')->group(function () {
         Route::get('/', [AdminProductController::class, 'getList'])->name('getList');
         Route::get('/add', [AdminProductController::class, 'getAdd'])->name('getAdd');

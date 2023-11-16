@@ -28,4 +28,5 @@ controller:
 	- docker compose exec php php artisan make:controller
 config:
 	- docker compose exec php php artisan config:cache
-
+admin : 
+	- docker compose exec php php artisan db:seed --class=AdminSeeder

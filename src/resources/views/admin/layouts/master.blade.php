@@ -60,13 +60,27 @@
             </div>
 
             <!-- Nav Item - Pages Products Menu -->
-            <li class="nav-item">
+            {{-- <li class="nav-item">
                 <a class="nav-link collapsed"  data-toggle="collapse" data-target="#collapseTwo"
                     aria-expanded="true" aria-controls="collapseTwo">
                     <i class="fas fa-fw fa-cog"></i>
                     <span>Products</span>
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+                    <div class="bg-white py-2 collapse-inner rounded">
+                        <h6 class="collapse-header">Custom Products:</h6>
+                        <a class="collapse-item" href="{{route('admin.products.getList')}}">Show List</a>
+                        <a class="collapse-item" href="{{route('admin.products.getAdd')}}">Add New</a>
+                    </div>
+                </div>
+            </li> --}}
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#products"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Products</span>
+                </a>
+                <div id="products" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <h6 class="collapse-header">Custom Products:</h6>
                         <a class="collapse-item" href="{{route('admin.products.getList')}}">Show List</a>
@@ -288,7 +302,7 @@
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
                                 aria-labelledby="userDropdown">
-                                <a class="dropdown-item" href="#">
+                                {{-- <a class="dropdown-item" href="#">
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
@@ -299,7 +313,7 @@
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Activity Log
-                                </a>
+                                </a> --}}
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -351,7 +365,11 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="login.html">Logout</a>
+                    <form action="{{route('logout')}}" method="POST">
+                        <button class="btn btn-primary" type="submit">Logout</button>
+                        @csrf
+                    </form>
+
                 </div>
             </div>
         </div>
@@ -359,7 +377,9 @@
 
     <!-- Bootstrap core JavaScript-->
 
+    <script>
 
+    </script>
 
     {{-- sonhoang2071 --}}
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

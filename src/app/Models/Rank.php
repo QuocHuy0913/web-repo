@@ -50,19 +50,19 @@ class Rank extends Model
                 foreach($allPrice as $key){
                     $price = (int)$price + (int)$key->total;
                 }
-                if($price > 0 && $price <100000000){
+                if($price > 0 && $price <5000){
                     $idRank = 1;
                 }
-                if($price > 100000000 && $price < 300000000){
+                if($price > 5000 && $price < 10000){
                     $idRank = 2;
                 }
-                if($price > 300000000 && $price < 500000000){
+                if($price > 10000 && $price < 20000){
                     $idRank = 3;
                 }
-                if($price > 500000000 && $price < 700000000){
+                if($price > 20000 && $price < 60000){
                     $idRank = 4;
                 }
-                if($price > 700000000 && $price < 900000000){
+                if($price > 60000){
                     $idRank = 5;
                 }
             }

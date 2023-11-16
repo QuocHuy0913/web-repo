@@ -3,7 +3,6 @@
 <div class="container" style="max-width: 1270px">
     <div class="row">
         <div class="center-content">
-
             <div class="blog-content">
                 <div class="info" style="float: left">
                     <span style="color:#B82121; font-weight:bold">Get in touch <span style="color: black">with us</span></span>
@@ -185,7 +184,7 @@
     }
 
     .center-content .img {
-        margin-top: 8%;
+
         float: right;
         width: 50%;
         display: inline-block;
@@ -194,7 +193,7 @@
     .about-us {
         width: 100%;
         display: flex;
-        background-image: linear-gradient(to bottom, #B82121 70%, orange);
+        background-color: #B82121;
         border-radius: 0 0 15px 15px;
         justify-content: center;
     }

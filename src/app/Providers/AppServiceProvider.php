@@ -4,7 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Laravel\Passport\Passport;
-
+use Illuminate\Support\Facades\Config;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -13,7 +13,7 @@ class AppServiceProvider extends ServiceProvider
     public function register(): void
     {
         //
-        
+
     }
 
     /**
@@ -22,5 +22,6 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         //
+        Config::set('app.timezone', 'Asia/Ho_Chi_Minh');
     }
 }

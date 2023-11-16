@@ -12,12 +12,12 @@
                 <li class="splide__slide"><img style="height:360px" src="{{asset('images/xiaomi-tv.webp')}}" alt=""></li>
               </ul>
             </div>
-            
+
             <!-- Add the progress bar element -->
             <div class="my-slider-progress">
                 <div class="my-slider-progress-bar"></div>
             </div>
-        </div>       
+        </div>
     </div>
     @if(!empty(categories()))
     @foreach(categories() as $item)
@@ -39,12 +39,10 @@
                     <img src="{{asset($key->images)}}"
                       class="w-100" />
                   </div>
-                  <div class="card-body">          
+                  <div class="card-body">
                       <h5 class="card-title mb-3" style="color:black">{{$key->name}}</h5>
                     <h6 class="mb-3" style="color:red">${{$key->price_sell}}</h6>
                   </div>
-                </a> 
-                <a href="#!">
                   <div class="mask">
                     <div class="d-flex justify-content-center align-items-center">
                       <h5><span class="badge bg-primary ms-2" style="color: white">Buy now</span></h5>
@@ -54,6 +52,7 @@
                     <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
                   </div>
                 </a>
+
               </div>
             </div>
             @endforeach
@@ -61,7 +60,7 @@
     </div>
     @endforeach
     @endif
-<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>     
+<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
 <script>
   var splide_show = new Splide( '.splide_show', {
   type    : 'loop',
@@ -87,7 +86,7 @@ splide_show.mount();
   .my-slider-progress {
     background: #ccc;
   }
-  
+
   .my-slider-progress-bar {
     background: greenyellow;
     height: 2px;

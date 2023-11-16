@@ -37,7 +37,6 @@ class AuthController extends Controller
         $user->email = $req->email;
         $user->password = $req->password;
         $check = $user->save();
-        dd($check);
         return redirect()->intended('/');
     }
     public function logout(Request $req){

@@ -56,7 +56,7 @@
 
                     <div class="mb-3">
                         <label for="">Amount</label>
-                        <input type="number" name="amount" class="form-control w-50" placeholder="Product Amount" min="1" max="10" value="{{old('amount')}}">
+                        <input type="number" name="amount" class="form-control w-50" placeholder="Product Amount" min="1" max="1000" value="{{old('amount')}}">
                         @error('amount')
                             <span style="color: red">{{$message}}</span>
                         @enderror

@@ -15,6 +15,7 @@
     {{-- <link rel="stylesheet" href="./Font-Awesomecss/css/font-awesome.min.css"> --}}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+    <link rel="shortcut icon" href="{{asset('/images/laravel-logo.png')}}">
     <title>Techstore</title>
 </head>
 <body>
@@ -932,7 +933,7 @@
                             <div class="header-content-inner">
                                 <div class="header-search-form">
                                     <div class="search_wrap search_wrap_1">
-                                        <form action="{{route('search')}}" method="POST">
+                                        <form action="{{route('search')}}" method="POST" style="margin: 0">
                                             <div class="search_box">
                                                 <input name="search" type="text" class="input" placeholder="Search something..." value="{{old('search') }}">
                                                 <button class="btn btn_common">
@@ -1034,7 +1035,7 @@
                                                     @foreach(getAllCategory() as $item=>$key)
                                                         <li class="category-menu-item">
                                                             <a href="{{route('getCategory',['data'=>"$key->name"])}}" class="cmi-link">
-                                                                <div class="cmi-wrap">                                            
+                                                                <div class="cmi-wrap">
                                                                         <span class="cmi-content">
                                                                             {{$key->name}}
                                                                         </span>
@@ -1075,13 +1076,13 @@
                                                         </div>
                                                     </a>
                                                 </li>
-                                                <li class="menu-item">
+                                                {{-- <li class="menu-item">
                                                     <a href="{{route('more')}}" class="rm-rf underline-hover-effect">
                                                         <div class="menu-item-wrap">
                                                             <span class="menu-item-title">More</span>
                                                         </div>
                                                     </a>
-                                                </li>
+                                                </li> --}}
                                             </ul>
                                         </div>
                                     </div>
@@ -1179,10 +1180,10 @@
                                         <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
                                     </div>
                                     <span class="subtitle-login-forn">or use your email for registration</span>
-                                    <input type="text" placeholder="Name"  class="inp-login-form" name="name"/>
-                                    <input type="email" placeholder="Email" class="inp-login-form" name="email"/>
-                                    <input type="password" placeholder="Password" class="inp-login-form" name="password"/>
-                                    <input type="password" placeholder="Confirm Password" class="inp-login-form" name="password_confirmation"/>
+                                    <input type="text" placeholder="Name"  class="inp-login-form" name="name" required/>
+                                    <input type="email" placeholder="Email" class="inp-login-form" name="email" required/>
+                                    <input type="password" placeholder="Password" class="inp-login-form" name="password" required/>
+                                    <input type="password" placeholder="Confirm Password" class="inp-login-form" name="password_confirmation" required/>
                                     <button class="btn-login-form" type="submit">Sign Up</button>
                                     @csrf
                                 </form>
@@ -1196,8 +1197,8 @@
                                         <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
                                     </div>
                                     <span class="subtitle-login-forn">or use your account</span>
-                                    <input type="email" placeholder="Email" class="inp-login-form" name="email"/>
-                                    <input type="password" placeholder="Password" class="inp-login-form" name="password"/>
+                                    <input type="email" placeholder="Email" class="inp-login-form" name="email" required/>
+                                    <input type="password" placeholder="Password" class="inp-login-form" name="password" required/>
                                     <a class="forgot-pass-link" href="#">Forgot your password?</a>
                                     <button class="btn-login-form" type="submit">Sign In</button>
                                     @csrf
@@ -1272,7 +1273,7 @@
                 <h5>Techstore vouchers</h5>
             </div>
             <div id="vouchers-block">
-                <ul id="vouchers-list">                    
+                <ul id="vouchers-list">
                         @foreach(getDiscountUser(Auth()->user()->rank_id) as $item)
                                 <li class="voucher-item">
                                     <form method="POST" action="{{route('checkDiscountSelect')}}">
@@ -1282,7 +1283,7 @@
                                             <input type="hidden" name="voucher" value="{{$item->code}}" class="voucher-item-name" readonly/>
                                             <div>
                                                 <input type="hidden">
-                                                <button class="btn btn-primary" type="submit">Add</button>     
+                                                <button class="btn btn-primary" type="submit">Add</button>
                                             </div>
                                         </div>
                                         @csrf
@@ -1337,7 +1338,7 @@
                         loginForm.style.display = "none";
                         loginForm.style.top = "36%";
                         document.body.style.overflow = "visible";
-                        document.body.style.paddingRight = "17px";
+                        document.body.style.paddingRight = "0px";
                         sontran.style.display = "none";
                     }
                 });
@@ -1351,28 +1352,6 @@
 
     </script>
 
-    <script>
-        const btnLoginForm2 = document.querySelector("#init-login-form-responsive");
-        btnLoginForm2.addEventListener("click", () => {
-            console.log(1);
-            let loginForm1 = document.getElementById("login-responsive");
-            let sontran = document.getElementById("sontran-responsive");
-                loginForm1.style.display = "block";
-                loginForm1.style.top = window.scrollY + window.innerHeight / 2 + "px";
-                document.body.style.overflow = "hidden";
-                sontran.style.display = "block";
-                document.body.style.paddingRight = "17px";
-                document.addEventListener("click", (e) => {
-                    if (!loginForm1.contains(e.target) && !btnLoginForm2.contains(e.target)) {
-                        loginForm1.style.display = "none";
-                        loginForm1.style.top = "36%";
-                        document.body.style.overflow = "visible";
-                        document.body.style.paddingRight = "17px";
-                        sontran.style.display = "none";
-                    }
-                });
-        });
-    </script>
 
     <script>
         const btnSignUp = document.querySelector(".btn-signUp-form");
@@ -1426,10 +1405,10 @@
                 $('.categories_nav_option').css('border-bottom', '2px solid black');
                 $('.menu_nav_option').css('border-bottom', '0');
                 $('.menu__container').css('display', 'none');
-                $('.categories__container').css('display', 'block'); 
+                $('.categories__container').css('display', 'block');
             })
         })
-    
+
     </script>
 
     <script src="{{asset('admins')}}/vendor/jquery/jquery.min.js"></script>

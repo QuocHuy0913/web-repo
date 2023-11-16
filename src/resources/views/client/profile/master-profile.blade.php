@@ -1,13 +1,7 @@
 @extends('client.layouts.master')
 @section('content')
     <div class="container" style="max-width: 1270px">
-        <div class="path">
-            <a href="{{route('home')}}" style="color: grey">Home</a>
-            <i class="fas fa-angle-right"></i>
-            <a href="{{route('getUserProfile')}}" style="color: grey">User Profile</a>
-            <i class="fas fa-angle-right"></i>
-            <a style="margin-left: 20px; color: darkgrey"></a>
-        </div>
+
         <div class="row">
             <div class="menu-profile" style="position: fixed; top:20%; height:435px; width: 260px; background-color:white; border-radius: 0 25px 25px 0;">
                 <div style="border-bottom: 1px solid lightgrey; align-items:center">
