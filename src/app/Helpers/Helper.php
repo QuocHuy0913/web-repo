@@ -48,7 +48,7 @@ function getDiscount(){
     return $list;
 }
 function getDiscountUser($id){
-    $list = Discount::where('rank_id', $id)->get();
+    $list = Discount::where('rank_id', $id)->where('amount', '>', 0)->orderByDesc('price')->get();
     return $list;
 }
 function getDiscountName($id){

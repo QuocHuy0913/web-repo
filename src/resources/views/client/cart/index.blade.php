@@ -101,7 +101,7 @@
                                             @if(!empty($item['price']))
                                                 <form method="POST" action="{{route('checkDiscount')}}">
                                                     <div class="head-content">
-                                                    <input type="text" name="voucher" placeholder="Nhập mã khuyến mãi..." class="customer-voucher form-control" value="{{$item['code']}}" style="width: 240px;" >
+                                                    <input type="text" name="voucher" placeholder="Nhập mã khuyến mãi..." class="customer-voucher form-control" value="{{$item['code']}}" style="width: 240px; margin-right:4px" >
                                                     <button type="submit" class="btn btn-primary">Add</button>
                                                     </div>
                                                     @csrf
@@ -111,7 +111,7 @@
                                     @else
                                         <form method="POST" action="{{route('checkDiscount')}}">
                                             <div class="head-content">
-                                            <input type="text" name="voucher" placeholder="Nhập mã khuyến mãi..." class="customer-voucher form-control" style="width: 240px;" >
+                                            <input type="text" name="voucher" placeholder="Nhập mã khuyến mãi..." class="customer-voucher form-control" style="width: 240px; margin-right:4px" >
                                             <button type="submit" class="btn btn-primary">Add</button>
                                             </div>
                                             @csrf

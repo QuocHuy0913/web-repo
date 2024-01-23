@@ -7,7 +7,7 @@
         </div>
             <div id="main-cart">
                 @if (!empty("$list"))
-                    <div id="content-left">
+                    <div id="">
                         <div class="content-left-head ">
                             <label for="" style="margin-bottom: 0;">Tất cả sản phẩm</label>
                             <span class="ta-c">Đơn giá</span>
@@ -20,7 +20,7 @@
                                 <div class="test r-item" id="wrap-item-{{$item->product_id}}">
                                     <div class="">
                                         <div class="product-info">
-                                            <a href="" class="link-img">
+                                            <a href="{{route('getDetailProduct',[ 'id' => $item->product_id ] )}}" class="link-img">
                                                 <div class="block-product-img">
                                                     <img src="{{asset(product($item->product_id)->images)}}" alt="" class="product-img">
                                                 </div>
@@ -46,7 +46,7 @@
                         </div>
                     </div>
                 @else
-                <h4 style="width:fit-content; color:#d70018;">Cart is null</h4>
+                <h4 style="width:fit-content; color:#d70018;">Your Favorites is null</h4>
                 @endif
             </div>
 
@@ -175,7 +175,8 @@
         display: flex;
         flex-wrap: nowrap;
         -webkit-box-pack: justify;
-        justify-content: space-between;
+	justify-content: center;
+	
 
 
     }

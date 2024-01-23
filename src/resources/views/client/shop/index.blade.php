@@ -328,6 +328,9 @@
                                 @endif
                         @endif
                     </div>
+		</div>
+		<div style="margin-top:24px">
+                    {{$list->links("pagination::bootstrap-5")}}
                 </div>
             </div>
     </div>

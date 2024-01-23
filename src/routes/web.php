@@ -93,7 +93,7 @@ Route::prefix('admin')->name('admin.')->middleware('admin')->group(function (){
 Route::get('/', [ClientDashboardController::class, 'home'])->name('home');
 Route::get('/shop', [ClientProductController::class, 'getList'])->name('shop');
 Route::get('/getCategory/{data}', [ClientProductController::class, 'searchCategory'])->name('getCategory');
-Route::post('/search', [ClientProductController::class, 'search'])->name('search');
+Route::get('/search', [ClientProductController::class, 'search'])->name('search');
 Route::get('/shop/detailProduct/{id}', [ClientProductController::class, 'getDetailProduct'])->name('getDetailProduct');
 Route::get('/blog', [ClientDashboardController::class, 'blog'])->name('blog');
 Route::get('/more', [ClientDashboardController::class, 'more'])->name('more');

@@ -11,7 +11,7 @@ class ProductController extends Controller
 {
     //
     public function getList(){
-        $list = Product::all();
+	$list = Product::where('amount', '>', 0)->paginate(12)->withQueryString();
         if(!empty($list)) {
             return view('client.shop.index', compact('list'));
         }
@@ -25,8 +25,8 @@ class ProductController extends Controller
     //     return view('client.shop.favourite');
     // }
     public function search(Request $request){
-        $search = $request->search;
-        $data = Product::where(function($query) use ($search){
+        $search = $request->input('search');
+        $list = Product::where(function($query) use ($search){
             $query->where('name','like',"%$search%")->orWhere('price_sell','like',"%$search%");
         })
         ->orWhereHas('category',function($query) use ($search){
@@ -35,14 +35,12 @@ class ProductController extends Controller
         ->orWhereHas('brand',function($query) use ($search){
             $query->where('name','like',"%$search%")->orWhere('description','like',"%$search%");               
         })
-        ->get();
-        return view('client.shop.index',compact('data','search'));
+        ->where('amount', '>', 0)->paginate(12)->withQueryString();
+        return view('client.shop.index',compact('list','search'));
     }
     public function searchCategory($name){
-        $category = Category::where(function($query) use ($name){
-            $query->where('name',$name);
-        })
-        ->get();
-        return view('client.shop.index',compact('category'));
+        $list = Category::where('name', $name)->first();
+        $list = Product::where('category_id', $list->id)->where('amount', '>', 0)->paginate(12)->withQueryString();
+        return view('client.shop.index',compact('list'));
     }
 }

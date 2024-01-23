@@ -933,7 +933,7 @@
                             <div class="header-content-inner">
                                 <div class="header-search-form">
                                     <div class="search_wrap search_wrap_1">
-                                        <form action="{{route('search')}}" method="POST" style="margin: 0">
+                                        <form action="{{route('search')}}" method="get" style="margin: 0">
                                             <div class="search_box">
                                                 <input name="search" type="text" class="input" placeholder="Search something..." value="{{old('search') }}">
                                                 <button class="btn btn_common">

@@ -31,7 +31,7 @@
                     <div class="mb-3">
                        
                                 <label for="">Rank</label>
-                                    <select name="rank">
+                                    <select name="rank" class= "form-control w-50">
                                         <option value="0">Open this select menu</option>
                                         @if(!empty($rank))
                                             @foreach($rank as $item)

@@ -46,7 +46,8 @@ class CartController extends Controller
                         'order_id' => $idOrder,
                         'product_id' => $item['productInfo']->id,
                         'price' => $item['price'],
-                        'amount' => $item['quantity'],
+			'amount' => $item['quantity'],
+			'created_at' =>date('Y-m-d H:i:s')
                     ];
                     $this->orderdetail->addOrderDetail($data);
                     $product = Product::find($item['productInfo']->id);
@@ -376,7 +377,7 @@ class CartController extends Controller
         //     ]);
         // } else {
             $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-            $vnp_Returnurl = "http://localhost/cart";
+            $vnp_Returnurl = "http://sonhoang2071.site/cart";
             $vnp_TmnCode = "U2YDTOHX";//Mã website tại VNPAY
             $vnp_HashSecret = "KZGNSWGMVOOUJLTTKOAPYVBUCVHUXLQT"; //Chuỗi bí mật
 

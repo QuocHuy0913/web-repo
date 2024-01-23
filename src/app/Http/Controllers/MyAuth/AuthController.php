@@ -10,15 +10,16 @@ class AuthController extends Controller
 {
     //
     public function login(Request $req){
-        $credentials = $req->validate([
+        $req->validate([
             'email' => 'required|email',
             'password' => 'required',
-        ]);
+	]);
+	$credentials = request(['email', 'password']);
 
-        if (Auth::attempt($credentials)) {
+        if (auth()->attempt($credentials)) {
             $req->session()->regenerate();
 
-            return redirect()->intended('/');
+            return redirect()->route('home');
         }
 
         return back()->withErrors([
